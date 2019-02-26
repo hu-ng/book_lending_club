@@ -59,15 +59,15 @@ Environment variables are crucial in protecting sensitive information like API k
 
 To install direnv, simply run
 
-$ brew install direnv
+    $ brew install direnv
 
 If installation is successful, add the following line to your bash (~/.bashrc) file
 
-$ eval "$(direnv hook bash)"
+    $ eval "$(direnv hook bash)"
 
 Create a new file under the project directory
 
-$ touch .envrc
+    $ touch .envrc
 
 Add the following code to .envrc
 
