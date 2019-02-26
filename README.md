@@ -31,3 +31,24 @@ Meta_book class serves the function of recording the metadata of a specific book
 The transaction model tracks the status of a lending process between the owner and lender. It includes basic functionalities of updating the status of a transaction.
 
 ![Example UML](https://yuml.me/diagram/scruffy/class/[Transaction|+book_id;+lender_id;+borrower_id;+status;|+update_status();])
+
+## Setup MySQL
+
+To setup the MySQL database necessary for the project, first log into the local database with the following command:
+
+    $ mysql -u root -p
+
+Create the database for the current project
+    
+    $ create database book_lending_club;
+    $ use database book_lending_club;
+
+Insert the following code to initialize a table for user
+
+```
+CREATE TABLE users (
+    id int NOT NULL PRIMARY KEY,
+    email varchar(255),
+    username varchar(255)
+);
+```
