@@ -17,3 +17,17 @@ Other than that, it should also have the attributes of *books* and *lent* which 
 To encourage users to return books on time and positively contribute to community, the model also includes the stars attribute which awards users every time they receive positive comment and punishes when they return the book late.
 
 ![Example UML](https://yuml.me/diagram/scruffy/class/[User|+books;+lent;+stars;+username;-password|+Login();+Logout();])
+
+### Book Model
+
+The book model contains two separate classes: meta_book and book.
+
+Meta_book class serves the function of recording the metadata of a specific book including name, author, and number of pages. In contrast, book class inherits from the meta_book and represents each book copy of that "meta book". It contains attributes like availability, owner, conditions, and etc.
+
+![Example UML](https://yuml.me/diagram/scruffy/class/[Meta_book|+name;+author;+numpages;+username;]^-[Book|+availability;+owner_id;+condition])
+
+### Transaction Model
+
+The transaction model tracks the status of a lending process between the owner and lender. It includes basic functionalities of updating the status of a transaction.
+
+![Example UML](https://yuml.me/diagram/scruffy/class/[Transaction|+book_id;+lender_id;+borrower_id;+status;|+update_status();])
