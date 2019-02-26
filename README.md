@@ -52,3 +52,30 @@ CREATE TABLE users (
     username varchar(255)
 );
 ```
+
+## Setup Environment Variables
+
+Environment variables are crucial in protecting sensitive information like API keys and passwords from being pushed to the CLI. One recommended tool to quickly setup environment varaibles in your local repo is direnv.
+
+To install direnv, simply run
+
+$ brew install direnv
+
+If installation is successful, add the following line to your bash (~/.bashrc) file
+
+$ eval "$(direnv hook bash)"
+
+Create a new file under the project directory
+
+$ touch .envrc
+
+Add the following code to .envrc
+
+```
+export database_username={PUT YOUR USERNAME}
+export database_pwd={PUT YOUR PASSWORD}
+export database_host=localhost
+export database_db=book_lending_club
+```
+
+Finally, run `direnv allow` to save all the changes.
