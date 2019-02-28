@@ -32,7 +32,50 @@ The transaction model tracks the status of a lending process between the owner a
 
 ![Example UML](https://yuml.me/diagram/scruffy/class/[Transaction|+book_id;+lender_id;+borrower_id;+status;|+update_status();])
 
+## Run Virtual Environment
+
+Virtual environment is a key component in ensuring that the application is configured in the right environment
+
+##### Requirements
+* Python 3
+* Pip 3
+
+```bash
+$ brew install python3
+```
+
+Pip3 is installed with Python3
+
+##### Installation
+To install virtualenv via pip run:
+```bash
+$ pip3 install virtualenv
+```
+
+##### Usage
+Creation of virtualenv:
+```bash
+$ virtualenv -p python3 venv
+```
+
+Activate the virtualenv:
+```bash
+$ source venv/bin/activate
+```
+
+Deactivate the virtualenv:
+```bash
+$ deactivate
+```
+
+Install dependencies in virtual environment:
+```bash
+$ pip3 install -r requirements.txt
+```
+
 ## Setup MySQL
+
+[Install MySQL](https://dev.mysql.com/doc/refman/5.7/en/installing.html)
 
 To setup the MySQL database necessary for the project, first log into the local database with the following command:
 
