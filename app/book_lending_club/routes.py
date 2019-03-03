@@ -1,11 +1,5 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-import os
-
-app = Flask(__name__)
-app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{0}:{1}@{2}/{3}'.format(os.environ['database_username'], os.environ['database_pwd'], os.environ['database_host'], os.environ['database_db'])
-db = SQLAlchemy(app)
+from flask import render_template
+from book_lending_club import app
 
 
 @app.route('/')
@@ -32,5 +26,3 @@ def book(id):
 def transaction(lender_id, borrower_id):
     return render_template('transaction.html', lender=lender_id, borrower_id=borrower_id)
 
-if __name__ == '__main__':
-    app.run(debug=True)
