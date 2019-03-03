@@ -57,6 +57,10 @@ Creation of virtualenv:
 ```bash
 $ virtualenv -p python3 venv
 ```
+or use the command:
+```bash
+$ python3 -m virtualenv venv
+```
 
 Activate the virtualenv:
 ```bash
@@ -119,6 +123,11 @@ export database_username={PUT YOUR USERNAME}
 export database_pwd={PUT YOUR PASSWORD}
 export database_host=localhost
 export database_db=book_lending_club
+```
+
+Make sure to rerun bash:
+```
+$ source ~/.bash_profile
 ```
 
 Finally, run `direnv allow` to save all the changes.

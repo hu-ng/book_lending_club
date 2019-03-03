@@ -30,7 +30,7 @@ def book(id):
 # Book lending request page
 @app.route('/transaction/<int:lender_id>/<int:borrower_id>')
 def transaction(lender_id, borrower_id):
-    return render_template('transaction.html', lender=lender_id, borrower_id)
+    return render_template('transaction.html', lender=lender_id, borrower_id=borrower_id)
 
 if __name__ == '__main__':
     app.run(debug=True)
