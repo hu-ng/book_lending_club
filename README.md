@@ -54,24 +54,25 @@ $ pip3 install virtualenv
 
 ##### Usage
 Creation of virtualenv:
-```bash
-$ virtualenv -p python3 venv
-```
 
-Activate the virtualenv:
-```bash
-$ source venv/bin/activate
-```
+    $ virtualenv -p python3 venv
 
-Deactivate the virtualenv:
-```bash
-$ deactivate
-```
+If the above code does not work, you could also do 
+
+    $ python3 -m virtualenv venv
+
+To activate the virtualenv:
+
+    $ source venv/bin/activate
+
+To deactivate the virtualenv (after you finished working):
+
+    $ deactivate
 
 Install dependencies in virtual environment:
-```bash
-$ pip3 install -r requirements.txt
-```
+
+    $ pip3 install -r requirements.txt
+
 
 ## Setup MySQL
 
@@ -104,9 +105,13 @@ To install direnv, simply run
 
     $ brew install direnv
 
-If installation is successful, add the following line to your bash (~/.bashrc) file
+If installation is successful, add the following line to your bash (~/.bashrc or ~/.bash_profile) file
 
     $ eval "$(direnv hook bash)"
+    
+Restart your terminal or source the bash file with:
+
+    $ source ~/.bash_profile
 
 Create a new file under the project directory
 
@@ -115,8 +120,8 @@ Create a new file under the project directory
 Add the following code to .envrc
 
 ```
-export database_username={PUT YOUR USERNAME}
-export database_pwd={PUT YOUR PASSWORD}
+export database_username=PUT YOUR USERNAME
+export database_pwd=PUT YOUR PASSWORD
 export database_host=localhost
 export database_db=book_lending_club
 ```
