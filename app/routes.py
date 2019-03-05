@@ -1,5 +1,5 @@
 from flask import render_template
-from book_lending_club import app
+from app import app
 
 
 @app.route('/')

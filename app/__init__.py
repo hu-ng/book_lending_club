@@ -7,4 +7,4 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{0}:{1}@{2}/{3}'.format(os.environ['database_username'], os.environ['database_pwd'], os.environ['database_host'], os.environ['database_db'])
 db = SQLAlchemy(app)
 
-from book_lending_club import routes
+from app import routes
