@@ -126,9 +126,4 @@ export database_host=localhost
 export database_db=book_lending_club
 ```
 
-Make sure to rerun bash:
-```
-$ source ~/.bash_profile
-```
-
 Finally, run `direnv allow` to save all the changes.
