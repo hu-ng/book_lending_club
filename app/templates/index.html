@@ -1,1 +1,101 @@
-<h1>This is the book lending club</h1>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title> LinexLine - Book Lending</title>
+    <link rel="stylesheet" href= "../static/styles.css"> <!-- "{{ url_for('static',filename='styles.css') }}" -->
+    <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+
+    <div id = 'navbar'>
+      <a href = '/home' id = 'logo'> <img src = '../static/resources/logo.png' ></img></a>
+      <a href = '/profile' id = 'profile'>
+        <img src = '../static/resources/user.png'></img>
+      </a>
+      <ul>
+        <li>
+          <a href = '/home'> about </a>
+        </li>
+        <li>
+          <a href = '/catalog'> catalog </a>
+        </li>
+        <li>
+          <a href = '/sign-in'> sign in </a>
+        </li>
+      </ul>
+    </div>
+    <div id = "background"></div>
+    <div id = "main">
+      <div id = "main-box">
+        <div id = "main-box-text-container">
+          <div style="text-align:center">
+            <h1>Physical Books for Virtual Students </h1>
+            <h2>lend and borrow from other minervans</h2>
+          </div>
+        </div>
+      </div>
+      <div>
+        <img src="../static/resources/index.svg"
+              alt="Girl reading book"
+              id = "landscape"
+              class = "main-content">
+        </img>
+        <div id="obscure-main-box"></div>
+        <a id = "signup-button" href = "/signup">Sign up now</a>
+        <div id="footer">
+          <div id = "footer-copyright">© CS162 TT 9am ART</div>
+          <div id = "footer-tagline">
+            <a href = "/home">line x line</a></br>
+            <p>Connecting Minerva's Readers</p>
+          </div>
+          <div id = "footer-social">
+            <img src = "../static/resources/youtube.svg"></img>
+            <img src = "../static/resources/twitter.svg"></img>
+            <img src = "../static/resources/facebook.svg"></img>
+            <img src = "../static/resources/instagram.svg"></img>
+          </div>
+        </div>
+      </div>
+      <div id = "book-box">
+        <div id="book" class = "main-content">
+          <img src="../static/resources/Book View.svg" alt="Open Book">
+          </img>
+        </div>
+
+        <div id = "testimonial-block">
+          <div class = "testimonial-profile">
+            <div class = "profile-image-container">
+              <img src = "../static/resources/erin.png"></img>
+            </div>
+            <div class = "testimonial-text">
+              <p>
+                “I didn’t know so many of my friends enjoyed the same books as me.
+                Now I can share my books and keep track of exactly who has them.”
+              </p>
+              <p class = "testimonial-text-name">
+                -Erin
+              </p>
+            </div>
+          </div>
+          <div class = "testimonial-profile">
+            <div class = "profile-image-container">
+              <img src = "../static/resources/jo.png"></img>
+            </div>
+            <div class = "testimonial-text">
+              <p>
+                “I don’t have room to pack a library in my suitcase,
+                but when I share with my friends, I don’t need to.”
+              </p>
+              <p class = "testimonial-text-name">
+                -Johannes
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
