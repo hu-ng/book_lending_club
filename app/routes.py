@@ -1,5 +1,5 @@
 from flask import render_template, request
-from app import app
+from app import app, bcrypt, db
 from .forms import RegistrationForm
 from .models import User
 
@@ -36,8 +36,9 @@ def register():
         user = User.query.filter_by(username=form.username.data).first()
         email = User.query.filter_by(email=form.email.data).first()
         if not user and not email:
-            new_user = User(username=form.username.data, email=form.email.data)
-            new_user.set_password(form.password.data)
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+            # We do not have such method for User model: new_user.set_password(form.password.data)
             db.session.add(new_user)
             db.session.commit()
             flash("Account created", "success")
