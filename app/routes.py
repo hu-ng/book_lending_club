@@ -53,8 +53,9 @@ def register():
         # Username has already been taken
         else:
             flash("Username or email has already been taken", "error")
-            return render_template("register.html", title="Register", form=form)
-    return render_template("register.html", title="Register", form=form)
+            return render_template("test_register.html", title="Register", form=form)
+    # Template for registration would be test_register.html for now
+    return render_template("test_register.html", title="Register", form=form)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -69,7 +70,7 @@ def login():
             return redirect(url_for('home'))
         else:
             flash('Log In Failed. Please recheck credentials', 'danger')
-    return render_template('login.html', title='Log In', form=form)
+    return render_template('test_login.html', title='Log In', form=form)
 
 
 @app.route('/logout', methods=["POST"])
