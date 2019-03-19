@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, url_for, flash, redirect
 from app import app, bcrypt, db
 from .forms import RegistrationForm
 from .models import User
@@ -33,7 +33,7 @@ def transaction(lender_id, borrower_id):
 @app.route('/register', methods=["GET","POST"])
 def register():
     form = RegistrationForm()
-    if request.method=="POST" and form.validate():
+    if form.validate_on_submit():
         # Validate username and email
         user = User.query.filter_by(username=form.username.data).first()
         email = User.query.filter_by(email=form.email.data).first()
