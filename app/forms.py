@@ -1,10 +1,29 @@
 from flask_wtf import FlaskForm
-from wtforms import Form, BooleanField, StringField, PasswordField, validators, SubmitField
+from wtforms import BooleanField, StringField, PasswordField, SubmitField
+from wtforms.validators import ValidationError, DataRequired, EqualTo, Length, Email
+from app.models import User
+
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[validators.Length(min=4, max=25)])
-    email = StringField('Email', validators=[validators.DataRequired(), validators.Email()])
-    password = PasswordField('Password', validators=[validators.DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[validators.DataRequired(),validators.EqualTo("password")])
+    username = StringField('Username', validators=[Length(min=4, max=25)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo("password")])
     submit = SubmitField("Register")
 
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('That username is taken. Please choose a different one.')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('That email is taken. Please choose a different one.')
+
+
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField('Remember Me')
+    submit = SubmitField('Log In')
