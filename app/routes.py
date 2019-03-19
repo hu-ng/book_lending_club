@@ -2,6 +2,8 @@ from flask import render_template, request
 from app import app, bcrypt, db
 from .forms import RegistrationForm
 from .models import User
+from flask_login import login_user, current_user, logout_user
+
 
 @app.route('/')
 def index():
