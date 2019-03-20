@@ -8,7 +8,14 @@ from flask_bcrypt import Bcrypt
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'a8c24e8ea6fb2993715e4c3a4aa8996d'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{0}:{1}@{2}/{3}'.format(os.environ['database_username'], os.environ['database_pwd'], os.environ['database_host'], os.environ['database_db'])
+
+# from environment variables
+db_username = os.environ['database_username']
+db_pwd = os.environ['database_pwd']
+db_host = os.environ['database_host']
+db = os.environ['database_db']
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{0}:{1}@{2}/{3}'.format(db_username, db_pwd, db_host, db)
 db = SQLAlchemy(app)
 # set up login manager
 login_manager = LoginManager(app)

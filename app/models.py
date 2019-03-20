@@ -12,18 +12,5 @@ class User(db.Model, UserMixin):
 	email = db.Column(db.String(120), unique=True, nullable=False)
 	password = db.Column(db.String(60), nullable = False)
 
-
-	#Should actually find these checking the books table.
-	#books = db.Column()
-	#lent = db.Column()
-	#stars = db.Column(db.Integer)
-	
-	# def __init__(self, username, password, stars):
-	# 	self.username = username
-	# 	self.password = password
-	# 	#Should actually find these checking the books table.
-	# 	#self.books = books
-	# 	#self.lent = lent
-	# 	stars = stars
 	def __repr__(self):
 		return f"User('{self.username}', '{self.email}')"
