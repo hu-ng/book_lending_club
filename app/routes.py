@@ -59,14 +59,14 @@ def login():
             login_user(user, remember=form.remember.data)
             flash('Log In Successful', 'success')
             # After successful log in, redirects to main page, wherever that is.
-            return redirect(url_for('home'))
+            return redirect(url_for('index'))
         else:
             flash('Log In Failed. Please recheck credentials', 'danger')
     return render_template('test_login.html', title='Log In', form=form)
 
 
-@app.route('/logout', methods=["POST"])
+@app.route('/logout', methods=["GET","POST"])
 def logout():
     logout_user()
     # Returns the user to the home page
-    return redirect(url_for('home'))
+    return redirect(url_for('index'))
