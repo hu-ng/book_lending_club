@@ -127,3 +127,15 @@ export database_db=book_lending_club
 ```
 
 Finally, run `direnv allow` to save all the changes.
+
+## Initialize Database with MySQL
+To get all the tables to start working, at the project directory, please go to the python console:
+```bash
+$ python
+```
+And enter the following command
+```bash
+$ from app import db 
+$ db.drop_all()
+$ db.create_all() 
+```
