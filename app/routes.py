@@ -39,21 +39,13 @@ def transaction(lender_id, borrower_id):
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        # Validate username and email
-        user = User.query.filter_by(username=form.username.data).first()
-        email = User.query.filter_by(email=form.email.data).first()
-        if not user and not email:
-            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-            new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-            # We do not have such method for User model: new_user.set_password(form.password.data)
-            db.session.add(new_user)
-            db.session.commit()
-            flash("Account created", "success")
-            return redirect(url_for('login'))
-        # Username has already been taken
-        else:
-            flash("Username or email has already been taken", "error")
-            return render_template("test_register.html", title="Register", form=form)
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        # We do not have such method for User model: new_user.set_password(form.password.data)
+        db.session.add(new_user)
+        db.session.commit()
+        flash("Account created", "success")
+        return redirect(url_for('login'))
     # Template for registration would be test_register.html for now
     return render_template("test_register.html", title="Register", form=form)
 
