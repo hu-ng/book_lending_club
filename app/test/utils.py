@@ -1,6 +1,8 @@
-from app import db, app, login_manager
+from app import db, app
 from models import User
 
+db.dropall()
+db.createall()
 
 a = User("Joe", "xd", 4)
 db.session.add(a)
