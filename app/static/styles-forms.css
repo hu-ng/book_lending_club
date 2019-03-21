@@ -1,0 +1,179 @@
+#auth-forms-box {
+    width: 700px;
+    margin: auto;
+    margin-top: 5%;
+    /* margin-bottom: 25%; */
+
+    height: auto;
+    overflow: hidden;
+    /* border: 5px solid red; */
+
+    /* position: relative; */
+}
+
+.clearfix {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+
+#login-box {
+    float: left;
+}
+
+#signup-box {
+    float: right;
+}
+#login-box, #signup-box {
+    position: relative;
+    /* text-decoration: none; */
+    /* width: 30vh; */
+    /* left: -9999px; */
+    /* right: -9999px; */
+    width: 300px;
+    height: 75vh;
+    /* margin-bottom: -99999px; */
+    /* padding-bottom: 99999px;     */
+    /* margin: auto; */
+    /* float: left; */
+    /* margin-top: 15%;
+    margin-bottom: 15%; */
+        /* background-color: #FFF; */
+    /* color: #000; */
+    /* z-index: 100; */
+    /* text-align: center; */
+    /* font-size: 30px; */
+    /* padding: 10px; */
+  
+    /* top: calc(1300px + 60vw); */
+    /* border: 1px solid red; */
+
+    box-sizing: border-box;
+
+    /* display: inline-block; */
+
+    text-align: center;
+
+    
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+
+
+  #login-title, #signup-title {
+    /* position: fixed; */
+    /* text-decoration: none; */
+    width: inherit;
+    /* left: -9999px; */
+    /* right: -9999px; */
+    margin: auto;
+    background-color: #000;
+    color: #FFF;
+    /* z-index: 100; */
+    text-align: left;
+    font-size: 30px;
+    padding: 20px;
+    padding-left: 40px;
+  
+    /* top: calc(1300px + 60vw); */
+
+    
+    border-top: 1px solid #ccc;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+
+
+
+
+  #login-form, #signup-form {
+      text-align: center;
+      padding: 10% 10px;
+      display: block;
+
+      box-sizing: border-box;
+      
+  }
+
+  .form-text-fields-box {
+      margin-bottom: 10px;
+  }
+
+  input[type=text], input[type=password] {
+    width: 80%;
+
+    padding: 10px 20px;
+    margin: 2% 0;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #EEE;
+
+    font-family: 'Bitter', serif;
+    font-weight: bold;
+  }
+
+
+  #login-button, #signup-form-button {
+    /* position: absolute; */
+    display: block;
+    text-decoration: none;
+    width: 80%;
+    /* left: -9999px; */
+    /* right: -9999px; */
+    margin: auto;
+    background-color: #EF9000;
+    color: #FFF;
+    /* z-index: 100; */
+    text-align: center;
+    font-size: 30px;
+    padding: 10px;
+  
+    /* top: calc(1300px + 60vw); */
+
+    border: 0px solid #ccc;
+    border-radius: 8px;
+
+    font-family: 'Bitter', serif;
+
+
+
+    /* position: absolute;
+    bottom: 0;
+    width: 80%;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%); */
+  }
+
+  #forgot-password-box {
+      background-color: #CCC;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+
+      border-bottom: 1px solid #ccc;
+      border-bottom-right-radius: 8px;
+      border-bottom-left-radius: 8px;
+  }
+
+  #forgot-password-box a {
+      text-decoration: none;
+      color: #565656;
+      font-size: 12px;
+}
+
+#forgot-password-box a:hover {
+    text-decoration: underline;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+    /* flex-wrap: nowrap; */
+    /* align-items: center; */
+    align-items: stretch    ;
+}

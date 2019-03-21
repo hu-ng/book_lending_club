@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title> LinexLine - Book Lending</title>
+    <link rel="stylesheet" type="text/css" href= "../static/styles.css"> <!-- "{{ url_for('static',filename='styles.css') }}" -->
+    <link rel="stylesheet" type="text/css" href= "../static/styles-forms.css">
+    <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+
+    <div id = 'navbar'>
+      <a href = '/home' id = 'logo'> <img src = '../static/resources/logo.png' ></img></a>
+      <a href = '/profile' id = 'profile'>
+        <img src = '../static/resources/user.png'></img>
+      </a>
+      <ul>
+        <li>
+          <a href = '/home'> about </a>
+        </li>
+        <li>
+          <a href = '/catalog'> catalog </a>
+        </li>
+        <li>
+          <a href = '/sign-in'> sign in </a>
+        </li>
+      </ul>
+    
+    
+    
+    </div>
+
+
+    
+    <!-- <div id = "main"> -->
+
+            <!-- <div id = "login-box">
+                    <div id="login-title">
+                        <span>Log In</span>
+                    </div>
+                    <form id="login-form" action="">
+                        <div>
+                        <input type="text" placeholder="email" name="email" required>
+                    
+                        <input type="password" placeholder="password" name="password" required>
+                        
+                        <label>
+                            <input type="checkbox" checked="checked" name="keepMeIn"> Keep me signed in
+                        </label>
+                        </div>
+                    
+
+                    </form>
+
+                    <div>
+                        <button type="button" class="login-btn">Log In</button>            
+                    </div>
+        
+                    <div id="forgot-password">
+                        <span><a href="#">Forgot password?</a></span>
+                    </div>
+        
+                </div> -->
+    
+
+
+            <!-- </div> -->
+
+            <div id = "auth-forms-box" class = "clearfix">
+
+            <div id = "login-box">
+                    <div id="login-title">
+                        <span>Log In</span>
+                    </div>
+
+                    <div class = "flex-container">
+                    
+                    <form id="login-form" action="" class="form">
+                        <div class="form-text-fields-box">
+                        <input type="text" placeholder="email" name="email" required>
+                    
+                        <input type="password" placeholder="password" name="password" required>
+                        </div>
+                        
+
+                        <label>
+                            <input type="checkbox" checked="checked" name="keepMeIn"> Keep me signed in
+                        </label>
+                        
+                    
+
+                        
+                    </form>
+
+                        <div>
+                            <button type="button" id="login-button">Log In</button>            
+                        </div>
+
+                    </div>
+
+                    <div id="forgot-password-box">
+                        <p><a href="#">Forgot password?</a></p>
+                    </div>
+        
+            </div>
+
+
+            <div id = "signup-box">
+                    <div id="signup-title">
+                        <span>Sign Up</span>
+                    </div>
+                    
+                    <div class="flex-container">
+                    <form id="signup-form" action="" class="form">
+                        <div class="form-text-fields-box">
+                        <input style="display: inline-block; width: 39%; " type="text" placeholder="name" name="name" required>
+                        <input style="display: inline-block; width: 39%; " type="text" placeholder="surname" name="surname" required>
+
+
+                        <input type="text" placeholder="email" name="email" required>
+                    
+                        <input type="password" placeholder="password" name="password" required>
+                        <input type="password" placeholder="confirm password" name="confPassword" required>
+
+                        </div>
+                        
+
+                        <label>
+                            <input type="checkbox" checked="checked" name="keepMeIn"> Keep me signed in
+                        </label>
+
+                        
+
+                    </form>
+
+                    <div>
+                            <button type="button" id="signup-form-button">Sign Up</button>            
+                        </div>
+
+
+                    </div>
+                        
+
+        
+                    <!-- <div id="forgot-password">
+                        <p><a href="#">Forgot password?</a></p>
+                    </div> -->
+        
+            </div>
+
+
+            </div>
+                
+
+        <div id="footer" style="position: absolute; top: unset; bottom: 0;">
+          <div id = "footer-copyright">© CS162 TT 9am ART</div>
+            <div id = "footer-tagline">
+                <a href = "/home">line x line</a></br>
+                <p>Connecting Minerva's Readers</p>
+            </div>
+            <div id = "footer-social">
+                    <img src = "../static/resources/youtube.svg"></img>
+                    <img src = "../static/resources/twitter.svg"></img>
+                    <img src = "../static/resources/facebook.svg"></img>
+                    <img src = "../static/resources/instagram.svg"></img>
+            </div>
+        </div>
+      </div>
+
+
+
+
+
+      </div>
+    </div>
+
+
+
+  
+
+  </body>
+</html>
