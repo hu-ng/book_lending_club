@@ -12,8 +12,8 @@ class User(db.Model, UserMixin):
 	username = db.Column(db.String(40), nullable = False)
 	email = db.Column(db.String(120), unique=True, nullable=False)
 	password = db.Column(db.String(60), nullable = False)
-    region = db.Column(db.String(60), nullable = False)
-
+	region = db.Column(db.String(60), nullable = False)
+	
 	books = db.relationship('Book', backref='user', lazy=True)
 
 	def __repr__(self):
