@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for, flash, redirect
 from app import app, bcrypt, db
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, AddBookForm
 from .models import User
 from flask_login import login_user, current_user, logout_user
 
@@ -70,3 +70,12 @@ def logout():
     logout_user()
     # Returns the user to the home page
     return redirect(url_for('index'))
+
+
+
+# add books 
+@app.route('/add_books', methods=["GET", "POST"])
+def add_books():
+    form = AddBookForm()
+    if form.validate_on_submit():
+        meta_book = Meta_book.
