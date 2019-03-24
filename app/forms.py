@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, StringField, PasswordField, SubmitField, IntegerField
 from wtforms.validators import ValidationError, DataRequired, EqualTo, Length, Email
-from app.models import User, Meta_book, Book
+from app.models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -34,3 +34,5 @@ class AddBookForm(FlaskForm):
     bookname = StringField('Book Name', validators=[DataRequired()])
     author = StringField("Author of the Book", validators=[DataRequired()])
     numpages = IntegerField("Number of Pages", validators=[DataRequired()])
+    condition = BooleanField("How is the condition")
+    submit = SubmitField('Add')

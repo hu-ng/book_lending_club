@@ -1,7 +1,7 @@
 from flask import render_template, request, url_for, flash, redirect
 from app import app, bcrypt, db
 from .forms import RegistrationForm, LoginForm, AddBookForm
-from .models import User
+from .models import User, Meta_book, Book
 from flask_login import login_user, current_user, logout_user
 
 
@@ -78,4 +78,21 @@ def logout():
 def add_books():
     form = AddBookForm()
     if form.validate_on_submit():
-        meta_book = Meta_book.
+        meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
+        # if meta book exist, we add the copy
+        if meta_book:
+            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, condition=form.condition.data)
+            db.session.add(copy)
+            db.session.commit()
+        # If meta book doesn't exist, we need to add the meta book first
+        else:
+            meta = Meta_book(name=form.bookname.data, author=form.author.data, numpages=form.numpages.data)
+            db.session.add(meta)
+            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, condition=form.condition.data)
+            db.session.add(copy)
+            db.session.commit()
+        flash(f'Sucessfully added the book {form.bookname.data}!', 'success')
+        return redirect(url_for('index'))
+    return render_template('test_add_book.html', title="Add Book", form=form)
+
+
