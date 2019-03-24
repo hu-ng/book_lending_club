@@ -7,6 +7,7 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
+	__tablename__ = 'users'
 	id = db.Column(db.Integer, primary_key = True)
 	username = db.Column(db.String(40), nullable = False)
 	email = db.Column(db.String(120), unique=True, nullable=False)
@@ -20,9 +21,10 @@ class User(db.Model, UserMixin):
 
 
 class Meta_book(db.Model):
+	__tablename__ = 'metas'
 	id = db.Column(db.Integer, primary_key = True)
-	name = db.Column(db.String(), nullable = False)
-	author = db.Column(db.String(), nullable =False)
+	name = db.Column(db.String(120), nullable = False)
+	author = db.Column(db.String(40), nullable =False)
 	numpages = db.Column(db.Integer, nullable = False)
 	
 	copies = db.relationship('Book', backref='metas', lazy=True)
@@ -32,11 +34,12 @@ class Meta_book(db.Model):
 
 
 class Book(db.Model):
+	__tablename__ = 'book'
 	id = db.Column(db.Integer, primary_key = True)
 	
 	metabook_id = db.Column(db.Integer, db.ForeignKey('metas.id'), nullable=False)
 	
-	owner_id =  db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+	owner_id =  db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 	
 	availability = db.Column(db.Boolean, nullable = False)
 	condition = db.Column(db.Boolean, nullable = False)
