@@ -41,7 +41,7 @@ class Book(db.Model):
 	
 	owner_id =  db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 	
-	availability = db.Column(db.Boolean, nullable = False)
+	availability = db.Column(db.Boolean, nullable = False, default=True)
 	condition = db.Column(db.Boolean, nullable = False)
 
 	def __repr__(self):
