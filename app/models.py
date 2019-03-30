@@ -42,7 +42,8 @@ class Book(db.Model):
 	metabook_id = db.Column(db.Integer, db.ForeignKey('metas.id'), nullable=False)
 
 	owner_id =  db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-
+    
+    region = db.Column(db.String(60), db.ForeignKey('users.region'), nullable=False)
 	availability = db.Column(db.Boolean, nullable = False)
 	condition = db.Column(db.Boolean, nullable = False)
 
