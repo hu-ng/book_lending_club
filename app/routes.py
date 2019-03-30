@@ -2,7 +2,7 @@ from flask import render_template, request, url_for, flash, redirect
 from app import app, bcrypt, db
 from .forms import RegistrationForm, LoginForm, AddBookForm
 from .models import User, Meta_book, Book
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 @app.route('/')
@@ -74,6 +74,7 @@ def logout():
 
 # add books
 @app.route('/add_books', methods=["GET", "POST"])
+@login_required
 def add_books():
     form = AddBookForm()
     if form.validate_on_submit():
@@ -87,6 +88,8 @@ def add_books():
         else:
             meta = Meta_book(name=form.bookname.data, author=form.author.data, numpages=form.numpages.data)
             db.session.add(meta)
+            db.session.commit()
+            meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
             copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, condition=form.condition.data)
             db.session.add(copy)
             db.session.commit()
