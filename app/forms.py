@@ -9,6 +9,9 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo("password")])
+    region = SelectField(u'Region', choices=[("sf","San Francisco"),("sel","Seoul"),
+    ("hyd","Hyderabad"),("ber","Berlin"),("ba","Buenos Aires"),("ldn","London"),
+    ("tpe", "Taipei")], validators=[DataRequired()])
     submit = SubmitField("Register")
 
     def validate_username(self, username):

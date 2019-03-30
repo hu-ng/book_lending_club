@@ -40,8 +40,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        # We do not have such method for User model: new_user.set_password(form.password.data)
+        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password, region=form.region.data)
         db.session.add(new_user)
         db.session.commit()
         flash("Account created", "success")
@@ -73,7 +72,7 @@ def logout():
 
 
 
-# add books 
+# add books
 @app.route('/add_books', methods=["GET", "POST"])
 def add_books():
     form = AddBookForm()
@@ -94,5 +93,3 @@ def add_books():
         flash(f'Sucessfully added the book {form.bookname.data}!', 'success')
         return redirect(url_for('index'))
     return render_template('test_add_book.html', title="Add Book", form=form)
-
-

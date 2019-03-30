@@ -61,6 +61,10 @@
                     {{ form.confirm_password() }}
                 {% endif %}
             </div>
+            <div>
+                {{ form.region.label }}
+                {{ form.region }}
+            </div>
         </fieldset>
         <div>
             {{ form.submit() }}
