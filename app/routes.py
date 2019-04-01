@@ -71,7 +71,6 @@ def logout():
     return redirect(url_for('index'))
 
 
-
 # add books
 @app.route('/add_books', methods=["GET", "POST"])
 @login_required
