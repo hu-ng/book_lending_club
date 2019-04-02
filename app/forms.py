@@ -37,5 +37,6 @@ class AddBookForm(FlaskForm):
     bookname = StringField('Book Name', validators=[DataRequired()])
     author = StringField("Author of the Book", validators=[DataRequired()])
     numpages = IntegerField("Number of Pages", validators=[DataRequired()])
-    condition = BooleanField("How is the condition")
+    condition = SelectField(u'Condition of the book', choices=[("new", "New"),("used","Used"),
+    ("torn","Torn")], validators=[DataRequired()])
     submit = SubmitField('Add')

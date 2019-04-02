@@ -47,8 +47,8 @@ class Book(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     region = db.Column(db.String(60), db.ForeignKey('users.region'), nullable=False)
-    availability = db.Column(db.Boolean, nullable = False)
-    condition = db.Column(db.Boolean, nullable = False)
+    availability = db.Column(db.Boolean, nullable = False, default=True)
+    condition = db.Column(db.String(60), nullable = False)
 
     def __repr__(self):
         return f"Book('{self.name}', '{self.author}')"
