@@ -19,13 +19,13 @@ def book_store():
 # User profile page
 @app.route('/<int:id>/profile')
 def user_profile(id):
-    return render_template('profile.html', id=user_id)
+    return render_template('profile.html', id=id)
 
 
 # Book show page
 @app.route('/book/<int:id>')
 def book(id):
-    return render_template('book.html', id=book_id)
+    return render_template('book.html', id=id)
 
 
 # Book lending request page

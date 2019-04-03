@@ -21,8 +21,8 @@ class User(db.Model, UserMixin):
 
 class Meta_book(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
-	name = db.Column(db.String(), nullable = False)
-	author = db.Column(db.String(), nullable =False)
+	name = db.Column(db.String(40), nullable = False)
+	author = db.Column(db.String(40), nullable =False)
 	numpages = db.Column(db.Integer, nullable = False)
 	
 	copies = db.relationship('Book', backref='metas', lazy=True)
@@ -34,7 +34,7 @@ class Meta_book(db.Model):
 class Book(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	
-	metabook_id = db.Column(db.Integer, db.ForeignKey('metas.id'), nullable=False)
+	metabook_id = db.Column(db.Integer, db.ForeignKey('meta_book.id'), nullable=False)
 	
 	owner_id =  db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 	
