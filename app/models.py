@@ -18,7 +18,6 @@ class User(db.Model, UserMixin):
 
     books = db.relationship('Book', backref='user', lazy=True)
 
-
 def __repr__(self):
     return f"User('{self.username}', '{self.email}')"
 
@@ -46,7 +45,7 @@ class Book(db.Model):
 
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    region = db.Column(db.String(60), db.ForeignKey('users.region'), nullable=False)
+    region = db.Column(db.String(60), nullable=False)
     availability = db.Column(db.Boolean, nullable = False, default=True)
     condition = db.Column(db.String(60), nullable = False)
 
