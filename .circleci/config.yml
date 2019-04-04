@@ -4,6 +4,11 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.7
+      - image: mysql:5.7
+        environment:
+          MYSQL_ROOT_PASSWORD: 'circleci'
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_DATABASE: book_lending_club
 
     steps:
       # Step 1: obtain repo from GitHub
@@ -19,7 +24,7 @@ jobs:
           environment:
             database_username: root
             database_pwd: circleci
-            database_host: localhost
+            database_host: 127.0.0.1
             database_db: book_lending_club
       - run:
           name: run application
