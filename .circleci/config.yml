@@ -16,12 +16,17 @@ jobs:
             . venv/bin/activate
             pip install -r requirements.txt
       - run:
+          name: run application
           command: |
             python3 run.py
       # Step 3: run linter and tests
       - run:
           name: run tests
           command: |
-            . venv/bin/activate
+            mkdir test-reports
             flake8 --exclude=venv* --statistics
             python3 test.py 
+      - store_test_results:
+          path: test-reports
+      - store_artifacts:
+          path: test-reports
