@@ -2,73 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Add books</title>
 </head>
 <body>
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset>
-            <legend>Join Today</legend>
+            <legend>Log In</legend>
             <div>
-                {{ form.username.label() }}
-                {% if form.username.errors %}
-                    {{ form.username() }}
+                {{ form.bookname.label() }}
+                {% if form.bookname.errors %}
+                    {{ form.bookname() }}
                 <div>
-                    {% for error in form.username.errors %}
+                    {% for error in form.bookname.errors %}
                         <span>{{ error }}</span>
                     {% endfor %}
                 </div>
                 {% else %}
-                    {{ form.username() }}
+                    {{ form.bookname() }}
                 {% endif %}
             </div>
             <div>
-                {{ form.email.label() }}
-                {% if form.email.errors %}
-                    {{ form.email() }}
+                {{ form.author.label() }}
+                {% if form.author.errors %}
+                    {{ form.author() }}
                 <div>
-                    {% for error in form.email.errors %}
+                    {% for error in form.author.errors %}
                         <span>{{ error }}</span>
                     {% endfor %}
                 </div>
                 {% else %}
-                    {{ form.email() }}
+                    {{ form.author() }}
                 {% endif %}
             </div>
             <div>
-                {{ form.password.label() }}
-                {% if form.password.errors %}
-                    {{ form.password() }}
+                {{ form.numpages.label() }}
+                {% if form.numpages.errors %}
+                    {{ form.numpages() }}
                 <div>
-                    {% for error in form.password.errors %}
+                    {% for error in form.numpages.errors %}
                         <span>{{ error }}</span>
                     {% endfor %}
                 </div>
                 {% else %}
-                    {{ form.password() }}
+                    {{ form.numpages() }}
                 {% endif %}
             </div>
             <div>
-                {{ form.confirm_password.label() }}
-                {% if form.confirm_password.errors %}
-                    {{ form.confirm_password() }}
+                {{ form.condition.label() }}
+                {% if form.condition.errors %}
+                    {{ form.condition() }}
                 <div>
-                    {% for error in form.confirm_password.errors %}
+                    {% for error in form.condition.errors %}
                         <span>{{ error }}</span>
                     {% endfor %}
                 </div>
                 {% else %}
-                    {{ form.confirm_password() }}
+                    {{ form.condition() }}
                 {% endif %}
-            </div>
-            <div>
-                {{ form.region.label }}
-                {{ form.region }}
             </div>
         </fieldset>
         <div>
             {{ form.submit() }}
         </div>
     </form>
+</body>
+</html>
 </body>
 </html>

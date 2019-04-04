@@ -1,8 +1,8 @@
 from flask import render_template, request, url_for, flash, redirect
 from app import app, bcrypt, db
-from .forms import RegistrationForm, LoginForm
-from .models import User
-from flask_login import login_user, current_user, logout_user
+from .forms import RegistrationForm, LoginForm, AddBookForm
+from .models import User, Meta_book, Book
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 @app.route('/')
@@ -40,8 +40,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        # We do not have such method for User model: new_user.set_password(form.password.data)
+        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password, region=form.region.data)
         db.session.add(new_user)
         db.session.commit()
         flash("Account created", "success")
@@ -70,3 +69,29 @@ def logout():
     logout_user()
     # Returns the user to the home page
     return redirect(url_for('index'))
+
+
+# add books
+@app.route('/add_books', methods=["GET", "POST"])
+@login_required
+def add_books():
+    form = AddBookForm()
+    if form.validate_on_submit():
+        meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
+        # if meta book exist, we add the copy
+        if meta_book:
+            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, condition=form.condition.data)
+            db.session.add(copy)
+            db.session.commit()
+        # If meta book doesn't exist, we need to add the meta book first
+        else:
+            meta = Meta_book(name=form.bookname.data, author=form.author.data, numpages=form.numpages.data)
+            db.session.add(meta)
+            db.session.commit()
+            meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
+            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, condition=form.condition.data)
+            db.session.add(copy)
+            db.session.commit()
+        flash(f'Sucessfully added the book {form.bookname.data}!', 'success')
+        return redirect(url_for('index'))
+    return render_template('test_add_book.html', title="Add Book", form=form)
