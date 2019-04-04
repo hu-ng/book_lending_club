@@ -80,7 +80,8 @@ def add_books():
         meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
         # if meta book exist, we add the copy
         if meta_book:
-            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, condition=form.condition.data)
+            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, 
+                condition=form.condition.data, region=current_user.region)
             db.session.add(copy)
             db.session.commit()
         # If meta book doesn't exist, we need to add the meta book first
@@ -89,7 +90,8 @@ def add_books():
             db.session.add(meta)
             db.session.commit()
             meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
-            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, condition=form.condition.data)
+            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, 
+                condition=form.condition.data, region=current_user.region)
             db.session.add(copy)
             db.session.commit()
         flash(f'Sucessfully added the book {form.bookname.data}!', 'success')
