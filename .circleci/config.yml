@@ -15,6 +15,12 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip3 install -r requirements.txt
+            python3 utils.py
+          environment:
+            database_username: root
+            database_pwd: circleci
+            database_host: localhost
+            database_db: book_lending_club
       - run:
           name: run application
           command: |
