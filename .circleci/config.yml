@@ -43,7 +43,6 @@ jobs:
           command: |
             . venv/bin/activate
             mkdir test-reports
-            flake8 --exclude=venv* --statistics
             python3 test.py 
           environment:
             database_username: root
