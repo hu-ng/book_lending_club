@@ -44,7 +44,7 @@ class Book(db.Model):
     condition = db.Column(db.String(60), nullable = False)
 
     def __repr__(self):
-        return f"Book('{self.name}', '{self.author}')"
+        return f"Book('{self.metabook_id}', '{self.owner_id}')"
 
 
 class Transaction(db.Model):
@@ -53,7 +53,7 @@ class Transaction(db.Model):
 
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
 
-    borrower_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    borrower_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
     date_created = db.Column(db.DateTime, nullable=False, server_default=func.now() )

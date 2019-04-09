@@ -102,4 +102,9 @@ def add_books():
 @app.route('/book_display')
 def book_display():
     books = Book.query.all()
-    return render_template('display.html', books=books)
+    book_names = []
+    for book in books:
+        name = Meta_book.query.filter_by(id=book.metabook_id).first().name
+        book_names.append(name)
+    book_items = zip(books, book_names)
+    return render_template('display.html', books=book_items)

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Book Display</title>
 </head>
+<body>
 	<table style="width:80%">
 		<tr>
 			<th>Title</th>
@@ -11,13 +12,14 @@
 			<th>Availability</th>
 			<th></th>
 		</tr>
-		{% for book in books %}
+		{% for book, name in books %}
 		  <tr>
-		    <th>{book.title}</th>
-		    <th>{book.region}</th> 
-		    <th>{book.availability}</th>
+		    <th>{{name}}</th>
+		    <th>{{book.region}}</th> 
+		    <th>{{book.availability}}</th>
 		    <th><a href="url_for{'borrow'}">Borrow</a></th>
 		  </tr>
-	  {% endfor %}
+		  {% endfor %}
 	</table>
+</body>
 </html>
