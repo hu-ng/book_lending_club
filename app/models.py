@@ -1,5 +1,6 @@
 from app import db, app, login_manager
 from flask_login import UserMixin
+from sqlalchemy.sql import func
 
 
 @login_manager.user_loader
@@ -51,3 +52,23 @@ class Book(db.Model):
 
     def __repr__(self):
         return f"Book('{self.name}', '{self.author}')"
+
+
+class Transaction(db.Model):
+    __tablename__ = 'transactions'
+    id = db.Column(db.Integer, primary_key = True)
+
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+
+    borrower_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    lender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    date_created = db.Column(db.DateTime, nullable=False, server_default=func.now() )
+    
+    startdate = db.Column(db.DateTime, nullable=False)
+    enddate = db.Column(db.DateTime, nullable = False)
+    status = db.Column(db.String(60), nullable = False, default = "open")
+
+    def __repr__(self):
+        return f"Transaction('{self.book_id, self.borrower_id}', '{self.lender_id}')"
