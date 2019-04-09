@@ -5,7 +5,7 @@ db.drop_all()
 db.create_all()
 
 hashed_password = bcrypt.generate_password_hash('111').decode('utf-8')
-a = User(username = "Joe", email = "xd@gmail.com", password=hashed_password)
+a = User(username = "Joe", email = "xd@gmail.com", password=hashed_password, region="sf")
 db.session.add(a)
 
 db.session.commit()
