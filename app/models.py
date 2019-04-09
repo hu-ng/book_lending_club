@@ -8,11 +8,12 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(40), nullable = False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable = False)
-    
+    region = db.Column(db.String(60), nullable=False)
     books = db.relationship('Book', backref='user', lazy=True)
 
     def __repr__(self):
@@ -21,6 +22,7 @@ class User(db.Model, UserMixin):
 
 
 class Meta_book(db.Model):
+    __tablename__ = 'meta_book'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(40), nullable = False)
     author = db.Column(db.String(40), nullable =False)
@@ -33,6 +35,7 @@ class Meta_book(db.Model):
 
 
 class Book(db.Model):
+    __tablename__ = 'book'
     id = db.Column(db.Integer, primary_key = True)
     metabook_id = db.Column(db.Integer, db.ForeignKey('meta_book.id'), nullable=False) 
     owner_id =  db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

@@ -97,3 +97,9 @@ def add_books():
         flash(f'Sucessfully added the book {form.bookname.data}!', 'success')
         return redirect(url_for('index'))
     return render_template('test_add_book.html', title="Add Book", form=form)
+
+# book display page
+@app.route('/book_display')
+def book_display():
+    books = Book.query.all()
+    return render_template('display.html', books=books)
