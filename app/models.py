@@ -52,7 +52,6 @@ class Transaction(db.Model):
 
     borrower_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    lender_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     date_created = db.Column(db.DateTime, nullable=False, server_default=func.now() )
     
@@ -61,5 +60,5 @@ class Transaction(db.Model):
     status = db.Column(db.String(60), nullable = False, default = "open")
 
     def __repr__(self):
-        return f"Transaction('{self.book_id, self.borrower_id}', '{self.lender_id}')"
+        return f"Transaction('{self.book_id}', '{self.borrower_id}', '{self.lender_id}')"
 
