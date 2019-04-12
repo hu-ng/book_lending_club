@@ -1,5 +1,15 @@
 # Welcome to the Book Lending Club
 
+URL: http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/
+
+Available Functionalities:
+* [Sign up](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/register)
+* [Login](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/login)
+* [Logout](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/logout)
+* [Book Display](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/book_display)
+* [Add Books - Login Required](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/add_books)
+
+
 ## Run Virtual Environment
 
 Virtual environment is a key component in ensuring that the application is configured in the right environment
