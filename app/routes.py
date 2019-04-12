@@ -97,3 +97,14 @@ def add_books():
         flash(f'Sucessfully added the book {form.bookname.data}!', 'success')
         return redirect(url_for('index'))
     return render_template('test_add_book.html', title="Add Book", form=form)
+
+# book display page
+@app.route('/book_display')
+def book_display():
+    books = Book.query.all()
+    book_names = []
+    for book in books:
+        name = Meta_book.query.filter_by(id=book.metabook_id).first().name
+        book_names.append(name)
+    book_items = zip(books, book_names)
+    return render_template('display.html', books=book_items)

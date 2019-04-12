@@ -1,5 +1,6 @@
 from app import db, app, login_manager
 from flask_login import UserMixin
+from sqlalchemy.sql import func
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -7,11 +8,12 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(40), nullable = False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable = False)
-    
+    region = db.Column(db.String(60), nullable=False)
     books = db.relationship('Book', backref='user', lazy=True)
 
     def __repr__(self):
@@ -20,6 +22,7 @@ class User(db.Model, UserMixin):
 
 
 class Meta_book(db.Model):
+    __tablename__ = 'meta_book'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(40), nullable = False)
     author = db.Column(db.String(40), nullable =False)
@@ -32,6 +35,7 @@ class Meta_book(db.Model):
 
 
 class Book(db.Model):
+    __tablename__ = 'book'
     id = db.Column(db.Integer, primary_key = True)
     metabook_id = db.Column(db.Integer, db.ForeignKey('meta_book.id'), nullable=False) 
     owner_id =  db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -40,4 +44,24 @@ class Book(db.Model):
     condition = db.Column(db.String(60), nullable = False)
 
     def __repr__(self):
-        return f"Book('{self.name}', '{self.author}')"
+        return f"Book('{self.metabook_id}', '{self.owner_id}')"
+
+
+class Transaction(db.Model):
+    __tablename__ = 'transactions'
+    id = db.Column(db.Integer, primary_key = True)
+
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+
+    borrower_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
+    date_created = db.Column(db.DateTime, nullable=False, server_default=func.now() )
+    
+    startdate = db.Column(db.DateTime, nullable=False)
+    enddate = db.Column(db.DateTime, nullable = False)
+    status = db.Column(db.String(60), nullable = False, default = "open")
+
+    def __repr__(self):
+        return f"Transaction('{self.book_id}', '{self.borrower_id}', '{self.lender_id}')"
+

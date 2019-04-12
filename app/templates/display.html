@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Display</title>
+</head>
+<body>
+	<table style="width:80%">
+		<tr>
+			<th>Title</th>
+			<th>Region</th>
+			<th>Availability</th>
+			<th></th>
+		</tr>
+		{% for book, name in books %}
+		  <tr>
+		    <th>{{name}}</th>
+		    <th>{{book.region}}</th> 
+		    <th>{{book.availability}}</th>
+		    <th><a href="url_for{'borrow'}">Borrow</a></th>
+		  </tr>
+		  {% endfor %}
+	</table>
+</body>
+</html>
