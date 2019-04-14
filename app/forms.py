@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField, PasswordField, SubmitField, IntegerField, SelectField
+from wtforms import BooleanField, StringField, PasswordField, SubmitField, IntegerField, SelectField,DateField
 from wtforms.validators import ValidationError, DataRequired, EqualTo, Length, Email
 from app.models import User
-
+from datetime import date
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[Length(min=4, max=25)])
@@ -40,3 +40,15 @@ class AddBookForm(FlaskForm):
     condition = SelectField(u'Condition of the book', choices=[("new", "New"),("used","Used"),
     ("torn","Torn")], validators=[DataRequired()])
     submit = SubmitField('Add')
+
+# borrowing request form
+class RequestForm(FlaskForm):
+    start_date = DateField("Checkout date", format='%d/%m/%y', validators=[DataRequired(message='Enter checkout date in format: %d/%m/%y')])
+    end_date = DateField("Return date", format='%d/%m/%y', validators=[DataRequired(message='Enter return date in format: %d/%m/%y')])
+    submit = SubmitField("Request")
+
+    def validate_on_submit(self):
+        if (self.start_date.data > self.end_date.data) and (self.start_date.data < date.today):
+            return False
+        else:
+            return True
