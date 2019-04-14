@@ -58,11 +58,7 @@ Create the database for the current project
 Insert the following code to initialize a table for user
 
 ```
-CREATE TABLE users (
-    id int NOT NULL PRIMARY KEY,
-    email varchar(255),
-    username varchar(255)
-);
+
 ```
 
 ## Initialize Database with MySQL

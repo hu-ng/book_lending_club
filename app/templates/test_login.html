@@ -1,57 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Log In</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static',filename='mainstyles.css') }}">
+  <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+  <title>Log In</title>
 </head>
+
 <body>
-<!DOCTYPE html>
-<html lang="en">
-<head>
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
     <meta charset="UTF-8">
     <title>Register</title>
-</head>
-<body>
-    <form method="POST" action="">
+  </head>
+
+  <body>
+    <div id='navbar'>
+      <a href="{{ url_for('index') }}" id='logo'> <img src = '../static/resources/logo.png' ></img></a> {% if current_user.is_authenticated %}
+      <a href="{{ url_for('user_profile', id = current_user.id) }}" id='profile'>
+    {% else %}
+      <a href = "{{ url_for('login')}}" id = 'profile'>
+    {% endif %}
+      <img src = '../static/resources/user.png'></img>
+    </a>
+      <ul>
+        <li>
+          <a href="{{ url_for('index') }}"> about </a>
+        </li>
+        <li>
+          <a href="{{ url_for('book_store') }}"> catalog </a>
+        </li>
+        <li>
+          <a href="{{ url_for('login') }}"> sign in </a>
+        </li>
+      </ul>
+    </div>
+
+    <div id="main">
+      <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset>
-            <legend>Log In</legend>
+          <legend>Log In</legend>
+          <div>
+            {{ form.email.label() }} {% if form.email.errors %} {{ form.email() }}
             <div>
-                {{ form.email.label() }}
-                {% if form.email.errors %}
-                    {{ form.email() }}
-                <div>
-                    {% for error in form.email.errors %}
-                        <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                    {{ form.email() }}
-                {% endif %}
+              {% for error in form.email.errors %}
+              <span>{{ error }}</span> {% endfor %}
             </div>
+            {% else %} {{ form.email() }} {% endif %}
+          </div>
+          <div>
+            {{ form.password.label() }} {% if form.password.errors %} {{ form.password() }}
             <div>
-                {{ form.password.label() }}
-                {% if form.password.errors %}
-                    {{ form.password() }}
-                <div>
-                    {% for error in form.password.errors %}
-                        <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                    {{ form.password() }}
-                {% endif %}
+              {% for error in form.password.errors %}
+              <span>{{ error }}</span> {% endfor %}
             </div>
-            <div>
-                {{ form.remember() }}
-                {{ form.remember.label() }}
-            </div>
+            {% else %} {{ form.password() }} {% endif %}
+          </div>
+          <div>
+            {{ form.remember() }} {{ form.remember.label() }}
+          </div>
         </fieldset>
         <div>
-            {{ form.submit() }}
+          {{ form.submit() }}
         </div>
-    </form>
-</body>
-</html>
-</body>
-</html>
+      </form>
+    </div>
+    <div id="footer">
+      <div id="footer-copyright">© CS162 TT 9am ART</div>
+      <div id="footer-tagline">
+        <a href="{{ url_for('index') }}">line x line</a></br>
+        <p>Connecting Minerva's Readers</p>
+      </div>
+      <div id="footer-social">
+        <img src="../static/resources/youtube.svg"></img>
+        <img src="../static/resources/twitter.svg"></img>
+        <img src="../static/resources/facebook.svg"></img>
+        <img src="../static/resources/instagram.svg"></img>
+      </div>
+    </div>
+  </body>
+
+  </html>

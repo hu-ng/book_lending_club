@@ -1,0 +1,119 @@
+* {
+  box-sizing: border-box;
+}
+
+body{
+  background-color: #FFF;
+  margin: 0;
+  font-family: 'Bitter', serif;
+}
+
+#navbar {
+  z-index: 2;
+  position: fixed;
+  background-color: #000;
+  top: 0px;
+  width:100%;
+  height: 45px;
+}
+
+#navbar ul {
+  float: right;
+  list-style-type: none;
+  margin:0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#navbar li {
+  background-color: rgba(0,0,0,0);
+  display: inline-block;
+  padding: 12px;
+}
+
+#navbar li:hover {
+  background-color: #222;
+}
+
+#navbar li a {
+  color: #FFF;
+  font-size: 17px;
+  text-align: center;
+  vertical-align: middle;
+  display: block;
+}
+
+#logo img {
+  margin-left: 6%;
+  height: 45px;
+}
+
+#profile {
+  float: right;
+  display: inline-block;
+
+  padding: 10px;
+  margin-left: 17px;
+  margin-right: 5.5%;
+
+  width: 45px;
+  height: 45px;
+}
+
+#profile img {
+  width: 25px;
+  height: 25px;
+}
+
+#profile:hover {
+  background-color: #222;
+}
+
+#main {
+  padding-top: 45px;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+#footer {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 60px;
+  background-color: #CCC;
+
+  bottom: 0;
+}
+
+#footer-copyright {
+  font-size: 12px;
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+}
+
+
+#footer-social {
+  margin-left: 20vw;
+}
+
+#footer-social img {
+  width: 40px;
+  margin: 0 5px;
+}
+
+#footer-tagline a {
+  color: #000;
+  font-size: 16px;
+}
+
+#footer-tagline p {
+  font-size: 12px;
+  margin: 0;
+  font-weight: bold;
+}
