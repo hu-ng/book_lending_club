@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for, flash, redirect
 from app import app, bcrypt, db
-from .forms import RegistrationForm, LoginForm, AddBookForm
+from .forms import RegistrationForm, LoginForm, AddBookForm, RequestForm
 from .models import User, Meta_book, Book
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -80,7 +80,7 @@ def add_books():
         meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
         # if meta book exist, we add the copy
         if meta_book:
-            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, 
+            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
                 condition=form.condition.data, region=current_user.region)
             db.session.add(copy)
             db.session.commit()
@@ -90,7 +90,7 @@ def add_books():
             db.session.add(meta)
             db.session.commit()
             meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
-            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, 
+            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
                 condition=form.condition.data, region=current_user.region)
             db.session.add(copy)
             db.session.commit()
@@ -108,3 +108,16 @@ def book_display():
         book_names.append(name)
     book_items = zip(books, book_names)
     return render_template('display.html', books=book_items)
+
+@app.route('/borrowing_request/<int:borrower_id>/<int:book_id>',methods=["GET", "POST"])
+@login_required
+def borrowing_request(book_id):
+    form = RequestForm()
+    if form.validate_on_submit():
+        transaction = Transaction(book_id=book_id,borrower_id=current_user.id,start_date=form.start_date.data,\
+        enddate=form.end_date.data)
+        db.session.add(transaction)
+        db.session.commit()
+        flash(f'Sucessfully requested the book!', 'success')
+        return redirect(url_for('index'))
+    return render_template("test_request_book.html",title="Request", form=form)
