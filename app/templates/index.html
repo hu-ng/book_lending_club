@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title> LinexLine - Book Lending</title>
-    <link rel="stylesheet" href= "../static/styles.css"> <!-- "{{ url_for('static',filename='styles.css') }}" -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='mainstyles.css') }}">
+    <link rel="stylesheet" href= "{{ url_for('static',filename='index.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,19 +12,23 @@
   <body>
 
     <div id = 'navbar'>
-      <a href = '/home' id = 'logo'> <img src = '../static/resources/logo.png' ></img></a>
-      <a href = '/profile' id = 'profile'>
+      <a href = "{{ url_for('index') }}" id = 'logo'> <img src = '../static/resources/logo.png' ></img></a>
+      {% if current_user.is_authenticated %}
+        <a href = "{{ url_for('user_profile', id = current_user.id) }}" id = 'profile'>
+      {% else %}
+        <a href = "{{ url_for('login')}}" id = 'profile'>
+      {% endif %}
         <img src = '../static/resources/user.png'></img>
       </a>
       <ul>
         <li>
-          <a href = '/home'> about </a>
+          <a href = "{{ url_for('index') }}"> about </a>
         </li>
         <li>
-          <a href = '/catalog'> catalog </a>
+          <a href = "{{ url_for('book_store') }}"> catalog </a>
         </li>
         <li>
-          <a href = '/sign-in'> sign in </a>
+          <a href = "{{ url_for('login') }}"> sign in </a>
         </li>
       </ul>
     </div>
@@ -44,11 +49,11 @@
               class = "main-content">
         </img>
         <div id="obscure-main-box"></div>
-        <a id = "signup-button" href = "/signup">Sign up now</a>
+        <a id = "signup-button" href = "{{ url_for('register') }}">Sign up now</a>
         <div id="footer">
           <div id = "footer-copyright">© CS162 TT 9am ART</div>
           <div id = "footer-tagline">
-            <a href = "/home">line x line</a></br>
+            <a href = "{{ url_for('index') }}">line x line</a></br>
             <p>Connecting Minerva's Readers</p>
           </div>
           <div id = "footer-social">

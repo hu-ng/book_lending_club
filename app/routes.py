@@ -17,15 +17,20 @@ def book_store():
 
 
 # User profile page
-@app.route('/<int:id>/profile')
+@app.route('/user/<int:id>')
 def user_profile(id):
-    return render_template('profile.html', id=user_id)
+    if id is None and current_user.is_authenticated:
+        id=current_user.id
+    elif id is None:
+        return redirect(url_for('login'))
+
+    return render_template('profile.html', id=id)
 
 
 # Book show page
 @app.route('/book/<int:id>')
 def book(id):
-    return render_template('book.html', id=book_id)
+    return render_template('book.html', id=id)
 
 
 # Book lending request page
@@ -80,7 +85,7 @@ def add_books():
         meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
         # if meta book exist, we add the copy
         if meta_book:
-            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, 
+            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
                 condition=form.condition.data, region=current_user.region)
             db.session.add(copy)
             db.session.commit()
@@ -90,7 +95,7 @@ def add_books():
             db.session.add(meta)
             db.session.commit()
             meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
-            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id, 
+            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
                 condition=form.condition.data, region=current_user.region)
             db.session.add(copy)
             db.session.commit()
