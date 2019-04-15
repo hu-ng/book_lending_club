@@ -30,7 +30,7 @@ def user_profile(id):
 # Book show page
 @app.route('/book/<int:id>')
 def book(id):
-    return render_template('book.html', id=book_id)
+    return render_template('book.html', id=id)
 
 
 # Book lending request page
