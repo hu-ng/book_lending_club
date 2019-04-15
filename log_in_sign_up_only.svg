@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Warstwa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 841.9 595.3" style="enable-background:new 0 0 841.9 595.3;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FEF7BE;}
+	.st1{font-family:'Sacramento-Regular';}
+	.st2{font-size:24.6632px;}
+	.st3{fill:#FFFFFF;}
+	.st4{fill:#3EBFF0;}
+	.st5{font-family:'MyriadPro-Regular';}
+	.st6{font-size:7.3397px;}
+</style>
+<rect x="301.9" y="81" class="st0" width="238.4" height="432.3"/>
+<text transform="matrix(0.9501 0 0 1 387.292 123.6089)" class="st1 st2">Login</text>
+<path class="st3" d="M497.8,173.4h-165c-3.2,0-5.9-2.6-5.9-5.9v-11c0-3.2,2.6-5.9,5.9-5.9h165c3.2,0,5.9,2.6,5.9,5.9v11
+	C503.6,170.8,501,173.4,497.8,173.4z"/>
+<path class="st3" d="M498,202.4H332.6c-3.1,0-5.7-2.6-5.7-5.7v-10.6c0-3.1,2.6-5.7,5.7-5.7H498c3.1,0,5.7,2.6,5.7,5.7v10.6
+	C503.6,199.9,501.1,202.4,498,202.4z"/>
+<text transform="matrix(0.9501 0 0 1 377.9834 278.6754)" class="st1 st2">Sign Up</text>
+<path class="st3" d="M499,329.1H334c-3.2,0-5.9-2.6-5.9-5.9v-11c0-3.2,2.6-5.9,5.9-5.9h165c3.2,0,5.9,2.6,5.9,5.9v11
+	C504.9,326.4,502.2,329.1,499,329.1z"/>
+<path class="st3" d="M499.2,358.1H333.8c-3.1,0-5.7-2.6-5.7-5.7v-10.6c0-3.1,2.6-5.7,5.7-5.7h165.4c3.1,0,5.7,2.6,5.7,5.7v10.6
+	C504.9,355.5,502.3,358.1,499.2,358.1z"/>
+<path class="st3" d="M500.9,388.3h-165c-3.2,0-5.9-2.6-5.9-5.9v-11c0-3.2,2.6-5.9,5.9-5.9h165c3.2,0,5.9,2.6,5.9,5.9v11
+	C506.8,385.6,504.1,388.3,500.9,388.3z"/>
+<path class="st3" d="M501.1,417.3H335.7c-3.1,0-5.7-2.6-5.7-5.7V401c0-3.1,2.6-5.7,5.7-5.7h165.4c3.1,0,5.7,2.6,5.7,5.7v10.6
+	C506.8,414.7,504.2,417.3,501.1,417.3z"/>
+<text transform="matrix(0.9108 0 0 1 330.4985 211.6626)" class="st4 st5 st6">forgot password</text>
+<rect x="330.5" y="214.8" class="st4" width="45.5" height="0.6"/>
+</svg>
