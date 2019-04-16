@@ -109,7 +109,7 @@ def book_display():
     book_items = zip(books, book_names)
     return render_template('display.html', books=book_items)
 
-@app.route('/borrowing_request/<int:borrower_id>/<int:book_id>',methods=["GET", "POST"])
+@app.route('/borrowing_request/<int:book_id>',methods=["GET", "POST"])
 @login_required
 def borrowing_request(book_id):
     form = RequestForm()
@@ -121,3 +121,32 @@ def borrowing_request(book_id):
         flash(f'Sucessfully requested the book!', 'success')
         return redirect(url_for('index'))
     return render_template("test_request_book.html",title="Request", form=form)
+
+@app.route('/<int:id>/request-page',methods=['GET','POST'])
+@login_required
+def request_page():
+    # Sent requests
+    sent_requests = Transaction.query.filter_by(borrower_id=current_user.id,status='open').all()
+    sent_book_names = []
+    for s in sent_requests:
+        metabook_id = Book.query.filter_by(id=s.book_id).first().metabook_id
+        name = Meta_book.query.filter_by(id=metabook_id).first().name
+        sent_book_names.append(name)
+    request_items = zip(sent_requests,sent_book_names)
+
+    # Received requests
+    book_own_id = Book.query.filter_by(owner_id=current_user.id).all()
+    received_requests = Transaction.query.filter_by(book_id=book_own_id,status='open').all()
+    received_book_names = []
+    borrower_names = []
+    start_date = []
+    end_date = []
+    for r in received_requests:
+         metabook_id = Book.query.filter_by(id=r.book_id).first().metabook_id
+         book_name = Meta_book.query.filter_by(id=metabook_id).first().name
+         received_book_names.append(book_name)
+         borrower_name = User.query.filter_by(id=r.borrower_id).first().username
+         borrower_names.append(borrower_name)
+         start_date.append(r.startdate)
+         end_date.append(r.enddate)
+    received_items = zip(received_requests,received_book_names,borrower_names,start_date,end_date)
