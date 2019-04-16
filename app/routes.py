@@ -109,7 +109,7 @@ def book_display():
     book_items = zip(books, book_names)
     return render_template('display.html', books=book_items)
 
-@app.route('/borrowing_request/<int:borrower_id>/<int:book_id>',methods=["GET", "POST"])
+@app.route('/borrowing_request/<int:book_id>',methods=["GET", "POST"])
 @login_required
 def borrowing_request(book_id):
     form = RequestForm()

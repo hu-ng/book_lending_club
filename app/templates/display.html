@@ -17,7 +17,7 @@
 		    <th>{{name}}</th>
 		    <th>{{book.region}}</th> 
 		    <th>{{book.availability}}</th>
-		    <th><a href="url_for{'borrow'}">Borrow</a></th>
+		    <th><a href="{{url_for('borrowing_request', book_id=book.id)}}">Borrow</a></th>
 		  </tr>
 		  {% endfor %}
 	</table>
