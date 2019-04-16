@@ -1,9 +1,9 @@
 from flask import render_template, request, url_for, flash, redirect
 from app import app, bcrypt, db
 from .forms import RegistrationForm, LoginForm, AddBookForm, RequestForm
-from .models import User, Meta_book, Book
+from .models import User, Meta_book, Book,Transaction
 from flask_login import login_user, current_user, logout_user, login_required
-
+from datetime import date
 
 @app.route('/')
 def index():
@@ -100,6 +100,7 @@ def add_books():
 
 # book display page
 @app.route('/book_display')
+@login_required
 def book_display():
     books = Book.query.all()
     book_names = []
@@ -114,12 +115,16 @@ def book_display():
 def borrowing_request(book_id):
     form = RequestForm()
     if form.validate_on_submit():
-        transaction = Transaction(book_id=book_id,borrower_id=current_user.id,start_date=form.start_date.data,\
-        enddate=form.end_date.data)
-        db.session.add(transaction)
-        db.session.commit()
-        flash(f'Sucessfully requested the book!', 'success')
-        return redirect(url_for('index'))
+        if (form.start_date.data > form.end_date.data) or (form.start_date.data < date.today()):
+            flash(f'Invalid Date!', 'danger')
+            return redirect(url_for('index'))
+        else:
+            transaction = Transaction(book_id=book_id,borrower_id=current_user.id, startdate=form.start_date.data,\
+            enddate=form.end_date.data)
+            db.session.add(transaction)
+            db.session.commit()
+            flash(f'Sucessfully requested the book!', 'success')
+            return redirect(url_for('index'))
     return render_template("test_request_book.html",title="Request", form=form)
 
 @app.route('/<int:id>/request-page',methods=['GET','POST'])
