@@ -127,9 +127,9 @@ def borrowing_request(book_id):
             return redirect(url_for('index'))
     return render_template("test_request_book.html",title="Request", form=form)
 
-@app.route('/<int:id>/request-page',methods=['GET','POST'])
+@app.route('/notification_page',methods=['GET','POST'])
 @login_required
-def request_page():
+def notification_page():
     # Sent requests
     sent_requests = Transaction.query.filter_by(borrower_id=current_user.id,status='open').all()
     sent_book_names = []
