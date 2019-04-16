@@ -34,9 +34,9 @@ class LoginForm(FlaskForm):
 
 # book forms
 class AddBookForm(FlaskForm):
-    bookname = StringField('Book Name', validators=[DataRequired()])
-    author = StringField("Author of the Book", validators=[DataRequired()])
-    numpages = IntegerField("Number of Pages", validators=[DataRequired()])
-    condition = SelectField(u'Condition of the book', choices=[("new", "New"),("used","Used"),
+    bookname = StringField('', validators=[DataRequired()], render_kw={"placeholder": "book name"})
+    author = StringField("", validators=[DataRequired()], render_kw={"placeholder": "author"})
+    numpages = IntegerField("", validators=[DataRequired()], render_kw={"placeholder": "number of pages"})
+    condition = SelectField(u'', choices=[("new", "New"),("used","Used"),
     ("torn","Torn")], validators=[DataRequired()])
     submit = SubmitField('Add')
