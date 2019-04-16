@@ -5,11 +5,11 @@ from app.models import User
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[Length(min=4, max=25)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo("password")])
-    region = SelectField(u'Region', choices=[("sf","San Francisco"),("sel","Seoul"),
+    username = StringField('', validators=[Length(min=4, max=25)], render_kw={"placeholder": "username"})
+    email = StringField('', validators=[DataRequired(), Email()], render_kw={"placeholder": "email"})
+    password = PasswordField('', validators=[DataRequired()], render_kw={"placeholder": "password"})
+    confirm_password = PasswordField('', validators=[DataRequired(), EqualTo("password")], render_kw={"placeholder": "confirm password"})
+    region = SelectField(u'', choices=[("sf","San Francisco"),("sel","Seoul"),
     ("hyd","Hyderabad"),("ber","Berlin"),("ba","Buenos Aires"),("ldn","London"),
     ("tpe", "Taipei")], validators=[DataRequired()])
     submit = SubmitField("Register")
@@ -26,17 +26,17 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    email = StringField('', validators=[DataRequired(), Email()], render_kw={"placeholder": "email"})
+    password = PasswordField('', validators=[DataRequired()], render_kw={"placeholder": "password"})
     remember = BooleanField('Remember Me')
     submit = SubmitField('Log In')
 
 
 # book forms
 class AddBookForm(FlaskForm):
-    bookname = StringField('Book Name', validators=[DataRequired()])
-    author = StringField("Author of the Book", validators=[DataRequired()])
-    numpages = IntegerField("Number of Pages", validators=[DataRequired()])
-    condition = SelectField(u'Condition of the book', choices=[("new", "New"),("used","Used"),
+    bookname = StringField('', validators=[DataRequired()], render_kw={"placeholder": "book name"})
+    author = StringField("", validators=[DataRequired()], render_kw={"placeholder": "author"})
+    numpages = IntegerField("", validators=[DataRequired()], render_kw={"placeholder": "number of pages"})
+    condition = SelectField(u'', choices=[("new", "New"),("used","Used"),
     ("torn","Torn")], validators=[DataRequired()])
     submit = SubmitField('Add')

@@ -117,3 +117,62 @@ body{
   margin: 0;
   font-weight: bold;
 }
+
+
+
+
+/*Styles for SignUp/LogIn forms*/
+form {
+  text-align: center;
+  
+  margin: auto;
+  margin-top: 2.5%;
+  
+  width: 700px;
+  height: auto;
+}
+
+#submit { 
+  text-align: center;
+  font-family: 'Bitter', serif;
+  font-size: 30px;
+  
+  background-color: #EF9000;
+  color: #FFF;
+  
+  margin: auto;
+  padding: 10px;
+  
+  border: 0px solid #ccc;
+  border-radius: 8px;
+  
+  width: 100%;
+}
+
+
+input[type=text], input[type=password], select {
+  
+  font-family: 'Bitter', serif;
+  font-weight: bold;
+  background-color: #EEE;
+
+  padding: 0.7em 20px;
+  margin: 0.9% 0;
+  
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  
+  width: 80%;
+}
+
+
+legend {
+  text-align: left;
+  font-size: 30px;
+  background-color: transparent;
+
+  margin: auto;
+  padding: 20px;
+  
+  width: inherit;
+}
