@@ -1,4 +1,5 @@
 from flask import render_template, request, url_for, flash, redirect
+from sqlalchemy import and_
 from app import app, bcrypt, db
 from .forms import RegistrationForm, LoginForm, AddBookForm, RequestForm
 from .models import User, Meta_book, Book, Transaction
@@ -128,7 +129,10 @@ def notification():
 
     # Received requests
     book_own_id = Book.query.filter_by(owner_id=current_user.id).all()
-    received_requests = Transaction.query.filter_by(book_id=book_own_id,status='open').all()
+    book_ids = []
+    for book in book_own_id:
+        book_ids.append(book.id)
+    received_requests = Transaction.query.filter(and_(Transaction.book_id.in_(book_ids),Transaction.status=='open')).all()
     received_book_names = []
     borrower_names = []
     for r in received_requests:
@@ -137,13 +141,11 @@ def notification():
          received_book_names.append(book_name)
          borrower_name = User.query.filter_by(id=r.borrower_id).first().username
          borrower_names.append(borrower_name)
-         start_date.append(r.startdate)
-         end_date.append(r.enddate)
     received_items = zip(received_requests,received_book_names,borrower_names)
 
     return render_template('test_notification_page.html', requests_sent=sent_items, requests_received=received_items)
 
-@app.route('/accept/<int:id>/',methods=['GET','POST'])
+@app.route('/accept/<int:request_id>/',methods=['GET','POST'])
 @login_required
 def accept_request(request_id):
     request = Transaction.query.filter_by(id=request_id).first()
@@ -155,7 +157,7 @@ def accept_request(request_id):
     flash(f'Sucessfully accept request!', 'success')
     return redirect(url_for('notification'))
 
-@app.route('/reject/<int:id>/',methods=['GET','POST'])
+@app.route('/reject/<int:request_id>/',methods=['GET','POST'])
 @login_required
 def reject_request(request_id):
     request = Transaction.query.filter_by(id=request_id).first()
