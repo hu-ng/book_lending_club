@@ -122,7 +122,7 @@ def borrowing_request(book_id):
             return redirect(url_for('index'))
     return render_template("test_request_book.html",title="Request", form=form)
 
-@app.route('/<int:id>/notification',methods=['GET','POST'])
+@app.route('/notification',methods=['GET','POST'])
 @login_required
 def notification():
     # Sent requests
@@ -162,7 +162,7 @@ def accept_request(request_id):
     # Change the status of the request
     request.status = 'accepted'
     book = Book.query.filter_by(id=request.book_id).first()
-    # Mark the book as unavailable
+    # Mark the book as unavailables
     book.availability = False
     flash(f'Sucessfully accept request!', 'success')
     return redirect(url_for('notification'))

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notification</title>
+</head>
+<body>
+	<table style="width:80%">
+        <th>Requests sent</th>
+		<tr>
+			<th>Title</th>
+			<th>Start date</th>
+            <th>End date</th>
+            <th>Book ownder</th>
+            <th>Status</th>
+			<th></th>
+		</tr>
+		{% for request, book_name, book_owner in requests_sent %}
+		  <tr>
+		    <th>{{book_name}}</th>
+		    <th>{{request.startdate}}</th>
+		    <th>{{request.enddate}}</th>
+            <th>{{book_owner}}</th>
+            <th>{{request.status}}</th>
+
+		  </tr>
+		  {% endfor %}
+
+          <th>Requests received</th>
+  		<tr>
+  			<th>Title</th>
+  			<th>Start date</th>
+              <th>End date</th>
+              <th>Book ownder</th>
+              <th>Status</th>
+  			<th></th>
+  		</tr>
+  		{% for request, book_name, borrower in requests_received %}
+  		  <tr>
+  		    <th>{{book_name}}</th>
+  		    <th>{{request.startdate}}</th>
+  		    <th>{{request.enddate}}</th>
+              <th>{{borrower}}</th>
+              <th>{{request.status}}</th>
+  		  </tr>
+          <th><a href={{ url_for('accept_request', request_id=request.id) }}">Accept</a></th>
+          <th><a href="url_for{'reject_request'}">Reject</a></th>
+  		  {% endfor %}
+
+
+	</table>
+</body>
+</html>
