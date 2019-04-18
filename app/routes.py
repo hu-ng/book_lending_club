@@ -40,7 +40,10 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password, region=form.region.data)
+        new_user = User(username=form.username.data,
+                        email=form.email.data,
+                        password=hashed_password,
+                        region=form.region.data)
         db.session.add(new_user)
         db.session.commit()
         flash("Account created", "success")
@@ -77,21 +80,29 @@ def logout():
 def add_books():
     form = AddBookForm()
     if form.validate_on_submit():
-        meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
+        meta_book = Meta_book.query.filter_by(name=form.bookname.data,
+                                              author=form.author.data).first()
         # if meta book exist, we add the copy
         if meta_book:
-            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
-                condition=form.condition.data, region=current_user.region)
+            copy = Book(metabook_id=meta_book.id,
+                        owner_id=current_user.id,
+                        condition=form.condition.data,
+                        region=current_user.region)
             db.session.add(copy)
             db.session.commit()
         # If meta book doesn't exist, we need to add the meta book first
         else:
-            meta = Meta_book(name=form.bookname.data, author=form.author.data, numpages=form.numpages.data)
+            meta = Meta_book(name=form.bookname.data,
+                             author=form.author.data,
+                             numpages=form.numpages.data)
             db.session.add(meta)
             db.session.commit()
-            meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
-            copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
-                condition=form.condition.data, region=current_user.region)
+            meta_book = Meta_book.query.filter_by(name=form.bookname.data,
+                                                  author=form.author.data).first()
+            copy = Book(metabook_id=meta_book.id,
+                        owner_id=current_user.id,
+                        condition=form.condition.data,
+                        region=current_user.region)
             db.session.add(copy)
             db.session.commit()
         flash(f'Sucessfully added the book {form.bookname.data}!', 'success')
@@ -110,6 +121,7 @@ def book_display():
     book_items = zip(books, book_names)
     return render_template('display.html', books=book_items)
 
+
 @app.route('/borrowing_request/<int:book_id>',methods=["GET", "POST"])
 @login_required
 def borrowing_request(book_id):
@@ -119,13 +131,16 @@ def borrowing_request(book_id):
             flash(f'Invalid Date!', 'danger')
             return redirect(url_for('index'))
         else:
-            transaction = Transaction(book_id=book_id,borrower_id=current_user.id, startdate=form.start_date.data,\
-            enddate=form.end_date.data)
+            transaction = Transaction(book_id=book_id,
+                                      borrower_id=current_user.id,
+                                      startdate=form.start_date.data,
+                                      enddate=form.end_date.data)
             db.session.add(transaction)
             db.session.commit()
             flash(f'Sucessfully requested the book!', 'success')
             return redirect(url_for('index'))
     return render_template("test_request_book.html",title="Request", form=form)
+
 
 @app.route('/notification_page',methods=['GET','POST'])
 @login_required
@@ -155,3 +170,44 @@ def notification_page():
          start_date.append(r.startdate)
          end_date.append(r.enddate)
     received_items = zip(received_requests,received_book_names,borrower_names,start_date,end_date)
+
+
+@app.route('/notification_page/<int:borrower_id>/<int:book_id>/lender_confirm', methods=["POST"])
+@login_required
+def lender_confirm(book_id, borrower_id):
+    # Check to see if the current_user is the owner of the book_id
+    owner_id = Book.query.filter_by(id=book_id).first().owner_id
+    if owner_id == current_user.id:
+        transaction = Transaction.query.filter_by(book_id=book_id, borrower_id=borrower_id).first()
+        transaction.status = 'lender_confirmed'
+        db.session.commit()
+        flash(f'Successfully confirmed lending request!', 'success')
+        return render_template('notification_page')
+    flash(f"You don't have the right privileges to do this action", "danger")
+    return render_template('notification_page')
+
+
+@app.route("/notification_page/<int:borrower_id>/<int:book_id>/borrower_confirm", methods=["POST"])
+@login_required
+def borrower_confirm(book_id, borrower_id):
+    if current_user.id == borrower_id:
+        transaction = Transaction.query.filter_by(book_id=book_id, borrower_id=current_user.id).first()
+        transaction.status = 'borrower_confirmed'
+        db.session.commit()
+        return redirect(url_for('notification_page'))
+    flash(f"You don't have the right privileges to do this action", "danger")
+    return redirect(url_for('notification_page'))
+
+
+@app.route("/notification_page/<int:borrower_id>/<int:book_id>/return_confirm", methods=["POST"])
+@login_required
+def return_confirm(book_id, borrower_id):
+    owner_id = Book.query.filter_by(id=book_id).first().owner_id
+    if current_user.id == owner_id:
+        transaction = Transaction.query.filter_by(book_id=book_id, borrower_id=borrower_id).first()
+        transaction.status = 'return_confirmed'
+        db.session.commit()
+        return redirect(url_for('notification_page'))
+        # Again, it's better to redirect the owner to the borrowing page, but with new info
+    flash(f"You don't have the right privileges to do this action", "danger")
+    return redirect(url_for('notification_page'))
