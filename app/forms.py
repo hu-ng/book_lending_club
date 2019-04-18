@@ -49,14 +49,8 @@ class AddBookForm(FlaskForm):
 
 # borrowing request form
 class RequestForm(FlaskForm):
-    start_date = DateField("Checkout date", format='%d/%m/%y',
+    start_date = DateField("Checkout date", format='%d/%m/%Y',
                            validators=[DataRequired(message='Enter checkout date in format: %d/%m/%y')])
-    end_date = DateField("Return date", format='%d/%m/%y',
+    end_date = DateField("Return date", format='%d/%m/%Y',
                          validators=[DataRequired(message='Enter return date in format: %d/%m/%y')])
     submit = SubmitField("Request")
-
-    def validate_on_submit(self):
-        if (self.start_date.data > self.end_date.data) and (self.start_date.data < date.today):
-            return False
-        else:
-            return True
