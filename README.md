@@ -33,6 +33,10 @@ To activate the virtualenv:
 
     $ source venv/bin/activate
 
+Or, if you are **using windows** - [reference source:](https://stackoverflow.com/questions/8921188/issue-with-virtualenv-cannot-activate)
+
+    $ venv\Scripts\activate
+
 To deactivate the virtualenv (after you finished working):
 
     $ deactivate
@@ -49,6 +53,12 @@ Install dependencies in virtual environment:
 To setup the MySQL database necessary for the project, first log into the local database with the following command:
 
     $ mysql -u root -p
+
+_If the above command does not work, even after you installed MySQL successfully, [this is a common problem](https://stackoverflow.com/questions/5920136/mysql-is-not-recognised-as-an-internal-or-external-command-operable-program-or-b). In **Windows**, you may need to edit the following environmental variables - MYSQLHOME: ```C:\Program Files\MySQL\MySQL Server 5.0```, and Path: ```%MYSQL_HOME%\bin;``` (do adjust the appropriate version and directory for the first one)_
+
+_Another potential problem is to forget the password that was specified during the installation. [The solution to this is here](https://dev.mysql.com/doc/refman/8.0/en/resetting-permissions.html), just be patient following each of the steps very carefully._
+
+
 
 Create the database for the current project
     
@@ -107,6 +117,8 @@ export database_db=book_lending_club
 ```
 
 Finally, run `direnv allow` to save all the changes.
+
+(Note: In the worst case scenario for Windows users, [you may do something like this](https://www.youtube.com/watch?v=IolxqkL7cD8), as direnv is not available for Windows)
 
 ## Project Architecture
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Warstwa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 841.9 595.3" style="enable-background:new 0 0 841.9 595.3;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FEF7BE;}
+	.st1{font-family:'Sacramento-Regular';}
+	.st2{font-size:24.6632px;}
+	.st3{fill:#FFFFFF;}
+	.st4{fill:#3EBFF0;}
+	.st5{font-family:'MyriadPro-Regular';}
+	.st6{font-size:7.3397px;}
+	.st7{fill:#010202;}
+	.st8{font-size:11.2815px;}
+</style>
+<rect x="209.9" y="42" class="st0" width="238.4" height="432.3"/>
+<text transform="matrix(0.9501 0 0 1 295.292 84.6089)" class="st1 st2">Login</text>
+<path class="st3" d="M405.8,134.4h-165c-3.2,0-5.9-2.6-5.9-5.9v-11c0-3.2,2.6-5.9,5.9-5.9h165c3.2,0,5.9,2.6,5.9,5.9v11
+	C411.6,131.8,409,134.4,405.8,134.4z"/>
+<path class="st3" d="M406,163.4H240.6c-3.1,0-5.7-2.6-5.7-5.7v-10.6c0-3.1,2.6-5.7,5.7-5.7H406c3.1,0,5.7,2.6,5.7,5.7v10.6
+	C411.6,160.9,409.1,163.4,406,163.4z"/>
+<text transform="matrix(0.9501 0 0 1 285.9834 239.6753)" class="st1 st2">Sign Up</text>
+<path class="st3" d="M407,290.1H242c-3.2,0-5.9-2.6-5.9-5.9v-11c0-3.2,2.6-5.9,5.9-5.9h165c3.2,0,5.9,2.6,5.9,5.9v11
+	C412.9,287.4,410.2,290.1,407,290.1z"/>
+<path class="st3" d="M407.2,319.1H241.8c-3.1,0-5.7-2.6-5.7-5.7v-10.6c0-3.1,2.6-5.7,5.7-5.7h165.4c3.1,0,5.7,2.6,5.7,5.7v10.6
+	C412.9,316.5,410.3,319.1,407.2,319.1z"/>
+<path class="st3" d="M408.9,349.3h-165c-3.2,0-5.9-2.6-5.9-5.9v-11c0-3.2,2.6-5.9,5.9-5.9h165c3.2,0,5.9,2.6,5.9,5.9v11
+	C414.8,346.6,412.1,349.3,408.9,349.3z"/>
+<path class="st3" d="M409.1,378.3H243.7c-3.1,0-5.7-2.6-5.7-5.7V362c0-3.1,2.6-5.7,5.7-5.7h165.4c3.1,0,5.7,2.6,5.7,5.7v10.6
+	C414.8,375.7,412.2,378.3,409.1,378.3z"/>
+<text transform="matrix(0.9108 0 0 1 238.4985 172.6626)" class="st4 st5 st6">forgot password</text>
+<rect x="238.5" y="175.8" class="st4" width="45.5" height="0.6"/>
+<rect x="144.4" y="474" class="st7" width="554.3" height="77.7"/>
+<text transform="matrix(1.044 0 0 1 360.811 519.4429)" class="st3 st5 st8">CS162 Final Project, 2019 </text>
+</svg>

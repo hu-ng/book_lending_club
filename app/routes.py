@@ -12,9 +12,14 @@ def index():
 
 
 # User profile page
-@app.route('/<int:id>/profile')
+@app.route('/user/<int:id>')
 def user_profile(id):
-    return render_template('profile.html', id=user_id)
+    if id is None and current_user.is_authenticated:
+        id=current_user.id
+    elif id is None:
+        return redirect(url_for('login'))
+
+    return render_template('profile.html', id=id)
 
 
 # Book lending request page
