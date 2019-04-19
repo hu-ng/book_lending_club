@@ -26,7 +26,7 @@
           <a href = "{{ url_for('index') }}"> about </a>
         </li>
         <li>
-          <a href = "{{ url_for('book_store') }}"> catalog </a>
+          <a href = "{{ url_for('book_display') }}"> catalog </a>
         </li>
         <li>
           <a href = "{{ url_for('login') }}"> sign in </a>
@@ -50,6 +50,7 @@
               class = "main-content">
         </img>
         <div id="obscure-main-box"></div>
+
         <a id = "signup-button" href = "{{ url_for('register') }}">Sign up now</a>
         <div id="footer">
           <div id = "footer-copyright">© CS162 TT 9am ART</div>
