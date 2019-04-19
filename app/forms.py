@@ -49,8 +49,8 @@ class AddBookForm(FlaskForm):
 
 # borrowing request form
 class RequestForm(FlaskForm):
-    start_date = DateField("Checkout date", format='%d/%m/%Y',
-                           validators=[DataRequired(message='Enter checkout date in format: %d/%m/%y')])
-    end_date = DateField("Return date", format='%d/%m/%Y',
-                         validators=[DataRequired(message='Enter return date in format: %d/%m/%y')])
+    start_date = DateField("Checkout date", format='%Y-%m-%d',
+                           validators=[DataRequired()])
+    end_date = DateField("Return date", format='%Y-%m-%d',
+                         validators=[DataRequired()])
     submit = SubmitField("Request")
