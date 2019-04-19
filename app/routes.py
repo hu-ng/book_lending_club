@@ -137,7 +137,7 @@ def notification():
         metabook_id = Book.query.filter_by(id=s.book_id).first().metabook_id
         name = Meta_book.query.filter_by(id=metabook_id).first().name
         sent_book_names.append(name)
-        owner_id = Book.query.filter_by(id=s.book_id).first().id
+        owner_id = Book.query.filter_by(id=s.book_id).first().owner_id
         sent_book_owner = User.query.filter_by(id=owner_id).first().username
         sent_book_owners.append(sent_book_owner)
     sent_items = zip(sent_requests, sent_book_names, sent_book_owners)
