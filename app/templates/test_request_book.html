@@ -9,6 +9,15 @@
         {{ form.hidden_tag() }}
         <fieldset>
             <legend>Request</legend>
+            {% with messages = get_flashed_messages(category_filter=["danger"]) %}
+              {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
             <div>
                 {{ form.start_date.label() }}
                 {% if form.start_date.errors %}

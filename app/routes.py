@@ -123,7 +123,7 @@ def borrowing_request(book_id):
             return redirect(url_for('notification'))
         else: 
             flash(f'Dates are not valid (make sure that start date is before the end date and after today)', 'danger')
-            return redirect(url_for('notification'))
+            return redirect(url_for('borrowing_request', book_id = book_id))
     return render_template("test_request_book.html", title="Request", form=form)
 
 
