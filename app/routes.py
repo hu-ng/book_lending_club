@@ -121,6 +121,9 @@ def borrowing_request(book_id):
             db.session.commit()
             flash(f'Successfully requested the book!', 'success')
             return redirect(url_for('notification'))
+        else: 
+            flash(f'Dates are not valid (make sure that start date is before the end date and after today)', 'danger')
+            return redirect(url_for('notification'))
     return render_template("test_request_book.html", title="Request", form=form)
 
 
