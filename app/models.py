@@ -58,5 +58,5 @@ class Transaction(db.Model):
     status = db.Column(db.String(60), nullable=False, default="open")
 
     def __repr__(self):
-        return f"Transaction('{self.book_id}', '{self.borrower_id}', '{self.lender_id}')"
+        return f"Transaction('{self.book_id}', '{self.borrower_id}')"
 

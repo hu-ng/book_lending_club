@@ -29,7 +29,10 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password, region=form.region.data)
+        new_user = User(username=form.username.data,
+                        email=form.email.data,
+                        password=hashed_password,
+                        region=form.region.data)
         db.session.add(new_user)
         db.session.commit()
         flash("Account created", "success")
@@ -98,24 +101,31 @@ def book_display():
     book_items = zip(books, book_names)
     return render_template('display.html', books=book_items)
 
+
 @app.route('/borrowing_request/<int:book_id>',methods=["GET", "POST"])
 @login_required
 def borrowing_request(book_id):
     form = RequestForm()
     if form.validate_on_submit():
         if (form.start_date.data < form.end_date.data) and (form.start_date.data > date.today()):
-            transaction = Transaction(book_id=book_id,borrower_id=current_user.id,startdate=form.start_date.data,enddate=form.end_date.data)
+            transaction = Transaction(book_id=book_id,
+                                      borrower_id=current_user.id,
+                                      startdate=form.start_date.data,
+                                      enddate=form.end_date.data)
             db.session.add(transaction)
             db.session.commit()
-            flash(f'Sucessfully requested the book!', 'success')
-            return redirect(url_for('index'))
-    return render_template("test_request_book.html",title="Request", form=form)
+            flash(f'Successfully requested the book!', 'success')
+            return redirect(url_for('notification'))
+    return render_template("test_request_book.html", title="Request", form=form)
 
-@app.route('/notification',methods=['GET','POST'])
+
+@app.route('/notification', methods=['GET', 'POST'])
 @login_required
 def notification():
     # Sent requests
-    sent_requests = Transaction.query.filter_by(borrower_id=current_user.id,status='open').all()
+    sent_requests = Transaction.query.filter(and_(Transaction.borrower_id == current_user.id,
+                                                  Transaction.status != "return_confirmed")).all()
+    # status='open' Removed to test the flow
     sent_book_owners = []
     sent_book_names = []
     for s in sent_requests:
@@ -125,14 +135,17 @@ def notification():
         owner_id = Book.query.filter_by(id=s.book_id).first().id
         sent_book_owner = User.query.filter_by(id=owner_id).first().username
         sent_book_owners.append(sent_book_owner)
-    sent_items = zip(sent_requests,sent_book_names,sent_book_owners)
+    sent_items = zip(sent_requests, sent_book_names, sent_book_owners)
 
     # Received requests
     book_own_id = Book.query.filter_by(owner_id=current_user.id).all()
     book_ids = []
     for book in book_own_id:
         book_ids.append(book.id)
-    received_requests = Transaction.query.filter(and_(Transaction.book_id.in_(book_ids),Transaction.status=='open')).all()
+    # received_requests = Transaction.query.filter(and_(Transaction.book_id.in_(book_ids), Transaction.status == 'open')).all()
+    # Commented out to test the flow
+    received_requests = Transaction.query.filter(
+        and_(Transaction.book_id.in_(book_ids), Transaction.status != 'return_confirmed')).all()
     received_book_names = []
     borrower_names = []
     for r in received_requests:
@@ -141,11 +154,13 @@ def notification():
          received_book_names.append(book_name)
          borrower_name = User.query.filter_by(id=r.borrower_id).first().username
          borrower_names.append(borrower_name)
-    received_items = zip(received_requests,received_book_names,borrower_names)
+    received_items = zip(received_requests, received_book_names, borrower_names)
 
     return render_template('test_notification_page.html', requests_sent=sent_items, requests_received=received_items)
 
-@app.route('/accept/<int:request_id>/',methods=['GET','POST'])
+
+# Isn't this the same as lender_confirmed?
+@app.route('/accept/<int:request_id>/', methods=['GET', 'POST'])
 @login_required
 def accept_request(request_id):
     request = Transaction.query.filter_by(id=request_id).first()
@@ -154,8 +169,9 @@ def accept_request(request_id):
     book = Book.query.filter_by(id=request.book_id).first()
     # Mark the book as unavailables
     book.availability = False
-    flash(f'Sucessfully accept request!', 'success')
+    flash(f'Successfully accepted request!', 'success')
     return redirect(url_for('notification'))
+
 
 @app.route('/reject/<int:request_id>/',methods=['GET','POST'])
 @login_required
@@ -163,4 +179,57 @@ def reject_request(request_id):
     request = Transaction.query.filter_by(id=request_id).first()
     # Change the status of the request
     request.status = 'rejected'
+    return redirect(url_for('notification'))
+
+
+@app.route('/notification/<int:request_id>/lender_confirm', methods=['GET','POST'])
+@login_required
+def lender_confirm(request_id):
+    # Check to see if the current_user is the owner of the book_id
+    transaction = Transaction.query.filter_by(id=request_id).first()
+    book = Book.query.filter_by(id=transaction.book_id).first()
+    if current_user.id == book.owner_id:
+        transaction.status = 'lender_confirmed'
+        # Rejects every other transaction
+        alt_transactions = Transaction.query.filter_by(status='open', book_id=transaction.book_id)
+        for request in alt_transactions:
+            request.status = 'rejected'
+        db.session.commit()
+        flash(f'Successfully confirmed lending request!', 'success')
+        return redirect(url_for('notification'))
+    flash(f"You don't have the right privileges to do this action", "danger")
+    return redirect(url_for('notification'))
+
+
+@app.route("/notification/<int:request_id>/borrower_confirm", methods=['GET','POST'])
+@login_required
+def borrower_confirm(request_id):
+    transaction = Transaction.query.filter_by(id=request_id).first()
+    if current_user.id == transaction.borrower_id:
+        transaction.status = 'borrower_confirmed'
+        db.session.commit()
+        return redirect(url_for('notification'))
+    flash(f"You don't have the right privileges to do this action", "danger")
+    return redirect(url_for('notification'))
+
+
+@app.route("/notification_page/<int:request_id>/return_confirm", methods=['GET','POST'])
+@login_required
+def return_confirm(request_id):
+    transaction = Transaction.query.filter_by(id=request_id).first()
+    book = Book.query.filter_by(id=transaction.book_id).first()
+    if current_user.id == book.owner_id:
+        transaction.status = 'return_confirmed'
+        db.session.commit()
+        return redirect(url_for('notification'))
+    flash(f"You don't have the right privileges to do this action", "danger")
+    return redirect(url_for('notification'))
+
+
+@app.route("/notification/<int:request_id>/issue_raise", methods=['GET','POST'])
+@login_required
+def issue_raise(request_id):
+    transaction = Transaction.query.filter_by(id=request_id).first()
+    transaction.status = 'issue_raised'
+    db.session.commit()
     return redirect(url_for('notification'))
