@@ -34,10 +34,9 @@
   max-width: 130vh;
   background-color: #FFF8BD;
 
-  z-index: -100;
   transform: translateZ(-2px) scale(3);
+  z-index: -1;
 }
-
 
 #main-box h1 {
   font-family: 'Righteous', cursive;
@@ -73,9 +72,14 @@
 }
 
 #landscape {
-  top: 0px;
+  position: absolute;
+  left: -9999px;
+  right: -9999px;
+  margin: auto;
+
+  top: 10px;
   height: 110vh;
-  z-index: 100;
+  z-index: 400;
 }
 
 #obscure-main-box {
@@ -87,6 +91,7 @@
   width: 155.4vh;
   height: 110vh;
   background-color: #EEE;
+
   z-index: 0;
 }
 
@@ -97,11 +102,10 @@
   right: -9999px;
   margin: auto;
   height: 80vh;
-
-  z-index: 0;
   transform: translateZ(-1px) scale(2);
-
   align-items: center;
+
+  z-index: 200;
 }
 
 #book {
@@ -136,7 +140,7 @@
 }
 
 .testimonial-profile {
-  width: 400px;
+  width: 49%;
   display: inline-flex;
 
   padding: 10px;
@@ -188,7 +192,7 @@
   margin: auto;
   background-color: #000;
   color: #FFF;
-  z-index: 100;
+  z-index: 300;
   text-align: center;
   font-size: 30px;
   padding: 10px;
@@ -245,6 +249,18 @@
 
   #footer {
     top: calc(1550px + 60vw);
+  }
+
+  .profile-image-container {
+    display: none;
+  }
+
+  #testimonial-block {
+    max-width: 60vw;
+  }
+
+  .testimonial-profile {
+      width: 100%;
   }
 }
 
