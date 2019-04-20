@@ -8,6 +8,8 @@ Available Functionalities:
 * [Logout](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/logout)
 * [Book Display](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/book_display)
 * [Add Books - Login Required](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/add_books)
+* Borrow Books (From Book Display Page)
+* [Notifications - Login Required](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/notification)
 
 
 ## Run Virtual Environment
