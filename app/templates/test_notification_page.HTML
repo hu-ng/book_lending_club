@@ -1,27 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Notification</title>
-	<style>
-		table {
-		  font-family: arial, sans-serif;
-		  border-collapse: collapse;
-		  width: 100%;
-		}
+{% extends 'base.html' %}
 
-		td, th {
-		  border: 1px solid #dddddd;
-		  text-align: left;
-		  padding: 8px;
-		}
+{% block head %}
+<link rel="stylesheet" href= "{{ url_for('static',filename='notifications.css') }}">
+<title>Notification</title>
+{% endblock %}
 
-		tr:nth-child(even) {
-		  background-color: #dddddd;
-		}
-	</style>
-</head>
-<body>
+{% block container %}
+
 	<table style = "width:80%">
     <h2>Requests sent</h2>
 		<tr>
@@ -73,5 +58,5 @@
 		</tr>
 		{% endfor %}
 	</table>
-</body>
-</html>
+
+{% endblock %}
