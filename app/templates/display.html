@@ -33,28 +33,6 @@
     </ul>
   </div>
 
-
-
-  <!-- Will keep this strcture as a comment because I think it is very good
-    and a nice alternative that we may want to have as a display option. -->
-  <!-- E.g., something like, display as a carousel if you want, but also as a list -->
-	<!-- <table style="width:80%">
-		<tr>
-			<th>Title</th>
-			<th>Region</th>
-			<th>Availability</th>
-			<th></th>
-		</tr>
-		{#% for book, name in books %#}
-		  <tr>
-		    <th>{{name}}</th>
-		    <th>{{book.region}}</th>
-		    <th>{{book.availability}}</th>
-		    <th><a href= {{ url_for('borrowing_request',book_id=book.id) }}>Borrow</a></th>
-		  </tr>
-		  {#% endfor %#}
-  </table> -->
-
   <div id = 'page-title'>
     <h2>Explore the available books</h2>
   </div>
@@ -74,8 +52,27 @@
           <p><strong>Condition:</strong> {{book.condition}}</p>
 
 
+            <!-- Will keep this strcture as a comment because I think it is very good
+              and a nice alternative that we may want to have as a display option. -->
+            <!-- E.g., something like, display as a carousel if you want, but also as a list -->
+          	<!-- <table style="width:80%">
+          		<tr>
+          			<th>Title</th>
+          			<th>Region</th>
+          			<th>Availability</th>
+          			<th></th>
+          		</tr>
+          		{#% for book, name in books %#}
+          		  <tr>
+          		    <th>{{name}}</th>
+          		    <th>{{book.region}}</th>
+          		    <th>{{book.availability}}</th>
+          		    <th><a href= {{ url_for('borrowing_request',book_id=book.id) }}>Borrow</a></th>
+          		  </tr>
+          		  {#% endfor %#}
+            </table> -->
     </div>
-      <div class="text"><a href="url_for{'borrow'}">Borrow</a></div>
+      <div class="text"><a href=" {{ url_for('borrowing_request',book_id=book.id) }} ">Borrow</a></div>
     </div>
     {% endfor %}
 
@@ -84,8 +81,9 @@
 
     </div>
 
-    <!-- This buttons on the bottom were nice. May consider to use them later -->
+    <!-- This buttons on the bottom were nice. May consider to use them later  -->
     <!-- <br> -->
+    <!-- MAKE SURE TO UNCOMMENT THE PIECE OF JS WHICH INDICATES THE ACTIVE DOT -->
     <!-- <div style="text-align:center">
       <span class="dot" onclick="currentSlide(1)"></span>
       <span class="dot" onclick="currentSlide(2)"></span>
@@ -120,7 +118,7 @@
             dots[i].className = dots[i].className.replace(" active", "");
         }
         slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
+        //dots[slideIndex-1].className += " active";
       }
       </script>
 
