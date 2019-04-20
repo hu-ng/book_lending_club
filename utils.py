@@ -18,5 +18,6 @@ db.session.commit()
 book = Book(metabook_id=Meta_book.query.filter_by(name="Book_Meta", author="Mr. XD").first().id,
 			owner_id=User.query.filter_by(username = "Joe", email = "xd@gmail.com").first().id, 
             condition="new", region="sf")
+
 db.session.add(book)
 db.session.commit()

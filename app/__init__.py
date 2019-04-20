@@ -15,6 +15,7 @@ db_pwd = os.environ['database_pwd']
 db_host = os.environ['database_host']
 db = os.environ['database_db']
 
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{0}:{1}@{2}/{3}'.format(db_username, db_pwd, db_host, db)
 db = SQLAlchemy(app)
 # set up login manager

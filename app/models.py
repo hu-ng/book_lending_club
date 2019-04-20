@@ -2,6 +2,7 @@ from app import db, app, login_manager
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -18,7 +19,6 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
-
 
 
 class Meta_book(db.Model):
@@ -38,10 +38,10 @@ class Book(db.Model):
     __tablename__ = 'book'
     id = db.Column(db.Integer, primary_key = True)
     metabook_id = db.Column(db.Integer, db.ForeignKey('meta_book.id'), nullable=False) 
-    owner_id =  db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     region = db.Column(db.String(60), nullable=False)
-    availability = db.Column(db.Boolean, nullable = False, default=True)
-    condition = db.Column(db.String(60), nullable = False)
+    availability = db.Column(db.Boolean, nullable=False, default=True)
+    condition = db.Column(db.String(60), nullable=False)
 
     def __repr__(self):
         return f"Book('{self.metabook_id}', '{self.owner_id}')"
@@ -50,18 +50,13 @@ class Book(db.Model):
 class Transaction(db.Model):
     __tablename__ = 'transactions'
     id = db.Column(db.Integer, primary_key = True)
-
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
-
     borrower_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-
     date_created = db.Column(db.DateTime, nullable=False, server_default=func.now() )
-    
     startdate = db.Column(db.DateTime, nullable=False)
-    enddate = db.Column(db.DateTime, nullable = False)
-    status = db.Column(db.String(60), nullable = False, default = "open")
+    enddate = db.Column(db.DateTime, nullable=False)
+    status = db.Column(db.String(60), nullable=False, default="open")
 
     def __repr__(self):
-        return f"Transaction('{self.book_id}', '{self.borrower_id}', '{self.lender_id}')"
+        return f"Transaction('{self.book_id}', '{self.borrower_id}')"
 
