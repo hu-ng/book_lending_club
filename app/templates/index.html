@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+  {% block head %}
     <meta charset="utf-8">
     <title> LinexLine - Book Lending</title>
-    <link rel="stylesheet" href= "{{ url_for('static',filename='forms.css') }}">
     <link rel="stylesheet" href= "{{ url_for('static',filename='mainstyles.css') }}">
     <link rel="stylesheet" href= "{{ url_for('static',filename='index.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% endblock %}
   </head>
+
+  {% block content %}
   <body>
 
     <div id = 'navbar'>
@@ -33,6 +36,7 @@
         </li>
       </ul>
     </div>
+
     <div id = "background"></div>
     <div id = "main">
       <div id = "main-box">
@@ -43,32 +47,10 @@
           </div>
         </div>
       </div>
-      <div>
-        <img src="../static/resources/index.svg"
-              alt="Girl reading book"
-              id = "landscape"
-              class = "main-content">
-        </img>
-        <div id="obscure-main-box"></div>
 
-        <a id = "signup-button" href = "{{ url_for('register') }}">Sign up now</a>
-        <div id="footer">
-          <div id = "footer-copyright">© CS162 TT 9am ART</div>
-          <div id = "footer-tagline">
-            <a href = "{{ url_for('index') }}">line x line</a></br>
-            <p>Connecting Minerva's Readers</p>
-          </div>
-          <div id = "footer-social">
-            <img src = "../static/resources/youtube.svg"></img>
-            <img src = "../static/resources/twitter.svg"></img>
-            <img src = "../static/resources/facebook.svg"></img>
-            <img src = "../static/resources/instagram.svg"></img>
-          </div>
-        </div>
-      </div>
       <div id = "book-box">
         <div id="book" class = "main-content">
-          <img src="../static/resources/Book View.svg" alt="Open Book">
+          <img src="../static/resources/Book view.svg" alt="Open Book">
           </img>
         </div>
 
@@ -103,6 +85,34 @@
           </div>
         </div>
       </div>
+
+      <div id = "landscape">
+        <img src="../static/resources/index.svg"
+              alt="Girl reading book"
+              class = "main-content">
+        </img>
+      </div>
+
+      <div id="obscure-main-box"></div>
+
+      <div>
+        <a id = "signup-button" href = "{{ url_for('register') }}">Sign up now</a>
+        <div id="footer">
+          <div id = "footer-copyright">© CS162 TT 9am ART</div>
+          <div id = "footer-tagline">
+            <a href = "{{ url_for('index') }}">line x line</a></br>
+            <p>Connecting Minerva's Readers</p>
+          </div>
+          <div id = "footer-social">
+            <img src = "../static/resources/youtube.svg"></img>
+            <img src = "../static/resources/twitter.svg"></img>
+            <img src = "../static/resources/facebook.svg"></img>
+            <img src = "../static/resources/instagram.svg"></img>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
+
+  {% endblock %}
 </html>

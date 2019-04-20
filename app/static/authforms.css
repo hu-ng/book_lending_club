@@ -1,0 +1,65 @@
+
+
+/*Styles for SignUp/LogIn forms*/
+form {
+  margin: auto;
+  margin-top: 10vh;
+
+  width: 50%;
+  min-width: 400px;
+  height: auto;
+}
+
+fieldset {
+  padding: 30px 10%;
+}
+
+#submit {
+  text-align: center;
+  font-family: 'Bitter', serif;
+  font-size: 30px;
+
+  background-color: #EF9000;
+  color: #FFF;
+
+  margin: auto;
+  padding: 10px;
+
+  border: 0px solid #ccc;
+  border-radius: 0 0 8px 8px;
+
+  margin: 0 0 0 0.25%;
+  width: 99.5%;
+}
+
+#submit:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+input[type=text], input[type=password], select {
+
+  font-family: 'Bitter', serif;
+  font-weight: bold;
+  background-color: #EEE;
+
+  padding: 0.7em 20px;
+  margin: 0.9% 0;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+
+  width: 100%;
+}
+
+
+legend {
+  text-align: left;
+  font-size: 30px;
+  background-color: transparent;
+
+  margin: auto;
+  padding: 20px;
+
+  width: inherit;
+}

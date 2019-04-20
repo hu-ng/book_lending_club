@@ -132,6 +132,17 @@ Finally, run `direnv allow` to save all the changes.
 
 (Note: In the worst case scenario for Windows users, [you may do something like this](https://www.youtube.com/watch?v=IolxqkL7cD8), as direnv is not available for Windows)
 
+## Add demo user to db
+
+Running utils.py will add a demo user into the application
+
+    $ python3 utils.py
+    
+The login information is as follows:
+
+username: xd@gmail.com
+password: 111
+
 ## Project Architecture
 
 Project architecture section introduces different models that help build up the functionality of the Book Lending Club and their relationship with each other.
