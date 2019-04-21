@@ -1,64 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href= "{{ url_for('static',filename='mainstyles.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href= "{{ url_for('static',filename='carousel.css') }}">
     <title>Book Display</title>
-</head>
 
-<body>
-  <div id = 'navbar'>
-    <a href = "{{ url_for('index') }}" id = 'logo'> <img src = '../static/resources/logo.png' ></img></a>
-    {% if current_user.is_authenticated %}
-      <a href = "{{ url_for('user_profile', id = current_user.id) }}" id = 'profile'>
-    {% else %}
-      <a href = "{{ url_for('login')}}" id = 'profile'>
-    {% endif %}
-      <img src = '../static/resources/user.png'></img>
-    </a>
-    <ul>
-      <li>
-        <a href = "{{ url_for('index') }}"> about </a>
-      </li>
-      <li>
-        <a href = "{{ url_for('book_display') }}"> catalog </a>
-      </li>
-      <li>
-        <a href = "{{ url_for('login') }}"> sign in </a>
-      </li>
-    </ul>
+{% endblock %}
+
+{% block container %}
+  <div id = 'page-title'>
+    <h2>Explore the available books</h2>
   </div>
 
-	<table style="width:80%">
-		<tr>
-			<th>Title</th>
-			<th>Region</th>
-			<th>Availability</th>
-			<th></th>
-		</tr>
-		{% for book, name in books %}
-		  <tr>
-		    <th>{{name}}</th>
-		    <th>{{book.region}}</th>
-		    <th>{{book.availability}}</th>
-		    <th><a href= {{ url_for('borrowing_request',book_id=book.id) }}>Borrow</a></th>
-		  </tr>
-		  {% endfor %}
-	</table>
-  <div id="footer">
-    <div id = "footer-copyright">© CS162 TT 9am ART</div>
-    <div id = "footer-tagline">
-      <a href = "{{ url_for('index') }}">line x line</a></br>
-      <p>Connecting Minerva's Readers</p>
+  <div class="slideshow-container">
+
+    {% for book, name, author in books %}
+    <div class="mySlides fade" id = "carousel">
+      <div class="numbertext">{{loop.index}} / {{loop.length}}</div>
+      <img src="../static/resources/alternative_book_cover.svg">
+      <div id = "book-info">
+
+          <h1>{{name}}</h1>
+          <h2>By {{author}}</h2>
+          <p><strong>Region:</strong> {{book.region}}</p>
+          <p><strong>Available:</strong> {{book.availability}}</p>
+          <p><strong>Condition:</strong> {{book.condition}}</p>
+
+
+            <!-- Will keep this strcture as a comment because I think it is very good
+              and a nice alternative that we may want to have as a display option. -->
+            <!-- E.g., something like, display as a carousel if you want, but also as a list -->
+          	<!-- <table style="width:80%">
+          		<tr>
+          			<th>Title</th>
+          			<th>Region</th>
+          			<th>Availability</th>
+          			<th></th>
+          		</tr>
+          		{#% for book, name in books %#}
+          		  <tr>
+          		    <th>{{name}}</th>
+          		    <th>{{book.region}}</th>
+          		    <th>{{book.availability}}</th>
+          		    <th><a href= {{ url_for('borrowing_request',book_id=book.id) }}>Borrow</a></th>
+          		  </tr>
+          		  {#% endfor %#}
+            </table> -->
     </div>
-    <div id = "footer-social">
-      <img src = "../static/resources/youtube.svg"></img>
-      <img src = "../static/resources/twitter.svg"></img>
-      <img src = "../static/resources/facebook.svg"></img>
-      <img src = "../static/resources/instagram.svg"></img>
+      <div class="text"><a href=" {{ url_for('borrowing_request',book_id=book.id) }} ">Borrow</a></div>
     </div>
-  </div>
-</body>
-</html>
+    {% endfor %}
+
+    <a class="prev" onclick="plusSlides(-1)"><img src="../static/resources/arrow.svg" id = 'arrow-left'></a>
+    <a class="next" onclick="plusSlides(1)"><img src="../static/resources/arrow.svg" id = 'arrow-right'></a>
+
+    </div>
+
+    <!-- This buttons on the bottom were nice. May consider to use them later  -->
+    <!-- <br> -->
+    <!-- MAKE SURE TO UNCOMMENT THE PIECE OF JS WHICH INDICATES THE ACTIVE DOT -->
+    <!-- <div style="text-align:center">
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+    </div> -->
+
+
+
+    <!-- Carousel Script -->
+    <script>
+      var slideIndex = 1;
+      showSlides(slideIndex);
+
+      function plusSlides(n) {
+        showSlides(slideIndex += n);
+      }
+
+      function currentSlide(n) {
+        showSlides(slideIndex = n);
+      }
+
+      function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        //dots[slideIndex-1].className += " active";
+      }
+      </script>
+
+{% endblock %}

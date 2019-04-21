@@ -103,6 +103,7 @@ body{
 }
 
 #footer-social img {
+  display: none;
   width: 40px;
   margin: 0 5px;
 }
