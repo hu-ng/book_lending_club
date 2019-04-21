@@ -4,7 +4,7 @@
     <title>Add books</title>
 {% endblock %}
 
-{% block container %}<div id = "main">
+{% block container %}
   <form method="POST" action="">
       {{ form.hidden_tag() }}
       <fieldset>
@@ -66,19 +66,4 @@
           {{ form.submit() }}
       </div>
   </form>
-</div>
-<div id="footer">
-  <div id = "footer-copyright">© CS162 TT 9am ART</div>
-  <div id = "footer-tagline">
-    <a href = "{{ url_for('index') }}">line x line</a></br>
-    <p>Connecting Minerva's Readers</p>
-  </div>
-  <div id = "footer-social">
-    <img src = "../static/resources/youtube.svg"></img>
-    <img src = "../static/resources/twitter.svg"></img>
-    <img src = "../static/resources/facebook.svg"></img>
-    <img src = "../static/resources/instagram.svg"></img>
-  </div>
-</div>
-
 {% endblock %}

@@ -1,62 +1,63 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<link rel="stylesheet" href= "{{ url_for('static',filename='notifications.css') }}">
+
+<link rel="stylesheet" href="{{ url_for('static',filename='notifications.css') }}">
+
 <title>Notification</title>
 {% endblock %}
 
 {% block container %}
 
-	<table style = "width:80%">
-    <h2>Requests sent</h2>
-		<tr>
-			<td>Title</td>
-			<td>Start date</td>
-            <td>End date</td>
-            <td>Book owner</td>
-            <td>Status</td>
-		</tr>
-		{% for request, book_name, book_owner in requests_sent %}
-		<tr>
-		    <td>{{book_name}}</td>
-		    <td>{{request.startdate}}</td>
-		    <td>{{request.enddate}}</td>
-            <td>{{book_owner}}</td>
-            <td>{{request.status}}</td>
-			{% if request.status == "lender_confirmed" %}
-				<th><a href={{ url_for('borrower_confirm', request_id=request.id) }}>Borrower Confirm</a></th>
-			{% endif %}
-			<th><a href={{ url_for('issue_raise', request_id=request.id) }}>Raise Issue</a></th>
-		</tr>
-		{% endfor %}
-	</table >
-	<table style = "width:80%">
+<table style="width:80%">
+	<h2>Requests sent</h2>
+	<tr>
+		<td>Title</td>
+		<td>Start date</td>
+		<td>End date</td>
+		<td>Book owner</td>
+		<td>Status</td>
+	</tr>
+	{% for request, book_name, book_owner in requests_sent %}
+	<tr>
+		<td>{{book_name}}</td>
+		<td>{{request.startdate}}</td>
+		<td>{{request.enddate}}</td>
+		<td>{{book_owner}}</td>
+		<td>{{request.status}}</td>
+		{% if request.status == "lender_confirmed" %}
+		<th><a href={{ url_for( 'borrower_confirm', request_id=request.id) }}>Borrower Confirm</a></th>
+		{% endif %}
+		<th><a href={{ url_for( 'issue_raise', request_id=request.id) }}>Raise Issue</a></th>
+	</tr>
+	{% endfor %}
+</table>
+<table style="width:80%">
 	<h2>Requests received</h2>
-  		<tr>
-  			<td>Title</td>
-  			<td>Start date</td>
-			<td>End date</td>
-			<td>Book owner</td>
-			<td>Status</td>
-  			<td></td>
-  		</tr>
-  		{% for request, book_name, borrower in requests_received %}
-		<tr>
-  		    <td>{{book_name}}</td>
-  		    <td>{{request.startdate}}</td>
-  		    <td>{{request.enddate}}</td>
-		  	<td>{{borrower}}</td>
-		  	<td>{{request.status}}</td>
-			{% if request.status == 'open'%}
-				<th><a href={{ url_for('lender_confirm', request_id = request.id) }}>Accept</a></th>
-				<th><a href={{ url_for('reject_request', request_id = request.id) }}>Reject</a></th>
-			{% endif %}
-			{% if request.status == "borrower_confirmed" %}
-				<th><a href={{ url_for('return_confirm', request_id = request.id) }}>Confirm Return</a></th>
-			{% endif %}
-			<th><a href={{ url_for('issue_raise', request_id = request.id) }}>Raise Issue</a></th>
-		</tr>
-		{% endfor %}
-	</table>
+	<tr>
+		<td>Title</td>
+		<td>Start date</td>
+		<td>End date</td>
+		<td>Book owner</td>
+		<td>Status</td>
+		<td></td>
+	</tr>
+	{% for request, book_name, borrower in requests_received %}
+	<tr>
+		<td>{{book_name}}</td>
+		<td>{{request.startdate}}</td>
+		<td>{{request.enddate}}</td>
+		<td>{{borrower}}</td>
+		<td>{{request.status}}</td>
+		{% if request.status == 'open' %}
+		<th><a href='{{ url_for( 'lender_confirm', request_id=request.id) }}'>Accept</a></th>
+		<th><a href='{{ url_for( 'reject_request', request_id=request.id) }}'>Reject</a></th>
+		{% endif %} {% if request.status == "borrower_confirmed" %}
+		<th><a href='{{ url_for( 'return_confirm', request_id=request.id)}}'>Confirm Return</a></th>
+		{% endif %}
+		<th><a href='{{ url_for( 'issue_raise', request_id=request.id) }}'>Raise Issue</a></th>
+	</tr>
+	{% endfor %}
+</table>
 
 {% endblock %}
