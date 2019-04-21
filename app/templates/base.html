@@ -11,8 +11,9 @@
 
 <body>
   <div id='navbar'>
-    <a href="{{ url_for('index') }}" id='logo'> <img src = '../static/resources/logo.png' ></img></a> {% if current_user.is_authenticated %}
-    <a href="{{ url_for('user_profile', id = current_user.id) }}" id='profile'>
+    <a href="{{ url_for('index') }}" id='logo'> <img src = '../static/resources/logo.png' ></img></a>
+    {% if current_user.is_authenticated %}
+      <a href="{{ url_for('user_profile', id = current_user.id) }}" id='profile'>
     {% else %}
       <a href = "{{ url_for('login')}}" id = 'profile'>
     {% endif %}
@@ -23,16 +24,21 @@
         <a href="{{ url_for('index') }}"> about </a>
       </li>
       <li>
-        <a href="{{ url_for('book_display') }}"> catalog </a>
+        <a href="{{ url_for('book_display') }}"> library </a>
       </li>
-      <li>
-        <a href="{{ url_for('login') }}"> sign in </a>
-      </li>
+      {% if not current_user.is_authenticated %}
+        <li>
+          <a href="{{ url_for('login') }}"> sign in </a>
+        </li>
+      {% endif %}
     </ul>
   </div>
 
 
-  {% block container %}{% endblock %}
+  <div id="main">
+    {% block container %}
+    {% endblock %}
+  </div>
 
 
   <div id="footer">
