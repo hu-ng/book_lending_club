@@ -5,7 +5,7 @@ from .forms import RegistrationForm, LoginForm, AddBookForm, RequestForm
 from .models import User, Meta_book, Book, Transaction
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date
-from app import send_emails
+from send_emails import send_email
 
 @app.route('/')
 def index():
