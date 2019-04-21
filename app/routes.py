@@ -5,6 +5,7 @@ from .forms import RegistrationForm, LoginForm, AddBookForm, RequestForm
 from .models import User, Meta_book, Book, Transaction
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date
+from app import send_emails
 
 @app.route('/')
 def index():
@@ -119,6 +120,16 @@ def borrowing_request(book_id):
                                       enddate=form.end_date.data)
             db.session.add(transaction)
             db.session.commit()
+            # Notify the owner of the book.
+            holder_id = Book.query.filter_by(id=book_id).first().owner_id
+            holder_email = User.query.filter_by(id=receiver_id).first().email
+            send_email(receiver = holder_email,
+                       topic = "requesting",
+                       book_id = book_id)
+            # Notify the user he successfully requested the book.
+            send_email(receiver = current_user.email,
+                       topic = "requested",
+                       book_id = book_id)
             flash(f'Successfully requested the book!', 'success')
             return redirect(url_for('notification'))
         else: 
