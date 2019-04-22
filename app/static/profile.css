@@ -1,34 +1,87 @@
 #block-container {
 
   position: absolute;
-  background-color: #DDD;
-  display: table;
   left: -9999px;
   right: -9999px;
   margin: auto;
+  display: inline-flex;
 
   width: 95vw;
   max-width: 1000px;
-  height:500px;
-
-  align-items: center;
 
 }
 
 #borrowed, #owned {
-  width: 48%;
-  margin: 1%;
-  display: inline-block;
-  height:500px;
+  width: 46%;
+  margin: 2%;
+  min-height: 500px;
 
+  background-color: #FEF7BE;
 
-  background-color: #EEE;
-
-  padding: 10px;
+  padding: 20px;
   border-radius: 5px;
+
 }
 
-.book{
-  width: 400px;
+.book-grid {
+  display: flex;
+  flex-wrap: wrap;
+
+ justify-content: center;
+}
+
+.book-info {
+  width: 100px;
+  height: 130px;
+  margin: 5px;
+  margin-bottom: 3px;
+
+  background-color: rgb(230,73,87);
+
+  padding: 10px;
+
+  color: #fff;
+  position: relative;
+
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.content-wrapper {
   display: inline-block;
+
+  margin: 0;
+  text-align: center;
+}
+
+.status-green, .status-red {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+
+  height: 4px;
+  width: 100px;
+}
+
+.status-green {
+  background-color: #0F0;
+}
+
+.status-red {
+  background-color: #F00;
+}
+
+.status {
+  font-size: 10px;
+}
+
+
+.book {
+  text-align: center;
+  margin:5px;
 }

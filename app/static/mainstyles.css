@@ -8,6 +8,11 @@ body{
   font-family: 'Bitter', serif;
 }
 
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
 #page-title {
   margin-top: 9vh;
 }
@@ -88,7 +93,7 @@ body{
 
 #footer {
   display: flex;
-  position: absolute;
+  position: fixed;
   align-items: center;
   justify-content: center;
 

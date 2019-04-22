@@ -10,6 +10,7 @@
 </head>
 
 <body>
+<div class = 'page-container'>
   <div id='navbar'>
     <a href="{{ url_for('index') }}" id='logo'> <img src = '../static/resources/logo.png' ></img></a>
     {% if current_user.is_authenticated %}
@@ -47,12 +48,7 @@
       <a href = "{{ url_for('index') }}">line x line</a></br>
       <p>Connecting Minerva's Readers</p>
     </div>
-    <div id = "footer-social">
-      <img src = "../static/resources/youtube.svg"></img>
-      <img src = "../static/resources/twitter.svg"></img>
-      <img src = "../static/resources/facebook.svg"></img>
-      <img src = "../static/resources/instagram.svg"></img>
-    </div>
   </div>
+</div>
 </body>
 </html>
