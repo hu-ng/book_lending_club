@@ -11,9 +11,16 @@ from datetime import datetime
 def index():
     return render_template('index.html')
 
+@app.route('/delete_book/<int:id>')
+def delete_book(id):
+    raise NotImplementedError
 
-@app.route('/return_book/<int:id>')
-def return_book(id):
+@app.route('/book/<int:id>')
+def book_profile(id):
+    raise NotImplementedError
+
+@app.route('/confirm_returned/<int:id>')
+def confirm_returned(id):
     raise NotImplementedError
 
 # User profile page
@@ -33,6 +40,8 @@ def user_profile(id):
     borrowed = []
 
     for book in ownedQ:
+
+
         name = Meta_book.query.filter_by(id=book.metabook_id).first().name
         author = Meta_book.query.filter_by(id=book.metabook_id).first().author
 
@@ -45,7 +54,7 @@ def user_profile(id):
             borrower = None
 
 
-        owned.append((name,author,status,borrower))
+        owned.append((name,author,book.id,book.metabook_id,status,borrower))
 
     for t in borrowedQ:
         today = datetime.now()
@@ -58,7 +67,7 @@ def user_profile(id):
         owner = User.query.filter_by(id=book.owner_id).first().username
         ownerID = User.query.filter_by(id=book.owner_id).first().id
 
-        borrowed.append((name,author,book.id,due,owner,ownerID))
+        borrowed.append((name,author,book.id,book.metabook_id,due,owner,ownerID))
 
 
     return render_template('profile.html', id=id, user=user, borrowed = borrowed, owned = owned)

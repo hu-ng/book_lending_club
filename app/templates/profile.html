@@ -15,15 +15,20 @@
     <div id=borrowed>
       <h1 align = 'center'> Borrowed Books </h1>
       <div class = 'book-grid'>
-      {% for name, author, bookid, due, owner, ownerID in borrowed %}
+      {% for name, author, bookid, metabookid, due, owner, ownerID in borrowed %}
         <div class = 'book'>
           <div class = 'book-info'>
             <div class = 'content-wrapper'>
-              <p>{{ name }}
-                 <br>
-              by
+              <a  href = '{{ url_for("book_profile",id=metabookid) }}'>
+                <span class="link-spanner"></span>
+              </a>
+              <p>
+                {{ name }}
                 <br>
-              {{ author }}</p>
+                by
+                <br>
+                {{ author }}
+              </p>
             </div>
           </div>
 
@@ -35,8 +40,6 @@
               <div class = 'status-green'></div>
               Due in {{due}} days
             {% endif %}
-            <br>
-            <a href = "{{ url_for('return_book',id=bookid) }}"> Return </a>
           </div>
         </div>
       {% else %}
@@ -50,15 +53,25 @@
     <div id=owned>
       <h1 align = 'center'> My Books </h1>
       <div class = 'book-grid'>
-      {% for name, author, status, borrower in owned %}
+      {% for name, author, bookid, metabookid, status, borrower in owned %}
         <div class = 'book'>
           <div class = 'book-info'>
             <div class = 'content-wrapper'>
-              <p>{{ name }}
-                 <br>
-              by
+              <a  href = '{{ url_for("book_profile",id=metabookid) }}'>
+                <span class="link-spanner"></span>
+              </a>
+              <p>
+                {{ name }}
                 <br>
-              {{ author }}</p>
+                by
+                <br>
+                {{ author }}
+              </p>
+            </div>
+            <div class = 'delete-button'>
+              <a href = '{{ url_for("delete_book",id=bookid) }}'>
+                x
+              </a>
             </div>
           </div>
 
@@ -66,6 +79,8 @@
             {% if status == 'out' %}
               <div class = 'status-red'></div>
               Borrowed by {{ borrower }}
+              <br>
+              <a href = "{{ url_for('confirm_returned',id=bookid) }}"> Confirm Return </a>
             {% elif status == 'in' %}
               <div class = 'status-green'></div>
               Available
