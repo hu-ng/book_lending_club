@@ -19,7 +19,35 @@ def user_profile(id):
     elif id is None:
         return redirect(url_for('login'))
 
-    return render_template('profile.html', id=id)
+    user = User.query.filter_by(id=id).first()
+
+    ownedQ = Book.query.filter_by(owner_id=id)
+    borrowedQ = Transaction.query.filter_by(status='out', borrower_id=id)
+
+    owned = []
+    borrowed = []
+
+    for book in ownedQ:
+        name = Meta_book.query.filter_by(id=book.metabook_id).first().name
+        author = Meta_book.query.filter_by(id=book.metabook_id).first().author
+
+        t = Transaction.query.filter_by(status='out', book_id = book.id).first()
+        if t:
+            status = f'Borrowed by {t.borrower_name}'
+        else:
+            status = 'Not currently borrowed'
+        owned.append((name,author,status))
+
+    for book in borrowedQ:
+        name = Meta_book.query.filter_by(id=book.metabook_id).first().name
+        author = Meta_book.query.filter_by(id=book.metabook_id).first().author
+        owner = User.query.filter_by(id=book.owner_id).first().username
+        ownerID = User.query.filter_by(id=book.owner_id).first().id
+
+        borrowed.append((name,author,owner,ownerID))
+
+
+    return render_template('profile.html', id=id, user=user, borrowed = borrowed, owned = owned)
 
 
 # Book lending request page
