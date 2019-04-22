@@ -92,6 +92,18 @@
           You do not currently own any books
         </div>
       {% endfor %}
+      <div class = 'book' id = 'add-book'>
+        <div class = 'book-info'>
+          <div class = 'content-wrapper'>
+            <a  href = '{{ url_for("add_books")}}'>
+              <span class="link-spanner"></span>
+            </a>
+            <p>
+              add a book
+            </p>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   </div>

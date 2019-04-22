@@ -155,7 +155,7 @@ def book_display():
     for book in books:
         name = Meta_book.query.filter_by(id=book.metabook_id).first().name
         author = Meta_book.query.filter_by(id=book.metabook_id).first().author
-        book_names.append(name)
+        book_names.append(name) 
         book_authors.append(author)
     book_items = zip(books, book_names, book_authors)
     return render_template('display.html', books=list(book_items)) # passing it as a list object allows to iterate over it more than once in Jinja, which may be useful.

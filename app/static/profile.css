@@ -59,6 +59,14 @@
   background-color: rgb(150,50,50);
 }
 
+#add-book > .book-info {
+  background-color: rgb(150,150,150);
+}
+
+#add-book > .book-info:hover {
+  background-color: rgb(90,90,90);
+}
+
 
 .content-wrapper {
   display: inline-block;
