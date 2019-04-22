@@ -8,6 +8,15 @@ body{
   font-family: 'Bitter', serif;
 }
 
+#page-title {
+  margin-top: 9vh;
+}
+
+#page-title h2 {
+  text-align: center;
+  color: gray;
+}
+
 #navbar {
   z-index: 2;
   position: fixed;

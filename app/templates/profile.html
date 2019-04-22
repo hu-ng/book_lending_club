@@ -1,11 +1,45 @@
 {% extends 'base.html' %}
 
 {% block head %}
-  <title>Register</title>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='profile.css') }}">
+    <title> {{ current_user.id }} </title>
+
 {% endblock %}
 
 {% block container %}
+  <div id = 'page-title'>
+    <h2>Welcome to your bookshelf, {{user.username}}</h2>
+  </div>
 
-  <p>This shows the user profile</p>
-  
+  <div id = 'block-container'>
+    <div id=borrowed>
+      <h1> Borrowed Books </h1>
+      {% for name, author, owner, ownerID in borrowed %}
+        <div id = 'book'>
+          {{ name }} <br>
+          {{ author }} <br>
+          {{ owner }} <br>
+        </div>
+      {% else %}
+        <div id = 'empty'>
+          You are not currently borrowing any books
+        </div>
+      {% endfor %}
+    </div>
+
+    <div id=owned>
+      <h1> My Books </h1>
+      {% for name, author, status in owned %}
+        <div id = 'book'>
+          {{ name }} <br>
+          {{ author }} <br>
+          {{ status }}
+        </div>
+      {% else %}
+        <div id = 'empty'>
+          You do not currently own any books
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

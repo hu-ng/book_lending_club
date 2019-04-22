@@ -101,15 +101,6 @@ img {vertical-align: middle;}
    width:50%;
 }
 
-#page-title {
-  margin-top: 9vh;
-}
-
-#page-title h2 {
-  text-align: center;
-  color: gray;
-}
-
 #book-info {
   display: inline-block;
   vertical-align: middle;
