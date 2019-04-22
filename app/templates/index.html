@@ -5,8 +5,9 @@
   {% block head %}
     <meta charset="utf-8">
     <title> LinexLine - Book Lending</title>
-    <link rel="stylesheet" href= "{{ url_for('static',filename='mainstyles.css') }}">
-    <link rel="stylesheet" href= "{{ url_for('static',filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='mainstyles.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='index.css')}}">
+    <link rel="icon" href="{{ url_for('static',filename='resources/Book.png') }}">
     <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,13 +18,13 @@
   <body>
 
     <div id = 'navbar'>
-      <a href="{{ url_for('index') }}" id='logo'> <img src = '../static/resources/logo.png' ></img></a>
+      <a href="{{ url_for('index') }}" id='logo'> <img src = "{{ url_for('static',filename='resources/logo.png') }}" ></img></a>
       {% if current_user.is_authenticated %}
         <a href="{{ url_for('user_profile', id = current_user.id) }}" id='profile'>
       {% else %}
         <a href = "{{ url_for('login')}}" id = 'profile'>
       {% endif %}
-        <img src = '../static/resources/user.png'></img>
+        <img src = "{{ url_for('static',filename='resources/user.png') }}"></img>
       </a>
       <ul>
         <li>
@@ -35,6 +36,10 @@
         {% if not current_user.is_authenticated %}
           <li>
             <a href="{{ url_for('login') }}"> sign in </a>
+          </li>
+
+          <li>
+            <a href="{{ url_for('register') }}"> sign up </a>
           </li>
         {% endif %}
       </ul>
@@ -53,14 +58,14 @@
 
       <div id = "book-box">
         <div id="book" class = "main-content">
-          <img src="../static/resources/Book view.svg" alt="Open Book">
+          <img src="{{ url_for('static',filename='resources/Book view.svg') }}" alt="Open Book">
           </img>
         </div>
 
         <div id = "testimonial-block">
           <div class = "testimonial-profile">
             <div class = "profile-image-container">
-              <img src = "../static/resources/erin.png"></img>
+              <img src = "{{ url_for('static',filename='resources/erin.png') }}"></img>
             </div>
             <div class = "testimonial-text">
               <p>
@@ -74,7 +79,7 @@
           </div>
           <div class = "testimonial-profile">
             <div class = "profile-image-container">
-              <img src = "../static/resources/jo.png"></img>
+              <img src = "{{ url_for('static',filename='resources/jo.png') }}"></img>
             </div>
             <div class = "testimonial-text">
               <p>
@@ -90,7 +95,7 @@
       </div>
 
       <div id = "landscape">
-        <img src="../static/resources/index.svg"
+        <img src="{{ url_for('static',filename='resources/index.svg') }}"
               alt="Girl reading book"
               class = "main-content">
         </img>
