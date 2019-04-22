@@ -13,7 +13,7 @@
 
   <div class="slideshow-container">
 
-    {% for book, name, author in books %}
+    {% for book, name, author, availability in books %}
     <div class="mySlides fade" id = "carousel">
       <div class="numbertext">{{loop.index}} / {{loop.length}}</div>
       <img src="{{ url_for('static',filename='resources/alternative_book_cover.svg') }}">
@@ -22,7 +22,7 @@
           <h1>{{name}}</h1>
           <h2>By {{author}}</h2>
           <p><strong>Region:</strong> {{book.region}}</p>
-          <p><strong>Available:</strong> {{book.availability}}</p>
+          <p><strong>Available:</strong> {{availability}}</p>
           <p><strong>Condition:</strong> {{book.condition}}</p>
 
 
@@ -46,7 +46,7 @@
           		  {#% endfor %#}
             </table> -->
     </div>
-      {% if book.availability %}
+      {% if availability %}
         <div class="text"><a href=" {{ url_for('borrowing_request',book_id=book.id) }} ">Borrow</a></div>
       {% endif %}
     </div>
