@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title> LinexLine - Book Lending</title>
+    <link rel="stylesheet" href= "../static/styles.css"> <!-- "{{ url_for('static',filename='styles.css') }}" -->
+    <link rel="stylesheet" href= "../static/styles2.css">
+    <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+
+    <div id = 'navbar'>
+      <a href = '/home' id = 'logo'> <img src = '../static/resources/logo.png' ></img></a>
+      <a href = '/profile' id = 'profile'>
+        <img src = '../static/resources/user.png'></img>
+      </a>
+      <ul>
+        <li>
+          <a href = '/home'> about </a>
+        </li>
+        <li>
+          <a href = '/catalog'> catalog </a>
+        </li>
+        <li>
+          <a href = '/logout'> log out </a>
+        </li>
+      </ul>
+    </div> <!-- End navbar -->
+
+    <div id="welcome-profile">
+    	<h2>
+    		Welcome to your bookshelf NAME
+    	</h2>
+    </div>
+
+    <div class="container">
+    	<div id="Borrowed">
+    		<div class="book-container">
+    			<h3>Borrowed Books</h3>
+    		</div>
+    	</div>
+    	<div id="Mine">
+    		<div class="book-container">
+    			<h3>My books</h3>
+    		</div>
+    	</div>
+    	<div id="bookmodifying">
+    		buttons image
+    	</div>
+    </div> <!-- End container -->
+   
+
+  </body>
+</html>
