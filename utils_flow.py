@@ -1,5 +1,6 @@
 from app import db, bcrypt, app
-from app.models import User, Meta_book, Book
+from app.models import User, Meta_book, Book, Transaction
+from datetime import date, timedelta
 
 db.drop_all()
 db.create_all()
@@ -26,3 +27,10 @@ book = Book(metabook_id=Meta_book.query.filter_by(name="Book_Meta", author="Mr. 
 db.session.add(book)
 db.session.commit()
 
+transaction = Transaction(book_id=Book.query.filter_by(metabook_id=Meta_book.query.filter_by(name="Book_Meta", author="Mr. XD").first().id,region="sf").first().id,
+						  borrower_id=User.query.filter_by(username = "John", email = "test2@gmail.com").first().id,
+						  startdate=date.today() + timedelta(days=1),
+						  enddate =date.today() + timedelta(days=8))
+
+db.session.add(transaction)
+db.session.commit()
