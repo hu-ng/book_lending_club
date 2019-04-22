@@ -2,7 +2,7 @@
 
 {% block head %}
     <link rel="stylesheet" href= "{{ url_for('static',filename='profile.css') }}">
-    <title> {{ current_user.id }} </title>
+    <title> {{ user.username }}'s Profile </title>
 
 {% endblock %}
 
@@ -13,33 +13,86 @@
 
   <div id = 'block-container'>
     <div id=borrowed>
-      <h1> Borrowed Books </h1>
-      {% for name, author, owner, ownerID in borrowed %}
-        <div id = 'book'>
-          {{ name }} <br>
-          {{ author }} <br>
-          {{ owner }} <br>
+      <h1 align = 'center'> Borrowed Books </h1>
+      <div class = 'book-grid'>
+      {% for name, author, bookid, metabookid, due, owner, ownerID in borrowed %}
+        <div class = 'book'>
+          <div class = 'book-info'>
+            <div class = 'content-wrapper'>
+              <a  href = '{{ url_for("book_profile",id=metabookid) }}'>
+                <span class="link-spanner"></span>
+              </a>
+              <p>
+                {{ name }}
+                <br>
+                by
+                <br>
+                {{ author }}
+              </p>
+            </div>
+          </div>
+
+          <div class = 'status'>
+            {% if (due < 0 ) %}
+              <div class = 'status-red'></div>
+              Due {{-due}} days ago
+            {% else %}
+              <div class = 'status-green'></div>
+              Due in {{due}} days
+            {% endif %}
+          </div>
         </div>
       {% else %}
         <div id = 'empty'>
           You are not currently borrowing any books
         </div>
       {% endfor %}
+      </div>
     </div>
 
     <div id=owned>
-      <h1> My Books </h1>
-      {% for name, author, status in owned %}
-        <div id = 'book'>
-          {{ name }} <br>
-          {{ author }} <br>
-          {{ status }}
+      <h1 align = 'center'> My Books </h1>
+      <div class = 'book-grid'>
+      {% for name, author, bookid, metabookid, status, borrower in owned %}
+        <div class = 'book'>
+          <div class = 'book-info'>
+            <div class = 'content-wrapper'>
+              <a  href = '{{ url_for("book_profile",id=metabookid) }}'>
+                <span class="link-spanner"></span>
+              </a>
+              <p>
+                {{ name }}
+                <br>
+                by
+                <br>
+                {{ author }}
+              </p>
+            </div>
+            <div class = 'delete-button'>
+              <a href = '{{ url_for("delete_book",id=bookid) }}'>
+                x
+              </a>
+            </div>
+          </div>
+
+          <div class = 'status'>
+            {% if status == 'out' %}
+              <div class = 'status-red'></div>
+              Borrowed by {{ borrower }}
+              <br>
+              <a href = "{{ url_for('confirm_returned',id=bookid) }}"> Confirm Return </a>
+            {% elif status == 'in' %}
+              <div class = 'status-green'></div>
+              Available
+            {% endif %}
+          </div>
         </div>
       {% else %}
         <div id = 'empty'>
           You do not currently own any books
         </div>
       {% endfor %}
+      </div>
     </div>
   </div>
 {% endblock %}

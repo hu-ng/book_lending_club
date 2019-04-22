@@ -5,11 +5,23 @@ from .forms import RegistrationForm, LoginForm, AddBookForm, RequestForm
 from .models import User, Meta_book, Book, Transaction
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date
+from datetime import datetime
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+@app.route('/delete_book/<int:id>')
+def delete_book(id):
+    raise NotImplementedError
+
+@app.route('/book/<int:id>')
+def book_profile(id):
+    raise NotImplementedError
+
+@app.route('/confirm_returned/<int:id>')
+def confirm_returned(id):
+    raise NotImplementedError
 
 # User profile page
 @app.route('/user/<int:id>')
@@ -22,29 +34,40 @@ def user_profile(id):
     user = User.query.filter_by(id=id).first()
 
     ownedQ = Book.query.filter_by(owner_id=id)
-    borrowedQ = Transaction.query.filter_by(status='out', borrower_id=id)
+    borrowedQ = Transaction.query.filter_by(status='borrower_confirmed', borrower_id=id)
 
     owned = []
     borrowed = []
 
     for book in ownedQ:
+
+
         name = Meta_book.query.filter_by(id=book.metabook_id).first().name
         author = Meta_book.query.filter_by(id=book.metabook_id).first().author
 
-        t = Transaction.query.filter_by(status='out', book_id = book.id).first()
+        t = Transaction.query.filter_by(status='borrower_confirmed', book_id = book.id).first()
         if t:
-            status = f'Borrowed by {t.borrower_name}'
+            status = 'out'
+            borrower = User.query.filter_by(id=t.borrower_id).first().username
         else:
-            status = 'Not currently borrowed'
-        owned.append((name,author,status))
+            status = 'in'
+            borrower = None
 
-    for book in borrowedQ:
+
+        owned.append((name,author,book.id,book.metabook_id,status,borrower))
+
+    for t in borrowedQ:
+        today = datetime.now()
+        due = (t.enddate - datetime.now()).days
+
+        book = Book.query.filter_by(id=t.book_id).first()
+
         name = Meta_book.query.filter_by(id=book.metabook_id).first().name
         author = Meta_book.query.filter_by(id=book.metabook_id).first().author
         owner = User.query.filter_by(id=book.owner_id).first().username
         ownerID = User.query.filter_by(id=book.owner_id).first().id
 
-        borrowed.append((name,author,owner,ownerID))
+        borrowed.append((name,author,book.id,book.metabook_id,due,owner,ownerID))
 
 
     return render_template('profile.html', id=id, user=user, borrowed = borrowed, owned = owned)
