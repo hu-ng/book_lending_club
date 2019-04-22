@@ -1,0 +1,31 @@
+#welcome-profile {
+	margin-top: 120px;
+	text-align: center;
+	margin-bottom: 80px;
+}
+
+#Borrowed, #Mine, #bookmodifying {
+	position: relative;
+	float: left;
+	padding-right: 55px;
+  padding-left: 55px;
+}
+
+#Borrowed, #Mine {
+	width: 36%
+}
+
+#bookmodifying {
+	width: 28%
+}
+
+.book-container {
+	padding-top: 10px;
+	border-radius: 150px;
+	background-color: #f2eea2;
+	height: 600px;
+}
+
+.book-container h3 {
+	text-align: center;
+}
