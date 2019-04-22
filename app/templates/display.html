@@ -36,6 +36,7 @@
 			<th>Title</th>
 			<th>Region</th>
 			<th>Availability</th>
+      <th>Image</th>
 			<th></th>
 		</tr>
 		{% for book, name in books %}
@@ -43,6 +44,7 @@
 		    <th>{{name}}</th>
 		    <th>{{book.region}}</th>
 		    <th>{{book.availability}}</th>
+        <th><img src="{{book.img}}" alt="{{name}}" height="42" width="42"></th>
 		    <th><a href= {{ url_for('borrowing_request',book_id=book.id) }}>Borrow</a></th>
 		  </tr>
 		  {% endfor %}

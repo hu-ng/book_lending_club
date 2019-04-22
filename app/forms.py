@@ -45,6 +45,7 @@ class AddBookForm(FlaskForm):
                             choices=[("new", "New"),
                                      ("used", "Used"),
                                      ("torn", "Torn")], validators=[DataRequired()])
+    img = StringField('Image URL')
     submit = SubmitField('Add')
 
 

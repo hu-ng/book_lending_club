@@ -65,6 +65,19 @@
                       {{ form.condition() }}
                   {% endif %}
               </div>
+              <div>
+                  {{ form.img.label() }}
+                  {% if form.img.errors %}
+                      {{ form.img() }}
+                  <div>
+                      {% for error in form.img.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+                  {% else %}
+                      {{ form.img() }}
+                  {% endif %}
+              </div>
           </fieldset>
           <div>
               {{ form.submit() }}
