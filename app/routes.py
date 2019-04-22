@@ -98,6 +98,7 @@ def add_books():
 
 # book display page
 @app.route('/book_display')
+@login_required
 def book_display():
     books = Book.query.all()
     book_names = []
