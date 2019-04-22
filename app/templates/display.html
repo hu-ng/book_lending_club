@@ -25,7 +25,6 @@
           <p><strong>Available:</strong> {{availability}}</p>
           <p><strong>Condition:</strong> {{book.condition}}</p>
 
-
             <!-- Will keep this strcture as a comment because I think it is very good
               and a nice alternative that we may want to have as a display option. -->
             <!-- E.g., something like, display as a carousel if you want, but also as a list -->
@@ -46,7 +45,7 @@
           		  {#% endfor %#}
             </table> -->
     </div>
-      {% if availability %}
+      {% if availability and (book.owner_id != user.id) %}
         <div class="text"><a href=" {{ url_for('borrowing_request',book_id=book.id) }} ">Borrow</a></div>
       {% endif %}
     </div>
