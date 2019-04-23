@@ -13,18 +13,17 @@
 
   <div class="slideshow-container">
 
-    {% for book, name, author in books %}
+    {% for book, name, author, availability in books %}
     <div class="mySlides fade" id = "carousel">
       <div class="numbertext">{{loop.index}} / {{loop.length}}</div>
-      <img src="../static/resources/alternative_book_cover.svg">
+      <img src="{{ url_for('static',filename='resources/alternative_book_cover.svg') }}">
       <div id = "book-info">
 
           <h1>{{name}}</h1>
           <h2>By {{author}}</h2>
           <p><strong>Region:</strong> {{book.region}}</p>
-          <p><strong>Available:</strong> {{book.availability}}</p>
+          <p><strong>Available:</strong> {{availability}}</p>
           <p><strong>Condition:</strong> {{book.condition}}</p>
-
 
             <!-- Will keep this strcture as a comment because I think it is very good
               and a nice alternative that we may want to have as a display option. -->
@@ -46,12 +45,14 @@
           		  {#% endfor %#}
             </table> -->
     </div>
-      <div class="text"><a href=" {{ url_for('borrowing_request',book_id=book.id) }} ">Borrow</a></div>
+      {% if availability and (book.owner_id != user.id) %}
+        <div class="text"><a href=" {{ url_for('borrowing_request',book_id=book.id) }} ">Borrow</a></div>
+      {% endif %}
     </div>
     {% endfor %}
 
-    <a class="prev" onclick="plusSlides(-1)"><img src="../static/resources/arrow.svg" id = 'arrow-left'></a>
-    <a class="next" onclick="plusSlides(1)"><img src="../static/resources/arrow.svg" id = 'arrow-right'></a>
+    <a class="prev" onclick="plusSlides(-1)"><img src="{{ url_for('static',filename='resources/arrow.svg') }}" id = 'arrow-left'></a>
+    <a class="next" onclick="plusSlides(1)"><img src="{{ url_for('static',filename='resources/arrow.svg') }}" id = 'arrow-right'></a>
 
     </div>
 

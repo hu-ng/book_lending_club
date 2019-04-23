@@ -152,13 +152,16 @@ def book_display():
     books = Book.query.all()
     book_names = []
     book_authors = []
+    availability = []
     for book in books:
         name = Meta_book.query.filter_by(id=book.metabook_id).first().name
         author = Meta_book.query.filter_by(id=book.metabook_id).first().author
         book_names.append(name)
         book_authors.append(author)
-    book_items = zip(books, book_names, book_authors)
-    return render_template('display.html', books=list(book_items)) # passing it as a list object allows to iterate over it more than once in Jinja, which may be useful.
+        availability.append(not Transaction.query.filter_by(status='borrower_confirmed', book_id = book.id).first())
+
+    book_items = zip(books, book_names, book_authors, availability)
+    return render_template('display.html', user = current_user, books=list(book_items)) # passing it as a list object allows to iterate over it more than once in Jinja, which may be useful.
 
 
 @app.route('/borrowing_request/<int:book_id>',methods=["GET", "POST"])
