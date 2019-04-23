@@ -39,12 +39,12 @@
       <th>Image</th>
 			<th></th>
 		</tr>
-		{% for book, name in books %}
+		{% for book, meta in books %}
 		  <tr>
-		    <th>{{name}}</th>
+		    <th>{{meta.name}}</th>
 		    <th>{{book.region}}</th>
 		    <th>{{book.availability}}</th>
-        <th><img src="{{book.img}}" alt="{{name}}" height="42" width="42"></th>
+        <th><img src="{{meta.img}}" alt="{{meta.name}}" height="42" width="42"></th>
 		    <th><a href= {{ url_for('borrowing_request',book_id=book.id) }}>Borrow</a></th>
 		  </tr>
 		  {% endfor %}

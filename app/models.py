@@ -27,7 +27,7 @@ class Meta_book(db.Model):
     name = db.Column(db.String(40), nullable = False)
     author = db.Column(db.String(40), nullable =False)
     numpages = db.Column(db.Integer, nullable = False)
-    
+    img = db.Column(db.String(240))
     copies = db.relationship('Book', backref='metas', lazy=True)
 
     def __repr__(self):
@@ -42,7 +42,7 @@ class Book(db.Model):
     region = db.Column(db.String(60), nullable=False)
     availability = db.Column(db.Boolean, nullable=False, default=True)
     condition = db.Column(db.String(60), nullable=False)
-    img = db.Column(db.String(240))
+    
 
     def __repr__(self):
         return f"Book('{self.metabook_id}', '{self.owner_id}')"
