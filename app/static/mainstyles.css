@@ -31,7 +31,7 @@ body{
   height: 45px;
 }
 
-#navbar ul {
+#navbar > ul {
   float: right;
   list-style-type: none;
   margin:0;
@@ -39,17 +39,17 @@ body{
   overflow: hidden;
 }
 
-#navbar li {
+#navbar > ul > li {
   background-color: rgba(0,0,0,0);
   display: inline-block;
   padding: 12px;
 }
 
-#navbar li:hover {
+#navbar > ul > li:hover {
   background-color: #222;
 }
 
-#navbar li a {
+#navbar > ul > li a {
   color: #FFF;
   font-size: 17px;
   text-align: center;
@@ -63,10 +63,10 @@ body{
 }
 
 #profile {
+  position: relative;
   float: right;
   display: inline-block;
 
-  padding: 10px;
   margin-left: 17px;
   margin-right: 5.5%;
 
@@ -77,11 +77,162 @@ body{
 #profile img {
   width: 25px;
   height: 25px;
+  margin-top: 9px;
 }
 
-#profile:hover {
+#profile > label {
+  position:absolute;
+  width:45px;
+  height:45px;
+  top:0;
+  left: 0;
+  z-index: 1;
+
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  line-height: normal;
+}
+
+#profile > label:hover {
+  background-color: #222;
+  cursor: pointer;
+}
+
+#profile > input {
+  display: none;
+}
+
+#profile-check:checked~#profile-menu-container {
+  max-height: 500px;
+}
+
+#profile:hover #profile-menu-container {
+  max-height: 500px;
+}
+
+#profile-check:checked~label {
   background-color: #222;
 }
+
+#profile-menu-container {
+  max-height: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 100%;
+
+  width: 250px;
+
+  z-index: 5;
+}
+
+#profile-menu {
+  width: 100%;
+  height: 210px;
+
+  padding: 0;
+
+  background-color: #EEE;
+
+  border: solid;
+  border-width: 1px;
+  border-color: #222;
+
+  color: #fff;
+}
+
+
+#profile-menu > span {
+  position: absolute;
+  padding: 5px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #222;
+}
+
+#profile-menu h3 {
+  margin: 7px 5px;
+}
+
+#profile-menu ul {
+  position: absolute;
+  top: 50px;
+
+  width:100%;
+
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+#profile-menu li {
+  display: block;
+  position: relative;
+
+  height: 44px;
+}
+
+#profile-menu li > a {
+  position: relative;
+  display: block;
+  color: #111;
+  text-decoration: none;
+}
+
+
+#profile-menu li > a > span {
+  position:absolute;
+  width:100%;
+  height:50px;
+  top:0;
+  left: 0;
+  z-index: 1;
+
+  padding: 12px 20px;
+}
+
+#profile-menu li:hover {
+  background-color: #BBB;
+  cursor: pointer;
+}
+
+#profile-menu li:hover span{
+  text-decoration: underline;
+}
+
+
+#profile-menu > a {
+  position: absolute;
+  color: #EF9000;
+  right: 10px;
+  bottom: 7px;
+  text-decoration: none;
+}
+
+#profile-menu > a:hover {
+  text-decoration: underline;
+}
+
+/*    UNCOMMENT FOR A TOOLTIP
+
+#profile-check:checked~#profile-menu-container {
+  padding-top: 20px;
+}
+
+#profile-menu-container:after{
+  position: absolute;
+  top: 0;
+  right: 15%;
+  height: 0;
+  width: 0;
+  border: 10px solid transparent;
+  border-bottom-color: #FFF;
+  content: "";
+}*/
+
 
 #main {
   padding-top: 45px;
