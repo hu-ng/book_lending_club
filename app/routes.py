@@ -133,7 +133,7 @@ def borrowing_request(book_id):
                        book_id = book_id)
             flash(f'Successfully requested the book!', 'success')
             return redirect(url_for('notification'))
-        else: 
+        else:
             flash(f'Dates are not valid (make sure that start date is before the end date and after today)', 'danger')
             return redirect(url_for('borrowing_request', book_id = book_id))
     return render_template("test_request_book.html", title="Request", form=form)
@@ -180,25 +180,38 @@ def notification():
 
 
 # Isn't this the same as lender_confirmed?
-@app.route('/accept/<int:request_id>/', methods=['GET', 'POST'])
+@app.route('/cancel_request/<int:request_id>/', methods=['GET', 'POST'])
 @login_required
-def accept_request(request_id):
+def cancel_request(request_id):
     request = Transaction.query.filter_by(id=request_id).first()
     # Change the status of the request
-    request.status = 'accepted'
-    book = Book.query.filter_by(id=request.book_id).first()
-    # Mark the book as unavailables
-    book.availability = False
-    flash(f'Successfully accepted request!', 'success')
-    return redirect(url_for('notification'))
+    # If it's still an open request, no need for confirmation
+    if request.status == 'open':
+        request.status = 'cancelled'
+        db.session.commit()
+        flash(f'Successfully cancel this request!', 'success')
+        return redirect(url_for('notification'))
+    # If the borrower want to cancelled a confirmed request
+    # They need confirmation from the lender
+    elif current_user.id == request.borrower_id:
+        request.status = "pending cancel"
+        db.session.commit()
+        flash(f'Cancellation process has been initiated', 'success')
+        return redirect(url_for('notification'))
+    # If the lender accept the canceling request
+    # Change the status of the request in our database
+    else:
+        request.status = 'cancelled'
+        flash(f'Successfully cancel this request!', 'success')
+        return redirect(url_for('notification'))
 
-
-@app.route('/reject/<int:request_id>/',methods=['GET','POST'])
+@app.route('/reject_request/<int:request_id>/',methods=['GET','POST'])
 @login_required
 def reject_request(request_id):
     request = Transaction.query.filter_by(id=request_id).first()
     # Change the status of the request
     request.status = 'rejected'
+    db.session.commit()
     return redirect(url_for('notification'))
 
 
