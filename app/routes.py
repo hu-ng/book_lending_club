@@ -11,6 +11,17 @@ from app.send_emails import send_email
 def index():
     return render_template('index.html')
 
+@app.route('/delete_book/<int:id>')
+def delete_book(id):
+    raise NotImplementedError
+
+@app.route('/book/<int:id>')
+def book_profile(id):
+    raise NotImplementedError
+
+@app.route('/confirm_returned/<int:id>')
+def confirm_returned(id):
+    raise NotImplementedError
 
 # User profile page
 @app.route('/user/<int:id>')
@@ -20,7 +31,46 @@ def user_profile(id):
     elif id is None:
         return redirect(url_for('login'))
 
-    return render_template('profile.html', id=id)
+    user = User.query.filter_by(id=id).first()
+
+    ownedQ = Book.query.filter_by(owner_id=id)
+    borrowedQ = Transaction.query.filter_by(status='borrower_confirmed', borrower_id=id)
+
+    owned = []
+    borrowed = []
+
+    for book in ownedQ:
+
+
+        name = Meta_book.query.filter_by(id=book.metabook_id).first().name
+        author = Meta_book.query.filter_by(id=book.metabook_id).first().author
+
+        t = Transaction.query.filter_by(status='borrower_confirmed', book_id = book.id).first()
+        if t:
+            status = 'out'
+            borrower = User.query.filter_by(id=t.borrower_id).first().username
+        else:
+            status = 'in'
+            borrower = None
+
+
+        owned.append((name,author,book.id,book.metabook_id,status,borrower))
+
+    for t in borrowedQ:
+        today = datetime.now()
+        due = (t.enddate - datetime.now()).days
+
+        book = Book.query.filter_by(id=t.book_id).first()
+
+        name = Meta_book.query.filter_by(id=book.metabook_id).first().name
+        author = Meta_book.query.filter_by(id=book.metabook_id).first().author
+        owner = User.query.filter_by(id=book.owner_id).first().username
+        ownerID = User.query.filter_by(id=book.owner_id).first().id
+
+        borrowed.append((name,author,book.id,book.metabook_id,due,owner,ownerID))
+
+
+    return render_template('profile.html', id=id, user=user, borrowed = borrowed, owned = owned)
 
 
 # Book lending request page
@@ -106,8 +156,10 @@ def book_display():
     for book in books:
         meta = Meta_book.query.filter_by(id=book.metabook_id).first()
         metas.append(meta)
+    # we can just add in the meta book object and query specific items from the object
     book_items = zip(books, metas)
     return render_template('display.html', books=book_items)
+
 
 
 @app.route('/borrowing_request/<int:book_id>',methods=["GET", "POST"])

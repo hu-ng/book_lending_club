@@ -1,54 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'base.html' %}
+
+{% block head %}
     <title>Request book</title>
-</head>
-<body>
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        <fieldset>
-            <legend>Request</legend>
-            {% with messages = get_flashed_messages(category_filter=["danger"]) %}
-              {% if messages %}
-                <ul class=flashes>
-                {% for message in messages %}
-                  <li>{{ message }}</li>
-                {% endfor %}
-                </ul>
-              {% endif %}
-            {% endwith %}
-            <div>
-                {{ form.start_date.label() }}
-                {% if form.start_date.errors %}
-                    {{ form.start_date() }}
-                <div>
-                    {% for error in form.start_date.errors %}
-                        <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                    {{ form.start_date() }}
-                {% endif %}
-            </div>
-            <div>
-                {{ form.end_date.label() }}
-                {% if form.end_date.errors %}
-                    {{ form.end_date() }}
-                <div>
-                    {% for error in form.end_date.errors %}
-                        <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                    {{ form.end_date() }}
-                {% endif %}
-            </div>
-            
-        </fieldset>
+{% endblock %}
+
+{% block container %}
+  <form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        <legend>Request</legend>
+        {% with messages = get_flashed_messages(category_filter=["danger"]) %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
         <div>
-            {{ form.submit() }}
+            {{ form.start_date.label() }}
+            {% if form.start_date.errors %}
+                {{ form.start_date() }}
+            <div>
+                {% for error in form.start_date.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+                {{ form.start_date() }}
+            {% endif %}
         </div>
-    </form>
-</body>
-</html>
+        <div>
+            {{ form.end_date.label() }}
+            {% if form.end_date.errors %}
+                {{ form.end_date() }}
+            <div>
+                {% for error in form.end_date.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+                {{ form.end_date() }}
+            {% endif %}
+        </div>
+
+    </fieldset>
+    <div>
+        {{ form.submit() }}
+    </div>
+  </form>
+
+{% endblock %}

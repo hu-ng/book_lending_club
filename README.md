@@ -1,5 +1,17 @@
 # Welcome to the Book Lending Club
 
+URL: http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/
+
+Available Functionalities:
+* [Sign up](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/register)
+* [Login](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/login)
+* [Logout](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/logout)
+* [Book Display](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/book_display)
+* [Add Books - Login Required](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/add_books)
+* Borrow Books (From Book Display Page)
+* [Notifications - Login Required](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/notification)
+
+
 ## Run Virtual Environment
 
 Virtual environment is a key component in ensuring that the application is configured in the right environment
@@ -119,6 +131,17 @@ export database_db=book_lending_club
 Finally, run `direnv allow` to save all the changes.
 
 (Note: In the worst case scenario for Windows users, [you may do something like this](https://www.youtube.com/watch?v=IolxqkL7cD8), as direnv is not available for Windows)
+
+## Add demo user to db
+
+Running utils.py will add a demo user into the application
+
+    $ python3 utils.py
+    
+The login information is as follows:
+
+username: xd@gmail.com
+password: 111
 
 ## Project Architecture
 
