@@ -49,7 +49,7 @@
           		  {#% endfor %#}
             </table> -->
     </div>
-      {% if availability and (book.owner_id != user.id) %}
+      {% if book.availability and (book.owner_id != current_user.id) %}
         <div class="text"><a href=" {{ url_for('borrowing_request',book_id=book.id) }} ">Borrow</a></div>
       {% endif %}
     </div>

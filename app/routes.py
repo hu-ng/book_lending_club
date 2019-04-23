@@ -176,7 +176,7 @@ def borrowing_request(book_id):
             db.session.commit()
             # Notify the owner of the book.
             holder_id = Book.query.filter_by(id=book_id).first().owner_id
-            holder_email = User.query.filter_by(id=receiver_id).first().email
+            holder_email = User.query.filter_by(id=holder_id).first().email
             send_email(receiver = holder_email,
                        topic = "requesting",
                        book_id = book_id)
