@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
-
+from app.check_img_url import is_url_image
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -25,5 +25,10 @@ login_manager.login_message_category = "info"
 
 # bcrypt for password
 bcrypt = Bcrypt()
+
+# add check url image function
+app.jinja_env.globals.update(is_url_image=is_url_image)
+
+
 
 from app import routes
