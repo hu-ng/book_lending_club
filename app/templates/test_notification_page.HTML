@@ -76,9 +76,6 @@
             {% if request.status == "pending cancel"%}
 			         <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Confirm Canceling Request</a></th>
             {% endif %}
-            {% if request.status == "lender_confirmed"%}
-			         <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
-            {% endif %}
 			<th><a href={{ url_for('issue_raise', request_id = request.id) }}>Raise Issue</a></th>
 		</tr>
 		{% endfor %}
