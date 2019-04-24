@@ -1,6 +1,8 @@
 import smtplib
 
 import config
+from app.models import Book, Meta_book
+
 
 
 def send_email(receiver,topic,book_id):
