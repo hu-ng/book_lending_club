@@ -16,7 +16,7 @@ ENV database_host=minerva-book-lending.chzuzvcwsajf.us-east-2.rds.amazonaws.com:
 ENV database_db=book_lending_club
 
 # Make port 80 available to the world outside this container
-EXPOSE 80
+EXPOSE 5000
 
 # Run app.py when the container launches
 CMD ["python", "run.py"]
