@@ -1,7 +1,7 @@
 import requests
 
 def is_url_image(url):
-	if len(url) <= 0:
+	if not url:
 		return False
 	allowed_img_files = ("image/png", "image/jpeg", "image/jpg")
 	r = requests.head(url)
