@@ -1,0 +1,164 @@
+#block-container {
+
+  position: absolute;
+  left: -9999px;
+  right: -9999px;
+  margin: auto;
+  display: inline-flex;
+
+  width: 95vw;
+  max-width: 1000px;
+
+}
+
+#borrowed, #owned {
+  width: 46%;
+  margin: 2%;
+  min-height: 500px;
+
+  background-color: #FEF7BE;
+
+  padding: 20px;
+  border-radius: 5px;
+
+}
+
+.book-grid {
+  display: flex;
+  flex-wrap: wrap;
+
+ justify-content: center;
+}
+
+.book-info {
+  width: 100px;
+  height: 130px;
+  margin: 5px;
+  margin-bottom: 3px;
+
+  background-color: rgb(230,73,87);
+
+  padding: 10px;
+
+  position: relative;
+
+  text-align: center;
+  color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.book-info:hover > .delete-button {
+  display: block;
+}
+
+.book-info:hover {
+  background-color: rgb(150,50,50);
+}
+
+#add-book > .book-info {
+  background-color: rgb(150,150,150);
+}
+
+#add-book > .book-info:hover {
+  background-color: rgb(90,90,90);
+}
+
+
+.content-wrapper {
+  display: inline-block;
+
+  margin: 0;
+  text-align: center;
+}
+
+.content-wrapper a {
+  color: #fff;
+}
+
+.delete-button {
+  display: none;
+
+  position: absolute;
+  right: -7px;
+  top: -7px;
+  width: 20px;
+  height: 20px;
+
+  border: solid;
+  border-color: #fff;
+  border-width: 2px;
+  border-radius: 10px;
+
+  font-size: 12px;
+  background-color: #000;
+
+  z-index: 1;
+}
+
+.delete-button a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.delete-button:hover a {
+  color: #ccc;
+}
+
+.delete-button:hover {
+  border-color: #ccc;
+}
+
+.link-spanner {
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left: 0;
+  z-index: 1;
+}
+
+.content-wrapper a:hover + p{
+  text-decoration: underline;
+}
+
+
+.status-green, .status-red {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+
+  height: 4px;
+  width: 100px;
+}
+
+.status-green {
+  background-color: #0F0;
+}
+
+.status-red {
+  background-color: #F00;
+}
+
+.status {
+  font-size: 10px;
+}
+
+
+.book {
+  text-align: center;
+  margin:5px;
+}
+
+.status a {
+  text-decoration: none;
+  color: #888;
+}
+
+.status a:hover {
+  text-decoration: underline;
+}
