@@ -57,7 +57,6 @@ class Transaction(db.Model):
     startdate = db.Column(db.DateTime, nullable=False)
     enddate = db.Column(db.DateTime, nullable=False)
     status = db.Column(db.String(60), nullable=False, default="open")
-    issue = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return f"Transaction('{self.book_id}', '{self.borrower_id}')"

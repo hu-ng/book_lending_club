@@ -179,6 +179,7 @@ def notification():
     return render_template('test_notification_page.html', requests_sent=sent_items, requests_received=received_items)
 
 
+# Isn't this the same as lender_confirmed?
 @app.route('/cancel_request/<int:request_id>/', methods=['GET', 'POST'])
 @login_required
 def cancel_request(request_id):
@@ -203,7 +204,6 @@ def cancel_request(request_id):
         request.status = 'cancelled'
         flash(f'Successfully cancel this request!', 'success')
         return redirect(url_for('notification'))
-
 
 @app.route('/reject_request/<int:request_id>/',methods=['GET','POST'])
 @login_required
@@ -263,15 +263,6 @@ def return_confirm(request_id):
 @login_required
 def issue_raise(request_id):
     transaction = Transaction.query.filter_by(id=request_id).first()
-    transaction.issue = True
-    db.session.commit()
-    return redirect(url_for('notification'))
-
-
-@app.route("/notification/<int:request_id>/issue_resolve", methods=['GET','POST'])
-@login_required
-def issue_resolve(request_id):
-    transaction = Transaction.query.filter_by(id=request_id).first()
-    transaction.issue = False
+    transaction.status = 'issue_raised'
     db.session.commit()
     return redirect(url_for('notification'))
