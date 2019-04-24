@@ -27,7 +27,7 @@ class Meta_book(db.Model):
     name = db.Column(db.String(40), nullable = False)
     author = db.Column(db.String(40), nullable =False)
     numpages = db.Column(db.Integer, nullable = False)
-    
+    img = db.Column(db.String(240))
     copies = db.relationship('Book', backref='metas', lazy=True)
 
     def __repr__(self):
@@ -37,12 +37,12 @@ class Meta_book(db.Model):
 class Book(db.Model):
     __tablename__ = 'book'
     id = db.Column(db.Integer, primary_key = True)
-    metabook_id = db.Column(db.Integer, db.ForeignKey('meta_book.id'), nullable=False) 
+    metabook_id = db.Column(db.Integer, db.ForeignKey('meta_book.id'), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     region = db.Column(db.String(60), nullable=False)
     availability = db.Column(db.Boolean, nullable=False, default=True)
     condition = db.Column(db.String(60), nullable=False)
-    img = db.Column(db.String(240))
+    
 
     def __repr__(self):
         return f"Book('{self.metabook_id}', '{self.owner_id}')"
@@ -60,4 +60,3 @@ class Transaction(db.Model):
 
     def __repr__(self):
         return f"Transaction('{self.book_id}', '{self.borrower_id}')"
-

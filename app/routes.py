@@ -11,6 +11,17 @@ from app.send_emails import send_email
 def index():
     return render_template('index.html')
 
+@app.route('/delete_book/<int:id>')
+def delete_book(id):
+    raise NotImplementedError
+
+@app.route('/book/<int:id>')
+def book_profile(id):
+    raise NotImplementedError
+
+@app.route('/confirm_returned/<int:id>')
+def confirm_returned(id):
+    raise NotImplementedError
 
 # User profile page
 @app.route('/user/<int:id>')
@@ -20,7 +31,46 @@ def user_profile(id):
     elif id is None:
         return redirect(url_for('login'))
 
-    return render_template('profile.html', id=id)
+    user = User.query.filter_by(id=id).first()
+
+    ownedQ = Book.query.filter_by(owner_id=id)
+    borrowedQ = Transaction.query.filter_by(status='borrower_confirmed', borrower_id=id)
+
+    owned = []
+    borrowed = []
+
+    for book in ownedQ:
+
+
+        name = Meta_book.query.filter_by(id=book.metabook_id).first().name
+        author = Meta_book.query.filter_by(id=book.metabook_id).first().author
+
+        t = Transaction.query.filter_by(status='borrower_confirmed', book_id = book.id).first()
+        if t:
+            status = 'out'
+            borrower = User.query.filter_by(id=t.borrower_id).first().username
+        else:
+            status = 'in'
+            borrower = None
+
+
+        owned.append((name,author,book.id,book.metabook_id,status,borrower))
+
+    for t in borrowedQ:
+        today = datetime.now()
+        due = (t.enddate - datetime.now()).days
+
+        book = Book.query.filter_by(id=t.book_id).first()
+
+        name = Meta_book.query.filter_by(id=book.metabook_id).first().name
+        author = Meta_book.query.filter_by(id=book.metabook_id).first().author
+        owner = User.query.filter_by(id=book.owner_id).first().username
+        ownerID = User.query.filter_by(id=book.owner_id).first().id
+
+        borrowed.append((name,author,book.id,book.metabook_id,due,owner,ownerID))
+
+
+    return render_template('profile.html', id=id, user=user, borrowed = borrowed, owned = owned)
 
 
 # Book lending request page
@@ -79,17 +129,18 @@ def add_books():
         # if meta book exist, we add the copy
         if meta_book:
             copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
-                condition=form.condition.data, region=current_user.region, img=form.img.data)
+                condition=form.condition.data, region=current_user.region)
             db.session.add(copy)
             db.session.commit()
         # If meta book doesn't exist, we need to add the meta book first
         else:
-            meta = Meta_book(name=form.bookname.data, author=form.author.data, numpages=form.numpages.data)
+            meta = Meta_book(name=form.bookname.data, author=form.author.data, 
+                            numpages=form.numpages.data, img=form.img.data)
             db.session.add(meta)
             db.session.commit()
             meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
             copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
-                condition=form.condition.data, region=current_user.region, img=form.img.data)
+                condition=form.condition.data, region=current_user.region)
             db.session.add(copy)
             db.session.commit()
         flash(f'Sucessfully added the book {form.bookname.data}!', 'success')
@@ -101,12 +152,14 @@ def add_books():
 @login_required
 def book_display():
     books = Book.query.all()
-    book_names = []
+    metas = []
     for book in books:
-        name = Meta_book.query.filter_by(id=book.metabook_id).first().name
-        book_names.append(name)
-    book_items = zip(books, book_names)
+        meta = Meta_book.query.filter_by(id=book.metabook_id).first()
+        metas.append(meta)
+    # we can just add in the meta book object and query specific items from the object
+    book_items = zip(books, metas)
     return render_template('display.html', books=book_items)
+
 
 
 @app.route('/borrowing_request/<int:book_id>',methods=["GET", "POST"])
@@ -123,7 +176,7 @@ def borrowing_request(book_id):
             db.session.commit()
             # Notify the owner of the book.
             holder_id = Book.query.filter_by(id=book_id).first().owner_id
-            holder_email = User.query.filter_by(id=receiver_id).first().email
+            holder_email = User.query.filter_by(id=holder_id).first().email
             send_email(receiver = holder_email,
                        topic = "requesting",
                        book_id = book_id)

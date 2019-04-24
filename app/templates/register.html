@@ -1,5 +1,12 @@
-{% extends "index.html" %}
-{% block content %}
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href= "{{ url_for('static',filename='authforms.css') }}">
+    <title>Book Display</title>
+
+{% endblock %}
+
+{% block container %}
     <div class="content-section">
         <form id="register-form" method="POST" action="">
             {{ form.hidden_tag() }}
@@ -82,4 +89,4 @@
     </div>
 
 
-{% endblock content %}
+{% endblock %}
