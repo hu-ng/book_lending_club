@@ -16,8 +16,8 @@
     {% for book, meta in books %}
     <div class="mySlides fade" id = "carousel">
       <div class="numbertext">{{loop.index}} / {{loop.length}}</div>
-      {% if is_url_image(meta.img) %}
-      <img src="{{meta.img}}">
+      {% if is_url_image(book.img) %}
+      <img src="{{book.img}}">
       {% else %}
       <img src="{{ url_for('static',filename='resources/alternative_book_cover.svg') }}">
       {% endif %}

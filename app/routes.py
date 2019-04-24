@@ -129,18 +129,20 @@ def add_books():
         # if meta book exist, we add the copy
         if meta_book:
             copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
-                condition=form.condition.data, region=current_user.region)
+                condition=form.condition.data, region=current_user.region, 
+                img=form.img.data)
             db.session.add(copy)
             db.session.commit()
         # If meta book doesn't exist, we need to add the meta book first
         else:
             meta = Meta_book(name=form.bookname.data, author=form.author.data, 
-                            numpages=form.numpages.data, img=form.img.data)
+                            numpages=form.numpages.data)
             db.session.add(meta)
             db.session.commit()
             meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
             copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
-                condition=form.condition.data, region=current_user.region)
+                condition=form.condition.data, region=current_user.region,
+                img=form.img.data)
             db.session.add(copy)
             db.session.commit()
         flash(f'Sucessfully added the book {form.bookname.data}!', 'success')
