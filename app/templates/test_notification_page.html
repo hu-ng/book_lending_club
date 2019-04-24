@@ -29,19 +29,10 @@
             <th><a href={{ url_for('borrower_confirm', request_id=request.id) }}>Borrower Confirm</a></th>
             <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
         {% endif %}
-        {% if request.status == "open" or request.status=="lender_confirmed"%}
-            <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
+        {% if request.status == "open"%}
+                 <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
         {% endif %}
-        {% if request.status == "pending_cancel_issue" %}
-                 <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Confirm Cancel Issue</a></th>
-        {% endif %}
-        {% if request.status == "issue_raised" %}
-            <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Issue</a></th>
-        {% endif %}
-
-        {% if request.status != "issue_raised" and request.status != 'pending_cancel_issue' %}
-            <th><a href={{ url_for('issue_raise', request_id=request.id) }}>Raise Issue</a></th>
-        {% endif %}
+        <th><a href={{ url_for('issue_raise', request_id=request.id) }}>Raise Issue</a></th>
     </tr>
     {% endfor %}
 </table>
@@ -55,7 +46,7 @@
         <td>Status</td>
         <td></td>
     </tr>
-    {% for current_user, request, book_name, borrower in requests_received %}
+    {% for request, book_name, borrower in requests_received %}
     <tr>
         <td>{{book_name}}</td>
         <td>{{request.startdate}}</td>
@@ -69,28 +60,17 @@
         {% if request.status == "borrower_confirmed" %}
             <th><a href={{ url_for('return_confirm', request_id = request.id) }}>Confirm Return</a></th>
         {% endif %}
-        {% if request.status == "pending_cancel"%}
+        {% if request.status == "pending cancel"%}
                  <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Confirm Canceling Request</a></th>
         {% endif %}
         {% if request.status == "lender_confirmed"%}
                  <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
         {% endif %}
-        {% if request.status == "pending_cancel_issue" %}
-                 <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Confirm Cancel Issue</a></th>
-        {% endif %}
-        {% if request.status == "issue_raised" %}
-                 <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Issue</a></th>
-        {% endif %}
-        {% if request.status !=  "issue_raised" %}
-            <th><a href={{ url_for('issue_raise', request_id=request.id) }}>Raise Issue</a></th>
-
+        {% if request.issue == False %}
+        <th><a href={{ url_for('issue_raise', request_id=request.id) }}>Raise Issue</a></th>
         {% else %}
-
-
-
-
+        <th><a href={{ url_for('issue_resolve', request_id=request.id) }}>Resolve Issue</a></th>
         {% endif %}
-
     </tr>
     {% endfor %}
 </table>
