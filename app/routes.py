@@ -11,16 +11,13 @@ from app.send_emails import send_email
 def index():
     return render_template('index.html')
 
-
 @app.route('/delete_book/<int:id>')
 def delete_book(id):
     raise NotImplementedError
 
-
 @app.route('/book/<int:id>')
 def book_profile(id):
     raise NotImplementedError
-
 
 @app.route('/confirm_returned/<int:id>')
 def confirm_returned(id):
@@ -72,6 +69,7 @@ def user_profile(id):
 
         borrowed.append((name,author,book.id,book.metabook_id,due,owner,ownerID))
 
+
     return render_template('profile.html', id=id, user=user, borrowed = borrowed, owned = owned)
 
 
@@ -114,7 +112,7 @@ def login():
     return render_template('test_login.html', title='Log In', form=form)
 
 
-@app.route('/logout', methods=["GET", "POST"])
+@app.route('/logout', methods=["GET","POST"])
 def logout():
     logout_user()
     # Returns the user to the home page
@@ -165,77 +163,35 @@ def book_display():
     return render_template('display.html', books=book_items)
 
 
+
 @app.route('/borrowing_request/<int:book_id>',methods=["GET", "POST"])
 @login_required
 def borrowing_request(book_id):
-    # A check to make sure book owners can't borrow their own books
-    curr_book = Book.query.filter_by(id=book_id).first()
-    if curr_book.owner_id == current_user.id:
-        return redirect(url_for('book_display'))
-
-    # Find the last transaction of the same book from the same user
-    prev_transaction = Transaction.query.filter_by(book_id=book_id,
-                                                   borrower_id=current_user.id)\
-        .order_by(Transaction.id.desc()).first()
-
     form = RequestForm()
-
-    # If there is no existing transaction for this user and for this book
-    if prev_transaction is None:
-        if form.validate_on_submit():
-            if (form.start_date.data < form.end_date.data) and (form.start_date.data > date.today()):
-                transaction = Transaction(book_id=book_id,
-                                          borrower_id=current_user.id,
-                                          startdate=form.start_date.data,
-                                          enddate=form.end_date.data)
-                db.session.add(transaction)
-                db.session.commit()
-                # Notify the owner of the book.
-                holder_id = Book.query.filter_by(id=book_id).first().owner_id
-                holder_email = User.query.filter_by(id=holder_id).first().email
-                send_email(receiver = holder_email,
-                           topic = "requesting",
-                           book_id = book_id)
-                # Notify the user he successfully requested the book.
-                send_email(receiver = current_user.email,
-                           topic = "requested",
-                           book_id = book_id)
-                flash(f'Successfully requested the book!', 'success')
-                return redirect(url_for('notification'))
-            else:
-                flash(f'Dates are not valid (make sure that start date is before the end date and after today)', 'danger')
-                return redirect(url_for('borrowing_request', book_id = book_id))
-        return render_template("test_request_book.html", title="Request", form=form)
-
-    # If the last transaction is canceled or finished, then the current user can request again
-    elif prev_transaction.status == 'canceled' or prev_transaction.status == 'return_confirmed':
-        if form.validate_on_submit():
-            if (form.start_date.data < form.end_date.data) and (form.start_date.data > date.today()):
-                transaction = Transaction(book_id=book_id,
-                                          borrower_id=current_user.id,
-                                          startdate=form.start_date.data,
-                                          enddate=form.end_date.data)
-                db.session.add(transaction)
-                db.session.commit()
-                # Notify the owner of the book.
-                holder_id = Book.query.filter_by(id=book_id).first().owner_id
-                holder_email = User.query.filter_by(id=holder_id).first().email
-                send_email(receiver = holder_email,
-                           topic = "requesting",
-                           book_id = book_id)
-                # Notify the user he successfully requested the book.
-                send_email(receiver = current_user.email,
-                           topic = "requested",
-                           book_id = book_id)
-                flash(f'Successfully requested the book!', 'success')
-                return redirect(url_for('notification'))
-            else:
-                flash(f'Dates are not valid (make sure that start date is before the end date and after today)', 'danger')
-                return redirect(url_for('borrowing_request', book_id = book_id))
-        return render_template("test_request_book.html", title="Request", form=form)
-    # If the transaction is still in any other state, then do not let the transaction go through
-    else:
-        return redirect(url_for('book_display'))
+    if form.validate_on_submit():
+        if (form.start_date.data < form.end_date.data) and (form.start_date.data > date.today()):
+            transaction = Transaction(book_id=book_id,
+                                      borrower_id=current_user.id,
+                                      startdate=form.start_date.data,
+                                      enddate=form.end_date.data)
+            db.session.add(transaction)
+            db.session.commit()
+            # Notify the owner of the book.
+            holder_id = Book.query.filter_by(id=book_id).first().owner_id
+            holder_email = User.query.filter_by(id=holder_id).first().email
+            send_email(receiver = holder_email,
+                       topic = "requesting",
+                       book_id = book_id)
+            # Notify the user he successfully requested the book.
+            send_email(receiver = current_user.email,
+                       topic = "requested",
+                       book_id = book_id)
+            flash(f'Successfully requested the book!', 'success')
+            return redirect(url_for('notification'))
+        else:
+            flash(f'Dates are not valid (make sure that start date is before the end date and after today)', 'danger')
+            return redirect(url_for('borrowing_request', book_id = book_id))
+    return render_template("test_request_book.html", title="Request", form=form)
 
 
 @app.route('/notification', methods=['GET', 'POST'])
@@ -278,6 +234,7 @@ def notification():
     return render_template('test_notification_page.html', requests_sent=sent_items, requests_received=received_items)
 
 
+# Isn't this the same as lender_confirmed?
 @app.route('/cancel_request/<int:request_id>/', methods=['GET', 'POST'])
 @login_required
 def cancel_request(request_id):
@@ -300,9 +257,9 @@ def cancel_request(request_id):
     # Change the status of the request in our database
     else:
         request.status = 'cancelled'
+        db.session.commit()
         flash(f'Successfully cancel this request!', 'success')
         return redirect(url_for('notification'))
-
 
 @app.route('/reject_request/<int:request_id>/',methods=['GET','POST'])
 @login_required
@@ -362,15 +319,6 @@ def return_confirm(request_id):
 @login_required
 def issue_raise(request_id):
     transaction = Transaction.query.filter_by(id=request_id).first()
-    transaction.issue = True
-    db.session.commit()
-    return redirect(url_for('notification'))
-
-
-@app.route("/notification/<int:request_id>/issue_resolve", methods=['GET','POST'])
-@login_required
-def issue_resolve(request_id):
-    transaction = Transaction.query.filter_by(id=request_id).first()
-    transaction.issue = False
+    transaction.status = 'issue_raised'
     db.session.commit()
     return redirect(url_for('notification'))
