@@ -1,6 +1,6 @@
 import smtplib
 
-import config
+from app import config
 from app.models import Book, Meta_book
 
 
