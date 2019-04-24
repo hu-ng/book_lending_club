@@ -238,6 +238,16 @@ def notification():
 @login_required
 def cancel_request(request_id):
     request = Transaction.query.filter_by(id=request_id).first()
+    # In case the user want to cancel an issue_raised request:
+    if request.status == "issue_raised":
+        request.status = "pending_cancel_issue"
+        request.person_cancel_issue = current_user.id
+        db.session.commit()
+        return redirect(url_for('notification'))
+    elif request.status == "pending_cancel_issue":
+        request.status = "cancelled"
+        db.session.commit()
+        return redirect(url_for('notification'))
     # Change the status of the request
     # If it's still an open request, no need for confirmation
     if request.status == 'open':
@@ -248,7 +258,7 @@ def cancel_request(request_id):
     # If the borrower want to cancelled a confirmed request
     # They need confirmation from the lender
     elif current_user.id == request.borrower_id:
-        request.status = "pending cancel"
+        request.status = "pending_cancel"
         db.session.commit()
         flash(f'Cancellation process has been initiated', 'success')
         return redirect(url_for('notification'))
