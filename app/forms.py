@@ -45,6 +45,7 @@ class AddBookForm(FlaskForm):
                             choices=[("new", "New"),
                                      ("used", "Used"),
                                      ("torn", "Torn")], validators=[DataRequired()])
+    img = StringField('Image URL', validators=[Length(min=0, max=240, message="url is too long")])
     submit = SubmitField('Add')
 
 

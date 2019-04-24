@@ -5,7 +5,7 @@ from .forms import RegistrationForm, LoginForm, AddBookForm, RequestForm
 from .models import User, Meta_book, Book, Transaction
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date
-from datetime import datetime
+from app.send_emails import send_email
 
 @app.route('/')
 def index():
@@ -129,17 +129,20 @@ def add_books():
         # if meta book exist, we add the copy
         if meta_book:
             copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
-                condition=form.condition.data, region=current_user.region)
+                condition=form.condition.data, region=current_user.region, 
+                img=form.img.data)
             db.session.add(copy)
             db.session.commit()
         # If meta book doesn't exist, we need to add the meta book first
         else:
-            meta = Meta_book(name=form.bookname.data, author=form.author.data, numpages=form.numpages.data)
+            meta = Meta_book(name=form.bookname.data, author=form.author.data, 
+                            numpages=form.numpages.data)
             db.session.add(meta)
             db.session.commit()
             meta_book = Meta_book.query.filter_by(name=form.bookname.data, author=form.author.data).first()
             copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
-                condition=form.condition.data, region=current_user.region)
+                condition=form.condition.data, region=current_user.region,
+                img=form.img.data)
             db.session.add(copy)
             db.session.commit()
         flash(f'Sucessfully added the book {form.bookname.data}!', 'success')
@@ -148,20 +151,17 @@ def add_books():
 
 # book display page
 @app.route('/book_display')
+@login_required
 def book_display():
     books = Book.query.all()
-    book_names = []
-    book_authors = []
-    availability = []
+    metas = []
     for book in books:
-        name = Meta_book.query.filter_by(id=book.metabook_id).first().name
-        author = Meta_book.query.filter_by(id=book.metabook_id).first().author
-        book_names.append(name)
-        book_authors.append(author)
-        availability.append(not Transaction.query.filter_by(status='borrower_confirmed', book_id = book.id).first())
+        meta = Meta_book.query.filter_by(id=book.metabook_id).first()
+        metas.append(meta)
+    # we can just add in the meta book object and query specific items from the object
+    book_items = zip(books, metas)
+    return render_template('display.html', books=book_items)
 
-    book_items = zip(books, book_names, book_authors, availability)
-    return render_template('display.html', user = current_user, books=list(book_items)) # passing it as a list object allows to iterate over it more than once in Jinja, which may be useful.
 
 
 @app.route('/borrowing_request/<int:book_id>',methods=["GET", "POST"])
@@ -176,6 +176,16 @@ def borrowing_request(book_id):
                                       enddate=form.end_date.data)
             db.session.add(transaction)
             db.session.commit()
+            # Notify the owner of the book.
+            holder_id = Book.query.filter_by(id=book_id).first().owner_id
+            holder_email = User.query.filter_by(id=holder_id).first().email
+            send_email(receiver = holder_email,
+                       topic = "requesting",
+                       book_id = book_id)
+            # Notify the user he successfully requested the book.
+            send_email(receiver = current_user.email,
+                       topic = "requested",
+                       book_id = book_id)
             flash(f'Successfully requested the book!', 'success')
             return redirect(url_for('notification'))
         else:
@@ -225,25 +235,38 @@ def notification():
 
 
 # Isn't this the same as lender_confirmed?
-@app.route('/accept/<int:request_id>/', methods=['GET', 'POST'])
+@app.route('/cancel_request/<int:request_id>/', methods=['GET', 'POST'])
 @login_required
-def accept_request(request_id):
+def cancel_request(request_id):
     request = Transaction.query.filter_by(id=request_id).first()
     # Change the status of the request
-    request.status = 'accepted'
-    book = Book.query.filter_by(id=request.book_id).first()
-    # Mark the book as unavailables
-    book.availability = False
-    flash(f'Successfully accepted request!', 'success')
-    return redirect(url_for('notification'))
+    # If it's still an open request, no need for confirmation
+    if request.status == 'open':
+        request.status = 'cancelled'
+        db.session.commit()
+        flash(f'Successfully cancel this request!', 'success')
+        return redirect(url_for('notification'))
+    # If the borrower want to cancelled a confirmed request
+    # They need confirmation from the lender
+    elif current_user.id == request.borrower_id:
+        request.status = "pending cancel"
+        db.session.commit()
+        flash(f'Cancellation process has been initiated', 'success')
+        return redirect(url_for('notification'))
+    # If the lender accept the canceling request
+    # Change the status of the request in our database
+    else:
+        request.status = 'cancelled'
+        flash(f'Successfully cancel this request!', 'success')
+        return redirect(url_for('notification'))
 
-
-@app.route('/reject/<int:request_id>/',methods=['GET','POST'])
+@app.route('/reject_request/<int:request_id>/',methods=['GET','POST'])
 @login_required
 def reject_request(request_id):
     request = Transaction.query.filter_by(id=request_id).first()
     # Change the status of the request
     request.status = 'rejected'
+    db.session.commit()
     return redirect(url_for('notification'))
 
 
