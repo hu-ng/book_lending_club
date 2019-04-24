@@ -29,8 +29,8 @@
             <th><a href={{ url_for('borrower_confirm', request_id=request.id) }}>Borrower Confirm</a></th>
             <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
         {% endif %}
-        {% if request.status == "open"%}
-                 <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
+        {% if request.status != "pending cancel" %}
+            <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
         {% endif %}
         <th><a href={{ url_for('issue_raise', request_id=request.id) }}>Raise Issue</a></th>
     </tr>
@@ -69,8 +69,10 @@
         {% if request.issue == False %}
         <th><a href={{ url_for('issue_raise', request_id=request.id) }}>Raise Issue</a></th>
         {% else %}
+        <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
         <th><a href={{ url_for('issue_resolve', request_id=request.id) }}>Resolve Issue</a></th>
         {% endif %}
+        
     </tr>
     {% endfor %}
 </table>

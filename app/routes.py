@@ -199,7 +199,7 @@ def borrowing_request(book_id):
 def notification():
     # Sent requests
     sent_requests = Transaction.query.filter(and_(Transaction.borrower_id == current_user.id,
-                                                  Transaction.status != "return_confirmed")).all()
+                                                  Transaction.status != "return_confirmed", Transaction.status != "cancelled")).all()
     # status='open' Removed to test the flow
     sent_book_owners = []
     sent_book_names = []
@@ -220,7 +220,7 @@ def notification():
     # received_requests = Transaction.query.filter(and_(Transaction.book_id.in_(book_ids), Transaction.status == 'open')).all()
     # Commented out to test the flow
     received_requests = Transaction.query.filter(
-        and_(Transaction.book_id.in_(book_ids), Transaction.status != 'return_confirmed')).all()
+        and_(Transaction.book_id.in_(book_ids), Transaction.status != 'return_confirmed',Transaction.status != "cancelled")).all()
     received_book_names = []
     borrower_names = []
     for r in received_requests:
@@ -234,7 +234,6 @@ def notification():
     return render_template('test_notification_page.html', requests_sent=sent_items, requests_received=received_items)
 
 
-# Isn't this the same as lender_confirmed?
 @app.route('/cancel_request/<int:request_id>/', methods=['GET', 'POST'])
 @login_required
 def cancel_request(request_id):
