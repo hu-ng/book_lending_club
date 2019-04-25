@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block head %}
+    <link rel="stylesheet" href= "{{ url_for('static',filename='add_book.css') }}">
     <title>Add books</title>
 {% endblock %}
 {% block container %}
-  <form method="POST" action="">
+  <div id="maindiv">
+    <h2>Add Book</h2>
+    <form method="POST" action="">
       {{ form.hidden_tag() }}
-      <fieldset>
-          <legend>Add Books</legend>
-          <div>
+      
+          <div class = "form-input">
               {{ form.bookname.label() }}
               {% if form.bookname.errors %}
                   {{ form.bookname() }}
@@ -21,7 +23,7 @@
                   {{ form.bookname() }}
               {% endif %}
           </div>
-          <div>
+          <div class = "form-input">
               {{ form.author.label() }}
               {% if form.author.errors %}
                   {{ form.author() }}
@@ -34,7 +36,7 @@
                   {{ form.author() }}
               {% endif %}
           </div>
-          <div>
+          <div class = "form-input">
               {{ form.numpages.label() }}
               {% if form.numpages.errors %}
                   {{ form.numpages() }}
@@ -47,7 +49,21 @@
                   {{ form.numpages() }}
               {% endif %}
           </div>
-          <div>
+          
+          <div class = "form-input">
+              {{ form.img.label() }}
+              {% if form.img.errors %}
+                  {{ form.img() }}
+              <div>
+                  {% for error in form.img.errors %}
+                      <span>{{ error }}</span>
+                  {% endfor %}
+              </div>
+              {% else %}
+                  {{ form.img() }}
+              {% endif %}
+          </div>
+          <div id="form-select">
               {{ form.condition.label() }}
               {% if form.condition.errors %}
                   {{ form.condition() }}
@@ -60,23 +76,9 @@
                     {{ form.condition() }}
               {% endif %}
             </div>
-            <div>
-                {{ form.img.label() }}
-                {% if form.img.errors %}
-                    {{ form.img() }}
-                <div>
-                    {% for error in form.img.errors %}
-                        <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
-                {% else %}
-                    {{ form.img() }}
-                {% endif %}
-            </div>
-          </fieldset>
-      </fieldset>
-      <div>
-          {{ form.submit() }}
-      </div>
-  </form>
+          <div id="submit-div">
+            {{ form.submit() }}
+          </div>   
+    </form>
+  </div>
 {% endblock %}

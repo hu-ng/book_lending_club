@@ -38,14 +38,14 @@ class LoginForm(FlaskForm):
 
 # book forms
 class AddBookForm(FlaskForm):
-    bookname = StringField('Book Name', validators=[DataRequired()])
-    author = StringField("Author of the Book", validators=[DataRequired()])
-    numpages = IntegerField("Number of Pages", validators=[DataRequired()])
+    bookname = StringField('Book Name', validators=[DataRequired()], render_kw={"placeholder": "Book Title"})
+    author = StringField("Author of the Book", validators=[DataRequired()], render_kw={"placeholder": "Author"})
+    numpages = IntegerField("Number of Pages", validators=[DataRequired()], render_kw={"placeholder": "Number of pages"})
     condition = SelectField(u'Condition of the book',
                             choices=[("new", "New"),
                                      ("used", "Used"),
                                      ("torn", "Torn")], validators=[DataRequired()])
-    img = StringField('Image URL', validators=[Length(min=0, max=240, message="url is too long")])
+    img = StringField('Image URL', validators=[Length(min=0, max=240, message="url is too long")], render_kw={"placeholder": "Image URL"})
     submit = SubmitField('Add')
 
 
