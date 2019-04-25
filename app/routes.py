@@ -94,7 +94,7 @@ def register():
         flash("Account created", "success")
         return redirect(url_for('login'))
     # Template for registration would be test_register.html for now
-    return render_template("test_register.html", title="Register", form=form)
+    return render_template("register.html", title="Register", form=form)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -109,7 +109,7 @@ def login():
             return redirect(url_for('index'))
         else:
             flash('Log In Failed. Please recheck credentials', 'danger')
-    return render_template('test_login.html', title='Log In', form=form)
+    return render_template('login.html', title='Log In', form=form)
 
 
 @app.route('/logout', methods=["GET","POST"])
@@ -129,13 +129,13 @@ def add_books():
         # if meta book exist, we add the copy
         if meta_book:
             copy = Book(metabook_id=meta_book.id, owner_id=current_user.id,
-                condition=form.condition.data, region=current_user.region, 
+                condition=form.condition.data, region=current_user.region,
                 img=form.img.data)
             db.session.add(copy)
             db.session.commit()
         # If meta book doesn't exist, we need to add the meta book first
         else:
-            meta = Meta_book(name=form.bookname.data, author=form.author.data, 
+            meta = Meta_book(name=form.bookname.data, author=form.author.data,
                             numpages=form.numpages.data)
             db.session.add(meta)
             db.session.commit()
@@ -147,7 +147,7 @@ def add_books():
             db.session.commit()
         flash(f'Sucessfully added the book {form.bookname.data}!', 'success')
         return redirect(url_for('index'))
-    return render_template('test_add_book.html', title="Add Book", form=form)
+    return render_template('add_book.html', title="Add Book", form=form)
 
 # book display page
 @app.route('/book_display')
@@ -191,7 +191,7 @@ def borrowing_request(book_id):
         else:
             flash(f'Dates are not valid (make sure that start date is before the end date and after today)', 'danger')
             return redirect(url_for('borrowing_request', book_id = book_id))
-    return render_template("test_request_book.html", title="Request", form=form)
+    return render_template("request_book.html", title="Request", form=form)
 
 
 @app.route('/notification', methods=['GET', 'POST'])
@@ -231,7 +231,7 @@ def notification():
          borrower_names.append(borrower_name)
     received_items = zip(received_requests, received_book_names, borrower_names)
 
-    return render_template('test_notification_page.html', requests_sent=sent_items, requests_received=received_items)
+    return render_template('notification_page.html', requests_sent=sent_items, requests_received=received_items)
 
 
 # Isn't this the same as lender_confirmed?
