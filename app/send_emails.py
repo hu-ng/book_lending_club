@@ -27,7 +27,15 @@ def send_email(receiver,topic,book_id):
     
     elif topic == "reject2":
         subject = "Rejected book request"
-        msg = "You have successfuly rejected a request for {}.".format(name)
+        msg = "You have successfully rejected a request for {}.".format(name)
+
+    elif topic == "l_confirm1":
+        subject = "Book lending confirmed"
+        msg = "Your request for {} has been approved.".format(name)
+
+    elif topic == "l_confirm2":
+        subject = "Book lending confirmed"
+        msg = "You have confirmed to lend {}.".format(name)
 
     else:
         raise TypeError("The topic wasn't in the options available.")
