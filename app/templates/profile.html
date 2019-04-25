@@ -69,7 +69,7 @@
               </p>
             </div>
             <div class = 'delete-button'>
-              <a href = '{{ url_for("delete_book",id=bookid) }}'>
+              <a href = '{{ url_for("delete_book",id=bookid) }}' onclick="return confirm('Are you sure you want to remove this book?');" >
                 x
               </a>
             </div>
