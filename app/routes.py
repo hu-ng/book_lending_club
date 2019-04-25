@@ -267,6 +267,14 @@ def reject_request(request_id):
     # Change the status of the request
     request.status = 'rejected'
     db.session.commit()
+    # Send email notifying both parties
+    requester_email = User.query.filter_by(id=request.borrower_id).first().email
+    send_email(receiver = requester_email,
+               topic = "reject1",
+               book_id = request.book_id)
+    send_email(receiver = current_user.email,
+               topic = "reject2",
+               book_id = request.book_id)
     return redirect(url_for('notification'))
 
 
@@ -283,6 +291,25 @@ def lender_confirm(request_id):
         for request in alt_transactions:
             request.status = 'rejected'
         db.session.commit()
+        # Notify everyone after the commit
+        # The lender
+        send_email(receiver = current_user.email,
+                   topic = "l_confirm2",
+                   book_id = transaction.book_id)
+        # The requester
+        requester_email  = User.query.filter_by(id=transaction.borrower_id).first().email
+        send_email(receiver = requester_email,
+                   topic = "l_confirm1",
+                   book_id = transaction.book_id)
+        # The other requesters
+        for request in alt_transactions:
+            alt_req_email = User.query.filter_by(id=request.borrower_id).first().email
+            send_email(receiver = alt_req_email,
+                       topic = "reject1",
+                       book_id = transaction.book_id)
+            send_email(receiver = current_user.email,
+                       topic = "reject2",
+                       book_id = transaction.book_id)
         flash(f'Successfully confirmed lending request!', 'success')
         return redirect(url_for('notification'))
     flash(f"You don't have the right privileges to do this action", "danger")
