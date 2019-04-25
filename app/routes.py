@@ -13,7 +13,9 @@ def index():
 
 @app.route('/delete_book/<int:id>')
 def delete_book(id):
-    raise NotImplementedError
+    Book.query.filter_by(id=id).delete()
+    db.session.commit()
+    return render_template('deleted.html')
 
 @app.route('/book/<int:id>')
 def book_profile(id):

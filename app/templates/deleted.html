@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href= "{{ url_for('static',filename='deleted.css') }}">
+    <title>Book Removed</title>
+
+{% endblock %}
+
+{% block container %}
+
+<div id="maindiv">
+		<div id="centerdiv">
+			<h3>Your book was successfully removed from your profile</h3>
+			<a href = {{ url_for('user_profile', id = current_user.id) }}>Return to Profile </a>
+		</div>
+		
+</div>
+  
+{% endblock %}

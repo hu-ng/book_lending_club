@@ -1,0 +1,26 @@
+#maindiv {
+    height: 85%; 
+    text-align:center; 
+    display:table;
+    width:100%;
+}
+
+#centerdiv {
+	display:table-cell; 
+	vertical-align:middle
+}
+
+#centerdiv h3{
+	margin-bottom: 35px;
+}
+#centerdiv a {
+	padding: 10px 20px 10px 20px;
+	border-radius: 20px;
+	background-color: #CCC;
+	text-decoration: none;
+	color: white;
+}
+
+#centerdiv a:hover {
+	color: gray;
+}
