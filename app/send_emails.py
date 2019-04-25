@@ -1,7 +1,8 @@
 import smtplib
 
 from app import config
-from app.models import Book, Meta_book
+from app.models import User, Meta_book, Book, Transaction
+from datetime import datetime, date, timedelta
 
 
 
@@ -33,3 +34,11 @@ def send_email(receiver,topic,book_id):
         print("Email sent!")
     except:
     	print("Email failed to send.")
+
+def remind_return():
+    transactionsQ = Transaction.query.filter_by(status='borrower_confirmed',enddate=date.today()+timedelta(days=1))
+    for transaction in transactionsQ:
+        person = transaction.borrower_id
+        email = User.query.filter_by(id=person).first().email
+        book = transaction.book_id
+        send_email(email,"remind",book)
