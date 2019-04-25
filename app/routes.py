@@ -243,7 +243,7 @@ def borrowing_request(book_id):
 def notification():
     # Sent requests
     sent_requests = Transaction.query.filter(and_(Transaction.borrower_id == current_user.id,
-                                                  Transaction.status != "return_confirmed")).all()
+                                                  Transaction.status != "return_confirmed", Transaction.status != "cancelled")).all()
     # status='open' Removed to test the flow
     sent_book_owners = []
     sent_book_names = []
@@ -264,7 +264,7 @@ def notification():
     # received_requests = Transaction.query.filter(and_(Transaction.book_id.in_(book_ids), Transaction.status == 'open')).all()
     # Commented out to test the flow
     received_requests = Transaction.query.filter(
-        and_(Transaction.book_id.in_(book_ids), Transaction.status != 'return_confirmed')).all()
+        and_(Transaction.book_id.in_(book_ids), Transaction.status != 'return_confirmed', Transaction.status != "cancelled")).all()
     received_book_names = []
     borrower_names = []
     for r in received_requests:
