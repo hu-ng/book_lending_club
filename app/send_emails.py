@@ -14,12 +14,20 @@ def send_email(receiver,topic,book_id):
         msg = "This is a reminder that you should return {} in the next 24 hours.".format(name)
     
     elif topic == "requested":
-        subject = "Succesful book request"
-        msg = "You have succesfully requested {}.".format(name)
+        subject = "Successful book request"
+        msg = "You have successfully requested {}.".format(name)
     
     elif topic == "requesting":
         subject = "Book requested"
         msg = "Someone has requested {} from you.".format(name)
+
+    elif topic == "reject1":
+        subject = "Request denied"
+        msg = "Unfortunately, your petition for {} was rejected.".format(name)
+    
+    elif topic == "reject2":
+        subject = "Rejected book request"
+        msg = "You have successfuly rejected a request for {}.".format(name)
 
     else:
         raise TypeError("The topic wasn't in the options available.")
