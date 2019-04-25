@@ -267,6 +267,14 @@ def reject_request(request_id):
     # Change the status of the request
     request.status = 'rejected'
     db.session.commit()
+    # Send email notifying both parties
+    requester_email = User.query.filter_by(id=request.borrower_id).first().email
+    send_email(receiver = requester_email,
+               topic = "reject1",
+               book_id = request.book_id)
+    send_email(receiver = current_user.email,
+               topic = "reject2",
+               book_id = request.book_id)
     return redirect(url_for('notification'))
 
 
