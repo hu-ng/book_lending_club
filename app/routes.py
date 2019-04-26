@@ -319,6 +319,9 @@ def reject_request(request_id):
 def lender_confirm(request_id):
     # Check to see if the current_user is the owner of the book_id
     transaction = Transaction.query.filter_by(id=request_id).first()
+    if transaction.issue == True:
+        flash(f'You must resolve the issue before moving forward', "danger")
+        return redirect(url_for('notification'))
     book = Book.query.filter_by(id=transaction.book_id).first()
     if current_user.id == book.owner_id:
         transaction.status = 'lender_confirmed'
@@ -337,6 +340,9 @@ def lender_confirm(request_id):
 @login_required
 def borrower_confirm(request_id):
     transaction = Transaction.query.filter_by(id=request_id).first()
+    if transaction.issue == True:
+        flash(f'You must resolve the issue before moving forward', "danger")
+        return redirect(url_for('notification'))
     if current_user.id == transaction.borrower_id:
         transaction.status = 'borrower_confirmed'
         db.session.commit()
@@ -349,6 +355,9 @@ def borrower_confirm(request_id):
 @login_required
 def return_confirm(request_id):
     transaction = Transaction.query.filter_by(id=request_id).first()
+    if transaction.issue == True:
+        flash(f'You must resolve the issue before moving forward', "danger")
+        return redirect(url_for('notification'))
     book = Book.query.filter_by(id=transaction.book_id).first()
     if current_user.id == book.owner_id:
         transaction.status = 'return_confirmed'

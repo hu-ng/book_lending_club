@@ -25,14 +25,18 @@
         <td>{{request.enddate}}</td>
         <td>{{book_owner}}</td>
         <td>{{request.status}}</td>
-        {% if request.status == "lender_confirmed" %}
+        {% if request.status == "lender_confirmed" and request.issue == False %}
             <th><a href={{ url_for('borrower_confirm', request_id=request.id) }}>Borrower Confirm</a></th>
             <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
         {% endif %}
-        {% if request.status == "open"%}
+        {% if request.status == "open" %}
                  <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
         {% endif %}
+        {% if request.issue == False %}
         <th><a href={{ url_for('issue_raise', request_id=request.id) }}>Raise Issue</a></th>
+        {% else %}
+        <th><a href={{ url_for('issue_resolve', request_id=request.id) }}>Resolve Issue</a></th>
+        {% endif %}
     </tr>
     {% endfor %}
 </table>
@@ -53,17 +57,17 @@
         <td>{{request.enddate}}</td>
         <td>{{borrower}}</td>
         <td>{{request.status}}</td>
-        {% if request.status == 'open'%}
+        {% if request.status == 'open' %}
             <th><a href={{ url_for('lender_confirm', request_id = request.id) }}>Accept</a></th>
             <th><a href={{ url_for('reject_request', request_id = request.id) }}>Reject</a></th>
         {% endif %}
-        {% if request.status == "borrower_confirmed" %}
+        {% if request.status == "borrower_confirmed" and request.issue == False %}
             <th><a href={{ url_for('return_confirm', request_id = request.id) }}>Confirm Return</a></th>
         {% endif %}
         {% if request.status == "pending cancel"%}
                  <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Confirm Canceling Request</a></th>
         {% endif %}
-        {% if request.status == "lender_confirmed"%}
+        {% if request.status == "lender_confirmed" and request.issue == False %}
                  <th><a href={{ url_for('cancel_request', request_id=request.id) }}>Cancel Request</a></th>
         {% endif %}
         {% if request.issue == False %}
