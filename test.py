@@ -40,6 +40,14 @@ class FlaskTestCase(unittest.TestCase):
         response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/logout')
         self.assertIn("Sign up now", response.text)
         
+    #Testing whether the user is able to register
+    def test_register(self):
+         response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/register', data = dict(username="xd@gmail.com", email = "xd@gmail.com password="111"))
+    #Testing whether the user is able to register
+    def test_register(self):
+         response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/register', data = dict(username="Joe", email = "xd@gmail.com", password="111", region = "sf"))
+         self.assertEqual(response.status_code, 200)
+    
     #Testing that the index page loads properly
     def test_index(self):
         response = requests.get('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/')
@@ -190,7 +198,16 @@ class FlaskTestCase(unittest.TestCase):
         self.assertEqual(t1.book_id, 1)
         self.assertEqual(t1.borrower_id, 1)
         self.assertNotEqual(t1.startdate, datetime.datetime(2019, 4, 28) )
-
+    #Checking whether the send_email function works
+    def test_sendemail(self):
+        mb1 = Meta_book(name = "1984", author = "George Orwell", numpages = 352)
+        user1 = User(username = "Jane", email = "jane@gmail.com", password = "12345", region = "sf" )
+        book1 = Book(metabook_id = 1, owner_id = 1, condition = "used", region = "sf")
+        t1 = Transaction(book_id = 1, borrower_id = 1, date_created = datetime.datetime(2019, 4, 28), startdate = datetime.datetime(2019, 4, 30), enddate = datetime.datetime(2019, 5, 10), status = "open")
+        db.session.add(mb1)
+        db.session.add(user1)                                                                                                           
+        self.assertEqual(send_email(1,"requested",1), "This is a reminder that you should return 1984 in the next 24 hours."                                                                                                           
+                                                                                                                  
     if __name__ == '__main__':
         unittest.main()
 
