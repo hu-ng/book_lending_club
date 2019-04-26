@@ -138,7 +138,7 @@ class FlaskTestCase(unittest.TestCase):
         db.session.add(t1)
         db.session.commit()
         numtrans = Transaction.query.all()
-        self.assertEqual(len(numbertrans), 1)
+        self.assertEqual(len(numtrans), 1)
         self.assertTrue((now-t1.startdate).days <= 0)
         self.assertTrue((t1.startdate-t1.enddate).days <= 0)
           
