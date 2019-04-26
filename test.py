@@ -69,6 +69,12 @@ class FlaskTestCase(unittest.TestCase):
     def test_login_required_notification(self):
         response = requests.get('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/notification')
         self.assertNotIn('Requests sent', response.text) 
+    
+    #Test whether users are able to see their requests once logged in
+    def test_notification(self):
+        log_in(self, "xd@gmail.com", "111")
+        response = requests.get('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/notification')
+        self.assertIn('Requests sent', response.text)
         
     #Test whether users are able to add books
     def test_user_add_book(self):
@@ -190,7 +196,7 @@ class FlaskTestCase(unittest.TestCase):
         self.assertEqual(t1.book_id, 1)
         self.assertEqual(t1.borrower_id, 1)
         self.assertNotEqual(t1.startdate, datetime.datetime(2019, 4, 28) )
-
+    
     if __name__ == '__main__':
         unittest.main()
 
