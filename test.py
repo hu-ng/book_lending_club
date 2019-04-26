@@ -1,5 +1,12 @@
+import os
+import tempfile
+from flask import render_template, request, url_for, flash, redirect
 import unittest
-import requests
+from sqlalchemy import create_engine
+from app import app, bcrypt, db
+from app import routes, forms
+from app.models import User, Meta_book, Book, Transaction
+from flask_login import login_user, current_user, logout_user, login_required
 
 def log_in(self, email, password):
     return requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/login', data=dict(email=email, password=password))
@@ -53,6 +60,61 @@ class FlaskTestCase(unittest.TestCase):
         response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/add_books', data=dict(bookname="test book", author="test author", numpages=123, condition="used"))
         self.assertTrue(response.status_code == 200) 
         
+     def setUp(self):
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+        db.create_all()
+        
+    def test_password_hashing(self):
+        hashed_password = bcrypt.generate_password_hash('password').decode('utf-8')
+        new_user = User(username="John Doe",
+                        email="john@aol.com",
+                        password=hashed_password,
+                        region="sf")
+        self.assertFalse(bcrypt.check_password_hash(new_user.password, "incorrect password"))
+        self.assertTrue(bcrypt.check_password_hash(new_user.password, "password"))
+
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()   
+    def test_adding_users(self):
+        u1 = User(username="John Doe",
+                        email="john@aol.com",
+                        password=hashed_password,
+                        region="sf")
+        u2 = User(username="Jane Doe",
+                        email="jane@aol.com",
+                        password=hashed_password,
+                        region="hyd")
+        u3 = User(username="Simon Golombek",
+                        email="simon@minerva.kgi.edu",
+                        password=hashed_password,
+                        region="ber")
+        db.session.add_all([u1, u2, u3])
+        db.session.commit()
+        thirduser = User.query.filter_by(id=3).first()
+        self.assertEqual(thirduser.username, "Simon Golombek")
+        
+    def test_book_properties(self):
+        mb1 = Meta_book(name="bible", author="god", numpages=666)
+        b1 = Book(metabook_id=1, owner_id=1,
+                condition="new", region="sf")
+        self.assertEqual(mb1.author, "god")
+        self.assertEqual(b1.owner_id, 1)
+        self.assertNotEqual(b1.owner_id, 2)
+        
+    def test_adding_books(self):
+        b1 = Book(metabook_id=1, owner_id=1,
+                condition="new", region="sf")
+        b2 = Book(metabook_id=1, owner_id=1,
+                condition="used", region="hyd")
+        b3 = Book(metabook_id=1, owner_id=1,
+                condition="torn", region="sel")
+        db.session.add_all([b1, b2, b3])
+        db.session.commit()
+        hydbook = Book.query.filter_by(region="hyd").first()
+        numbertorn = Book.query.filter_by(condition="torn").all()
+        self.assertEqual(hydbook.owner_id, 1)
+        self.assertEqual(len(numbertorn), 1)
         
 if __name__ == '__main__':
     unittest.main()
