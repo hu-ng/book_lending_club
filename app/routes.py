@@ -27,6 +27,7 @@ def confirm_returned(id):
 
 # User profile page
 @app.route('/user/<int:id>')
+@login_required
 def user_profile(id):
     if id is None and current_user.is_authenticated:
         id=current_user.id
