@@ -222,6 +222,21 @@ class FlaskTestCase(unittest.TestCase):
     def test_register(self):
         response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/register', data = dict(username="Joe", email = "xd@gmail.com", password="111", confirm_password = "111", region = "sf"))
         self.assertEqual(response.status_code, 200)
+    
+    #Testing whether it is possible to request a book, request for which just got cancelled
+    def test_borrowing_book_after_cancelled_request(self):
+        mb1 = Meta_book(name = "1984", author = "George Orwell", numpages = 352)
+        book1 = Book(metabook_id = 1, owner_id = 1, condition = "used", region = "sf")
+        db.session.add(mb1)
+        db.session.add(book1)
+        response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/borrowing_request/1', data = dict(start_date = datetime.datetime(2019,5,1), enddate = datetime.datetime(2019,5,10)))
+        response1 = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/cancel_request/1')
+        response2 = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/borrowing_request/1', data = dict(start_date = datetime.datetime(2019,5,1), enddate = datetime.datetime(2019,5,10)))
+        self.assertEqual(response2.status_code, 200)
+
+        
+        
+        
     if __name__ == '__main__':
         unittest.main()
 
