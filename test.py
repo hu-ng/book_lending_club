@@ -39,6 +39,10 @@ class FlaskTestCase(unittest.TestCase):
         response1 = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/bookdisplay')
         response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/logout')
         self.assertIn("Sign up now", response.text)
+    #Testing whether the register function works
+    def test_register(self):
+        response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/register', data = dict(username="Joe", email = "xd@gmail.com", password="111", confirm_password = "111", region = "sf"))
+        self.assertEqual(response, 200)
         
     #Testing that the index page loads properly
     def test_index(self):
@@ -190,7 +194,8 @@ class FlaskTestCase(unittest.TestCase):
         self.assertEqual(t1.book_id, 1)
         self.assertEqual(t1.borrower_id, 1)
         self.assertNotEqual(t1.startdate, datetime.datetime(2019, 4, 28) )
-
+    
+         
     if __name__ == '__main__':
         unittest.main()
 
