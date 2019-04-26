@@ -60,7 +60,7 @@ class FlaskTestCase(unittest.TestCase):
         response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/add_books', data=dict(bookname="test book", author="test author", numpages=123, condition="used"))
         self.assertTrue(response.status_code == 200) 
         
-     def setUp(self):
+    def setUp(self):
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
         db.create_all()
         
