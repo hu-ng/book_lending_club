@@ -2,6 +2,7 @@ import os
 import tempfile
 from flask import render_template, request, url_for, flash, redirect
 import unittest
+import requests
 from sqlalchemy import create_engine
 from app import app, bcrypt, db
 from app import routes, forms
