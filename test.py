@@ -1,3 +1,5 @@
+#Importing dependencies
+
 import os
 import tempfile
 from flask import render_template, request, url_for, flash, redirect
@@ -12,11 +14,14 @@ from flask_login import login_user, current_user, logout_user, login_required
 def log_in(self, email, password):
     return requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/login', data=dict(email=email, password=password))
 
+hashed_password = bcrypt.generate_password_hash('password').decode('utf-8')
+
 
 class FlaskTestCase(unittest.TestCase):
     
     #Ensuring that the default user is able to log in by asserting that the status code for this request is 200
     def test_correct_login(self):
+        #Making a post request to the server with correct login credentials
         response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/login', data = dict(email="xd@gmail.com", password="111"))
         self.assertTrue(response.status_code == 200) 
     
@@ -66,7 +71,6 @@ class FlaskTestCase(unittest.TestCase):
         db.create_all()
         
     def test_password_hashing(self):
-        hashed_password = bcrypt.generate_password_hash('password').decode('utf-8')
         new_user = User(username="John Doe",
                         email="john@aol.com",
                         password=hashed_password,
