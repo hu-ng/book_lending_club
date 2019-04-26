@@ -190,7 +190,16 @@ class FlaskTestCase(unittest.TestCase):
         self.assertEqual(t1.book_id, 1)
         self.assertEqual(t1.borrower_id, 1)
         self.assertNotEqual(t1.startdate, datetime.datetime(2019, 4, 28) )
-
+    
+    #Test whether the book added to the database can be borrowed
+    def borrow_added_book(self):
+        mb1 = Meta_book(name = "1984", author = "George Orwell", numpages = 352)
+        book1 = Book(metabook_id = 1, owner_id = 1, condition = "used", region = "sf")
+        db.session.add(mb1)
+        db.session.add(book1)
+        response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/borrowing_request/1', data = dict(start_date = datetime.datetime(2019,5,1), enddate = datetime.datetime(2019,5,10)))
+        self.assertEqual(response, 200)
+    
     if __name__ == '__main__':
         unittest.main()
 
