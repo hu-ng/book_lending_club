@@ -157,7 +157,40 @@ class FlaskTestCase(unittest.TestCase):
         #Checking whether the enddate comes before the startdate
         #self.assertTrue((t1.startdate-t1.enddate).days <= 0)
         #self.assertTrue((now-t1.startdate).days <= 0)
-     
-if __name__ == '__main__':
-    unittest.main()
-    
+        
+    """Testing the addition of meta books"""
+    def test_add_meta_books(self):
+        mb1 = Meta_book(name = "1984", author = "George Orwell", numpages = 352, copies = 1)
+        db.session.add(mb)
+        db.session.commit()
+        number_mb = Meta_book.query.all()
+        self.assertEqual(len(number_mb),1)
+    """Testing user, meta books and transactions properties"""
+    def test_user_properties(self):
+        user1 = User(username = "Jane", email = "jane@gmail.com", password = "12345", region = "sf" )
+        self.assertEqual(user1.username, "Jane")
+        self.assertEqual(user1.email, "jane@gmail.com")
+        self.assertEqual(user1.password, "12345")
+        self.assertEqual(user1.region, "sf")
+
+    def test_meta_book_properties(self):
+        mb1 = Meta_book(name = "1984", author = "George Orwell", numpages = 352, copies = 1)
+        self.assertEqual(mb1.name, "1984")
+        self.assertEqual(mb1.author, "George Orwell")
+        self.assertEqual(mb1.numpages, 352)
+        self.assertNotEqual(mb1.numpages, 451)
+        self.assertEqual(mb1.copies, 1)
+
+    def test_transaction_properties(self):
+        mb1 = Meta_book(name = "1984", author = "George Orwell", numpages = 352)
+        user1 = User(username = "Jane", email = "jane@gmail.com", password = "12345", region = "sf" )
+        book1 = Book(metabook_id = 1, owner_id = 1, condition = "used", region = "sf")
+        t1 = Transaction(book_id = 1, borrower_id = 1, date_created = datetime.datetime(2019, 4, 28), startdate = datetime.datetime(2019, 4, 30), enddate = datetime.datetime(2019, 5, 10), status = "open")
+        self.assertNotEqual(t1.status, "closed")
+        self.assertEqual(t1.book_id, 1)
+        self.assertEqual(t1.borrower_id, 1)
+        self.assertNotEqual(t1.startdate, datetime.datetime(2019, 4, 28) )
+
+    if __name__ == '__main__':
+        unittest.main()
+
