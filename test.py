@@ -66,10 +66,17 @@ class FlaskTestCase(unittest.TestCase):
         response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/add_books', data=dict(bookname="test book", author="test author", numpages=123, condition="used"))
         self.assertTrue(response.status_code == 200) 
         
+    #Setting up a test database to check whether     
     def setUp(self):
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
         db.create_all()
         
+    #function for tearing down the database    
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()  
+     
+    #Checking whether the password hashing function works properly
     def test_password_hashing(self):
         new_user = User(username="John Doe",
                         email="john@aol.com",
@@ -77,10 +84,8 @@ class FlaskTestCase(unittest.TestCase):
                         region="sf")
         self.assertFalse(bcrypt.check_password_hash(new_user.password, "incorrect password"))
         self.assertTrue(bcrypt.check_password_hash(new_user.password, "password"))
-
-    def tearDown(self):
-        db.session.remove()
-        db.drop_all()   
+        
+    #Checking whether the database can add new users   
     def test_adding_users(self):
         u1 = User(username="John Doe",
                         email="john@aol.com",
@@ -99,6 +104,7 @@ class FlaskTestCase(unittest.TestCase):
         thirduser = User.query.filter_by(id=3).first()
         self.assertEqual(thirduser.username, "Simon Golombek")
         
+    #Testing the book properties    
     def test_book_properties(self):
         mb1 = Meta_book(name="bible", author="god", numpages=666)
         b1 = Book(metabook_id=1, owner_id=1,
@@ -107,6 +113,7 @@ class FlaskTestCase(unittest.TestCase):
         self.assertEqual(b1.owner_id, 1)
         self.assertNotEqual(b1.owner_id, 2)
         
+    #Testing whether the database is able to add books   
     def test_adding_books(self):
         b1 = Book(metabook_id=1, owner_id=1,
                 condition="new", region="sf")
@@ -120,7 +127,7 @@ class FlaskTestCase(unittest.TestCase):
         numbertorn = Book.query.filter_by(condition="torn").all()
         self.assertEqual(hydbook.owner_id, 1)
         self.assertEqual(len(numbertorn), 1)
-        
+          
 if __name__ == '__main__':
     unittest.main()
     
