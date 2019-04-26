@@ -36,12 +36,13 @@ class FlaskTestCase(unittest.TestCase):
     I fixed it by adding @login_required to the user page. However, this doesn't fix it suficciently, as it means if user 1 is logged it, he can just
     replace the '...ws.com/user/1' with '...ws.com/user/x' to view all the borrowed books of user x, so preferably a more substantial modification to the
     code structure will be implemented, but that is not a priority now.
-    """    
+    
     
     def test_login_required_userpage(self):
         response = requests.get('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/user/1')
         self.assertNotIn('Borrowed Books', response.text)
-        
+    """   
+    
     def test_login_required_notification(self):
         response = requests.get('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/notification')
         self.assertNotIn('Requests sent', response.text) 
