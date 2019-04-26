@@ -33,6 +33,13 @@ class FlaskTestCase(unittest.TestCase):
         response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/login', data = dict(username="incorrect@email.com", password="hunter12"))
         self.assertIn("Log In", response.text)
         
+    #Testing whether the log out function works
+    def test_logout(self):
+        log_in(self, "xd@gmail.com", "111")
+        response1 = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/bookdisplay')
+        response = requests.post('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/logout')
+        self.assertIn("Sign up now", response.text)
+        
     #Testing that the index page loads properly
     def test_index(self):
         response = requests.get('http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/')
