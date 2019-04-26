@@ -1,10 +1,29 @@
 {% extends 'base.html' %}
 
 {% block head %}
+		<link rel="stylesheet" href= "{{ url_for('static',filename='book.css') }}">
     <title>Book</title>
 
 {% endblock %}
 
 {% block container %}
-    <p>This presents the specific info about a book</p>
+
+<div id="maindiv">
+	<div id="imagediv">
+		{% if is_url_image(book.img) %}
+		<img src="{{book.img}}">
+    {% else %}
+      <img src="{{ url_for('static',filename='resources/alternative_book_cover.svg') }}">
+    {% endif %}
+	</div>
+	<div id="infodiv">
+		<h1>{{metabook.name}}</h1>
+	  <h2>By {{metabook.author}}</h2>
+	  <p><strong>Region:</strong> {{book.region}}</p>
+	  <p><strong>Available:</strong> {{book.availability}}</p>
+	  <p><strong>Condition:</strong> {{book.condition}}</p>
+  </div>
+  <a href = {{ url_for('user_profile', id = current_user.id) }}>Return to Profile </a>
+</div>
+    
 {% endblock %}

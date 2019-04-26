@@ -19,7 +19,13 @@ def delete_book(id):
 
 @app.route('/book/<int:id>')
 def book_profile(id):
-    raise NotImplementedError
+    book = Book.query.filter_by(id=id).first()
+    metabook_id = book.metabook_id
+    metabook = Meta_book.query.filter_by(id=metabook_id).first()
+    name = metabook.name
+    author = metabook.author
+    numpages = metabook.numpages
+    return render_template('book.html', book=book, metabook=metabook)
 
 @app.route('/confirm_returned/<int:id>')
 def confirm_returned(id):
