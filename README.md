@@ -1,8 +1,8 @@
 # Project Description:
 
-This web application serves as a platform for students in Minerva to coordinate book lending by aggregating books available in the cities that students live in and providing a tool to help both borrowers and lenders with requests.
+This web application is created a class project to serve as a platform for students in Minerva to coordinate book lending by aggregating books available in the cities that students live in and providing a tool to help both borrowers and lenders organize their requests.
 
-As part of the back-end team for this project, I implemented many functionalities and wrote barebones html files to test them out. My biggest contribution is implementing the "transaction" flow - the whole process of borrowing a book from start to end, from initiating a request to confirming that the borrower has returned the book. In addition to writing code that changes data but also maintains the consistency of the database, I also implemented checks to make sure that users can only do what they are allowed to do, like making sure that borrowers don't have access to lender-specific actions (and vice versa), or that borrowers can't "spam" request a book.
+As part of the back-end team for the project, I implemented many functionalities and wrote barebones html files to test them. My biggest contribution is implementing the "transaction" flow - the whole process of borrowing a book from start to end, from initiating a request to confirming that the borrower has returned the book. In addition to writing code that changes data but also maintains the consistency of the database, I also implemented checks to make sure that users can only do what they are allowed to do, like making sure that borrowers don't have access to lender-specific actions (and vice versa), or that borrowers can't "spam" request a book.
 
 # Welcome to the Book Lending Club
 
