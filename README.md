@@ -1,4 +1,4 @@
-# Project Description:
+# Project Description
 
 This web application is created a class project to serve as a platform for students in Minerva to coordinate book lending by aggregating books available in the cities that students live in and providing a tool to help both borrowers and lenders organize their requests.
 
