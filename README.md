@@ -173,4 +173,4 @@ Meta_book class serves the function of recording the metadata of a specific book
 
 The transaction model tracks the status of a lending process between the owner and lender. It includes basic functionalities of updating the status of a transaction.
 
-![Example UML](https://yuml.me/diagram/scruffy/class/[Transaction|+book_id;+lender_id;+borrower_id;+status;|+update_status();])
+![Example UML](https://yuml.me/diagram/scruffy/class/[Transaction|+book_id;+lender_id;+borrower_id;+status;+issue;|+update_status();])
