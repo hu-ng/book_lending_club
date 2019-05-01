@@ -6,7 +6,7 @@ Available Functionalities:
 * [Sign up](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/register)
 * [Login](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/login)
 * [Logout](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/logout)
-* [Book Display](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/book_display)
+* [Book Display - Login Required](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/book_display)
 * [Add Books - Login Required](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/add_books)
 * Borrow Books (From Book Display Page)
 * [Notifications - Login Required](http://ec2-18-219-248-53.us-east-2.compute.amazonaws.com/notification)
