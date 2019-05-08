@@ -11,11 +11,13 @@ from app.send_emails import send_email
 def index():
     return render_template('index.html')
 
+
 @app.route('/delete_book/<int:id>')
 def delete_book(id):
     Book.query.filter_by(id=id).delete()
     db.session.commit()
     return render_template('deleted.html')
+
 
 @app.route('/book/<int:id>')
 def book_profile(id):
@@ -26,6 +28,7 @@ def book_profile(id):
     author = metabook.author
     numpages = metabook.numpages
     return render_template('book.html', book=book, metabook=metabook)
+
 
 @app.route('/confirm_returned/<int:id>')
 def confirm_returned(id):
@@ -78,7 +81,6 @@ def user_profile(id):
 
         borrowed.append((name,author,book.id,book.metabook_id,due,owner,ownerID))
 
-
     return render_template('profile.html', id=id, user=user, borrowed = borrowed, owned = owned)
 
 
@@ -121,7 +123,7 @@ def login():
     return render_template('login.html', title='Log In', form=form)
 
 
-@app.route('/logout', methods=["GET","POST"])
+@app.route('/logout', methods=["GET", "POST"])
 def logout():
     logout_user()
     # Returns the user to the home page
@@ -172,7 +174,7 @@ def book_display():
     return render_template('display.html', books=book_items)
 
 
-@app.route('/borrowing_request/<int:book_id>', methods=["GET", "POST"])
+@app.route('/borrowing_request/<int:book_id>',methods=["GET", "POST"])
 @login_required
 def borrowing_request(book_id):
     # A check to make sure book owners can't borrow their own books
@@ -227,7 +229,7 @@ def borrowing_request(book_id):
 def notification():
     # Sent requests
     sent_requests = Transaction.query.filter(and_(Transaction.borrower_id == current_user.id,
-                                                  Transaction.status != "return_confirmed")).all()
+                                                  Transaction.status != "return_confirmed", Transaction.status != "cancelled")).all()
     # status='open' Removed to test the flow
     sent_book_owners = []
     sent_book_names = []
@@ -248,7 +250,7 @@ def notification():
     # received_requests = Transaction.query.filter(and_(Transaction.book_id.in_(book_ids), Transaction.status == 'open')).all()
     # Commented out to test the flow
     received_requests = Transaction.query.filter(
-        and_(Transaction.book_id.in_(book_ids), Transaction.status != 'return_confirmed')).all()
+        and_(Transaction.book_id.in_(book_ids), Transaction.status != 'return_confirmed', Transaction.status != "cancelled")).all()
     received_book_names = []
     borrower_names = []
     for r in received_requests:
@@ -262,6 +264,7 @@ def notification():
     return render_template('notification_page.html', requests_sent=sent_items, requests_received=received_items)
 
 
+# Isn't this the same as lender_confirmed?
 @app.route('/cancel_request/<int:request_id>/', methods=['GET', 'POST'])
 @login_required
 def cancel_request(request_id):
@@ -287,6 +290,7 @@ def cancel_request(request_id):
         flash(f'Successfully cancel this request!', 'success')
         return redirect(url_for('notification'))
 
+
 @app.route('/reject_request/<int:request_id>/',methods=['GET','POST'])
 @login_required
 def reject_request(request_id):
@@ -310,6 +314,9 @@ def reject_request(request_id):
 def lender_confirm(request_id):
     # Check to see if the current_user is the owner of the book_id
     transaction = Transaction.query.filter_by(id=request_id).first()
+    if transaction.issue == True:
+        flash(f'You must resolve the issue before moving forward', "danger")
+        return redirect(url_for('notification'))
     book = Book.query.filter_by(id=transaction.book_id).first()
     if current_user.id == book.owner_id:
         transaction.status = 'lender_confirmed'
@@ -347,6 +354,9 @@ def lender_confirm(request_id):
 @login_required
 def borrower_confirm(request_id):
     transaction = Transaction.query.filter_by(id=request_id).first()
+    if transaction.issue == True:
+        flash(f'You must resolve the issue before moving forward', "danger")
+        return redirect(url_for('notification'))
     if current_user.id == transaction.borrower_id:
         transaction.status = 'borrower_confirmed'
         db.session.commit()
@@ -359,6 +369,9 @@ def borrower_confirm(request_id):
 @login_required
 def return_confirm(request_id):
     transaction = Transaction.query.filter_by(id=request_id).first()
+    if transaction.issue == True:
+        flash(f'You must resolve the issue before moving forward', "danger")
+        return redirect(url_for('notification'))
     book = Book.query.filter_by(id=transaction.book_id).first()
     if current_user.id == book.owner_id:
         transaction.status = 'return_confirmed'
@@ -368,10 +381,19 @@ def return_confirm(request_id):
     return redirect(url_for('notification'))
 
 
-@app.route("/notification/<int:request_id>/issue_raise", methods=['GET','POST'])
+@app.route("/notification/<int:request_id>/issue_raise", methods=['GET', 'POST'])
 @login_required
 def issue_raise(request_id):
     transaction = Transaction.query.filter_by(id=request_id).first()
-    transaction.status = 'issue_raised'
+    transaction.issue = True
+    db.session.commit()
+    return redirect(url_for('notification'))
+
+
+@app.route("/notification/<int:request_id>/issue_resolve", methods=['GET','POST'])
+@login_required
+def issue_resolve(request_id):
+    transaction = Transaction.query.filter_by(id=request_id).first()
+    transaction.issue = False
     db.session.commit()
     return redirect(url_for('notification'))
